@@ -1,0 +1,107 @@
+name: Daily Lok Sabha Scraper
+
+on:
+  schedule:
+    # Runs at 02:00 UTC daily (7:30 AM IST) — eparlib is quieter at night
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    # Also allows manual trigger from GitHub Actions UI
+
+jobs:
+  scrape-and-parse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ── Download step ──────────────────────────────────────────────────────
+      # eparlib blocks scripted downloads intermittently.
+      # We attempt a download but treat failure as non-fatal.
+      # Manually dropped PDFs in pdfs/ are always processed regardless.
+      - name: Attempt PDF download (best effort)
+        id: download
+        run: |
+          # Try to download next 5 pending dates across all sessions.
+          # eparlib may block this — step is non-fatal.
+          python main.py --all-sessions --max-pdfs 5 2>&1 | tee /tmp/scraper_download.log
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+        continue-on-error: true
+
+      # ── Parse step ─────────────────────────────────────────────────────────
+      # Always runs — picks up any PDFs in pdfs/ whether just downloaded
+      # or manually placed there.
+      - name: Parse all unprocessed PDFs
+        run: |
+          python main.py --parse-only 2>&1 | tee /tmp/scraper_parse.log
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}   # Postgres (Neon) once migrated
+                                                       # Falls back to sansad.db if unset
+
+      # ── Status log ─────────────────────────────────────────────────────────
+      - name: Write run summary
+        run: |
+          python - <<'EOF'
+          import sqlite3, json, os
+          from datetime import datetime, timezone
+
+          db_path = "sansad.db"
+          if not os.path.exists(db_path):
+              print("No DB found — skipping summary")
+              exit(0)
+
+          conn = sqlite3.connect(db_path)
+          pdfs   = conn.execute("SELECT COUNT(*) FROM source_pdfs").fetchone()[0]
+          stmts  = conn.execute("SELECT COUNT(*) FROM statements").fetchone()[0]
+          latest = conn.execute(
+              "SELECT filename, downloaded_at FROM source_pdfs ORDER BY downloaded_at DESC LIMIT 1"
+          ).fetchone()
+          conn.close()
+
+          summary = {
+              "run_at": datetime.now(timezone.utc).isoformat(),
+              "total_pdfs": pdfs,
+              "total_statements": stmts,
+              "latest_pdf": latest[0] if latest else None,
+              "latest_pdf_at": latest[1] if latest else None,
+          }
+          print(json.dumps(summary, indent=2))
+
+          # Write to file so it can be committed / uploaded as artifact
+          with open("scraper_status.json", "w") as f:
+              json.dump(summary, f, indent=2)
+          EOF
+
+      # ── Upload artifact ─────────────────────────────────────────────────────
+      - name: Upload status + logs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraper-run-${{ github.run_id }}
+          path: |
+            scraper_status.json
+            /tmp/scraper_download.log
+            /tmp/scraper_parse.log
+          retention-days: 30
+
+      # ── Commit updated DB (SQLite mode only) ────────────────────────────────
+      # Once migrated to Postgres, remove this step — DB lives on Neon, not in repo.
+      - name: Commit updated sansad.db (SQLite mode)
+        if: ${{ !env.DATABASE_URL }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sansad.db scraper_status.json || true
+          git diff --cached --quiet || git commit -m "chore: scraper run $(date -u +%Y-%m-%dT%H:%M)Z [skip ci]"
+          git push
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}

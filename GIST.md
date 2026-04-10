@@ -1,6 +1,6 @@
 # ParamaSrota — Project Gist
 *Paste this at the start of every new session to restore full context.*
-*Last updated: April 2026, Session 1*
+*Last updated: April 2026, Session 2*
 
 ---
 
@@ -115,21 +115,69 @@ Canonical `politician_id` across all sources. Fuzzy name matching. "Rajnath Sing
 
 ## Task board
 
-**Tool:** GitHub Projects on bparlapalli/sansad repo
-**4 swim lanes:** Scraper · Database · Intelligence · UI
-**32 tasks created** (see GitHub Projects for current status)
+**Tool:** GitHub Projects → https://github.com/users/bparlapalli/projects/1/views/1
+**Structure:** Columns = pipeline stage (Scraper → Database → UI → Intelligence). Swim lanes = data track.
+**41 tasks across 6 tracks** (see GitHub Projects for current status)
 
-### Critical path to MVP (do in order)
-1. [DB] Migrate SQLite → Postgres (Neon)
-2. [UI] Streamlit app: politician search + last 7 days free
-3. [UI] Deploy on Railway
-4. [SCRAPER] Add monitoring + alerting
-5. [DB] Snowflake trial + S3 bronze stage
-6. [DB] DBT silver models
-7. [SCRAPER] Court scraper adapter
-8. [SCRAPER] Tender scraper (GeM)
-9. [INTEL] Entity resolution: politician_id
-10. [INTEL] Intelligence Snowflake views
+### Tracks
+| Track | Items | Description |
+|-------|-------|-------------|
+| 🟢 Lok Sabha | 28 | Parliament debates — primary track |
+| 🔵 Courts | 1 | eCourts case documents |
+| 🟡 Tenders | 2 | GeM + CPPP govt tenders |
+| 🟣 Private Business | 1 | Politician family business connections |
+| ⚪ YouTube | 1 | Parked — privacy concerns |
+| 🔴 Combined Intelligence | 7 | Cross-track, unlocked when 2+ tracks have data |
+
+### Priority system (Now / Next / Later / Parked)
+
+**Now — 9 items, do first:**
+| # | Task | Why |
+|---|------|-----|
+| #34 | Hindi parsing (Sarvam AI) | Parser-level. Unlocks ~60% of statements skipped |
+| #33 | Fix scripted PDF downloader | Blocker for automated pipeline |
+| #35 | Download remaining session PDFs | Core data gap |
+| #40 | GitHub Actions cron (daily scraper) | Runs independent of Claude, no tokens |
+| #41 | Scraper status dashboard | See what's downloaded, gaps, last run time |
+| #10 | Migrate SQLite → Postgres (Neon) | Foundation for web layer |
+| #37 | S3 bronze stage for raw PDFs | Cheap storage (~$0.023/GB/month) |
+| #39 | Register domain | ~₹1,000. Do it now before someone else does |
+| #29 | Tender alert email digest | Fastest path to first revenue — no public traffic needed |
+
+**Next:** FastAPI (#25) · Railway deploy (#28) · Politician search (#26) · Quote cards (#36) · Monitoring (#2)
+
+**Later:** Courts scraper · Tender scraper · Claim checker · SEO · DBT · Entity resolution
+
+**Parked:** Snowflake trial (#11) · YouTube (#6) · DBT incremental · Cross-source join views
+
+---
+
+## Infrastructure cost reality (stealth mode)
+
+| Component | Option | Cost |
+|-----------|--------|------|
+| Raw PDF storage | S3 Standard | ~$0.023/GB/month. 1000 PDFs ≈ pennies |
+| App database | Neon Postgres free tier | Free (0.5GB, enough for MVP) |
+| Analytics | **DuckDB locally** | Free. Runs on your machine. Upgrade to Snowflake only when needed |
+| Snowflake | 30-day trial, then ~$25–40/month minimum | **Skip until first paying customer** |
+| Hosting | Railway Hobby | $5/month |
+| Domain | .in or .com | ~$10–15/year. Register now |
+| **Total MVP cost** | | **~$6–8/month** |
+
+Snowflake is the right long-term call but wrong right now. DuckDB can query S3 files locally and produce the same medallion views for free. Migrate when you're billing customers.
+
+---
+
+## North star vision (as of April 2026)
+
+A news-intelligence platform where:
+- **Free tier:** latest data only (last N days) — politician quotes, tender awards, court listings
+- **Token tier:** deep historical queries, cross-source connections, "what has this politician said about X company over 5 years"
+- **Personalization:** user interest graph → relevant alerts
+- **Ads:** minimal, served directly through app (not AdSense), targeted by interest graph
+- **B2B:** Snowflake data sharing + API for fintechs, ESG funds, journalists
+
+Think: structured Indian political data layer, not a news site. The moat is the entity graph, not the content.
 
 ---
 
