@@ -1,0 +1,32 @@
+# Database
+sansad.db
+*.db
+
+# Downloaded PDFs (large files, download manually)
+pdfs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+
+# Temp / editor
+*.tmp
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Claude
+CLAUDE.md
