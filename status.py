@@ -88,7 +88,7 @@ async def status_dashboard():
     if d["last_run"]:
         lr = d["last_run"]
         last_run_html = f"""
-        <div class="card">
+        <div class=\"card\">
           <h2>Last Cron Run</h2>
           <table>
             <tr><th>Run at</th><td>{lr.get('run_at','—')}</td></tr>
@@ -109,11 +109,11 @@ async def status_dashboard():
           <td>{s['name']}</td>
           <td>{s['session_type']}</td>
           <td>{s['expected_sittings']}</td>
-          <td style="color:{color};font-weight:bold">{s['downloaded_sittings']}</td>
-          <td style="color:{'#e74c3c' if gap > 0 else '#2ecc71'}">{gap} missing</td>
+          <td style=\"color:{color};font-weight:bold\">{s['downloaded_sittings']}</td>
+          <td style=\"color:{'#e74c3c' if gap > 0 else '#2ecc71'}\">{gap} missing</td>
           <td>
-            <div style="background:#333;border-radius:4px;height:10px;width:100px;display:inline-block">
-              <div style="background:{color};border-radius:4px;height:10px;width:{min(pct,100):.0f}px"></div>
+            <div style=\"background:#333;border-radius:4px;height:10px;width:100px;display:inline-block\">
+              <div style=\"background:{color};border-radius:4px;height:10px;width:{min(pct,100):.0f}px\"></div>
             </div>
             {pct:.0f}%
           </td>
@@ -127,16 +127,16 @@ async def status_dashboard():
           <td><code>{p['filename']}</code></td>
           <td>{p['session_id']}</td>
           <td>{p['pages'] or '—'}</td>
-          <td>{"✅ " + str(p['statement_count']) if p['statement_count'] else "⚠️ 0"}</td>
-          <td style="font-size:0.8em;color:#999">{(p['downloaded_at'] or '')[:19]}</td>
+          <td>{"\u2705 " + str(p['statement_count']) if p['statement_count'] else "\u26a0\ufe0f 0"}</td>
+          <td style=\"font-size:0.8em;color:#999\">{(p['downloaded_at'] or '')[:19]}</td>
         </tr>"""
 
     html = f"""<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta charset=\"utf-8\">
   <title>ParamaSrota — Scraper Status</title>
-  <meta http-equiv="refresh" content="300"> <!-- auto-refresh every 5 min -->
+  <meta http-equiv=\"refresh\" content=\"300\">
   <style>
     body {{ font-family: system-ui, sans-serif; background: #111; color: #eee; margin: 0; padding: 20px; }}
     h1   {{ color: #f90; margin-bottom: 4px; }}
@@ -155,17 +155,17 @@ async def status_dashboard():
 </head>
 <body>
   <h1>ParamaSrota — Scraper Status</h1>
-  <div class="subtitle">Generated {d['generated_at'][:19]} UTC · Auto-refreshes every 5 min</div>
+  <div class=\"subtitle\">Generated {d['generated_at'][:19]} UTC · Auto-refreshes every 5 min</div>
 
-  <div class="cards">
-    <div class="card"><h2>PDFs Downloaded</h2><div class="num">{d['total_pdfs']}</div></div>
-    <div class="card"><h2>Statements Parsed</h2><div class="num">{d['total_statements']:,}</div></div>
-    <div class="card"><h2>Members Known</h2><div class="num">{d['total_members']}</div></div>
+  <div class=\"cards\">
+    <div class=\"card\"><h2>PDFs Downloaded</h2><div class=\"num\">{d['total_pdfs']}</div></div>
+    <div class=\"card\"><h2>Statements Parsed</h2><div class=\"num\">{d['total_statements']:,}</div></div>
+    <div class=\"card\"><h2>Members Known</h2><div class=\"num\">{d['total_members']}</div></div>
   </div>
 
   {last_run_html}
 
-  <div class="section-title">Session Coverage</div>
+  <div class=\"section-title\">Session Coverage</div>
   <table>
     <thead><tr>
       <th>#</th><th>Session</th><th>Type</th>
@@ -174,12 +174,12 @@ async def status_dashboard():
     <tbody>{sessions_rows}</tbody>
   </table>
 
-  <div class="section-title">Downloaded PDFs</div>
+  <div class=\"section-title\">Downloaded PDFs</div>
   <table>
     <thead><tr>
       <th>Date</th><th>File</th><th>Session</th><th>Pages</th><th>Statements</th><th>Downloaded At</th>
     </tr></thead>
-    <tbody>{pdf_rows or '<tr><td colspan="6" style="color:#666;text-align:center">No PDFs yet</td></tr>'}</tbody>
+    <tbody>{pdf_rows or '<tr><td colspan=\"6\" style=\"color:#666;text-align:center\">No PDFs yet</td></tr>'}</tbody>
   </table>
 </body>
 </html>"""
