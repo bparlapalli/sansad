@@ -1,21 +1,21 @@
 # ── Core ─────────────────────────────────────────────────────────────────────
 pdfplumber>=0.11        # PDF text extraction
-requests>=2.31          # HTTP downloads (scraper)
+requests>=2.31          # HTTP downloads / Sarvam AI API calls
 urllib3>=2.0
 
 # ── Web app ───────────────────────────────────────────────────────────────────
-flask>=3.0              # app/ news site
+flask>=3.0              # app/ news + admin site
+
+# ── Status dashboard (legacy) ─────────────────────────────────────────────────
+fastapi>=0.110          # status.py dashboard
+uvicorn[standard]>=0.29 # ASGI server for status.py
 
 # ── AI integrations ───────────────────────────────────────────────────────────
 anthropic>=0.25         # Claude API (digest.py) — needs ANTHROPIC_API_KEY
 # sarvam-ai            # Sarvam AI Python client if/when available
 # Until then, translator.py uses requests directly with SARVAM_API_KEY
 
-# ── Playwright scraper (new) ──────────────────────────────────────────────────
-# playwright>=1.40     # Real browser scraper for eparlib.sansad.in
+# ── Playwright scraper ────────────────────────────────────────────────────────
+playwright>=1.40        # Real browser scraper for eparlib.sansad.in
 #   Install: pip install playwright && playwright install chromium
 #   Used by: scrapers/parliament/playwright_scraper.py
-
-# ── Dev / optional ────────────────────────────────────────────────────────────
-# python-dotenv>=1.0   # load .env files: pip install python-dotenv
-#                      # Usage: add "from dotenv import load_dotenv; load_dotenv()" to main.py
