@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}ParamaSrota{% endblock %} — Parliament Intelligence</title>
+<style>
+/* ── Reset & Base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background: #f8f7f2;
+  color: #1a1a1a;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+a { color: #1a4a2e; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Masthead ─────────────────────────────────────────────────────────────── */
+.masthead {
+  background: #0f2818;
+  color: #fff;
+  padding: 0;
+}
+.masthead-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 40px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.masthead-logo {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.masthead-logo h1 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #fff;
+}
+.masthead-logo .devanagari {
+  font-size: 1.1rem;
+  opacity: 0.55;
+  letter-spacing: 0.5px;
+}
+.masthead-date {
+  font-size: 0.8rem;
+  opacity: 0.5;
+  font-family: sans-serif;
+}
+.masthead-nav {
+  background: #1a3a24;
+  padding: 0 40px;
+  display: flex;
+  gap: 0;
+}
+.masthead-nav a {
+  color: rgba(255,255,255,0.75);
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 9px 16px;
+  display: block;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+}
+.masthead-nav a:hover,
+.masthead-nav a.active {
+  color: #fff;
+  border-bottom-color: #4a9e6a;
+  text-decoration: none;
+}
+.ticker-bar {
+  background: #e8f0ea;
+  border-bottom: 1px solid #d0ddd3;
+  padding: 6px 40px;
+  font-family: sans-serif;
+  font-size: 0.78rem;
+  color: #2a5a3a;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-label {
+  font-weight: 700;
+  margin-right: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Layout ───────────────────────────────────────────────────────────────── */
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+  align-items: start;
+}
+.main-col {}
+.side-col {}
+
+/* ── Section heading ──────────────────────────────────────────────────────── */
+.section-label {
+  font-family: sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #2a6a3a;
+  border-bottom: 2px solid #2a6a3a;
+  padding-bottom: 5px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Cards ────────────────────────────────────────────────────────────────── */
+.card {
+  background: #fff;
+  border: 1px solid #e4e0d8;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.card + .card { margin-top: 16px; }
+.card-body { padding: 18px 20px; }
+
+/* ── Statement chip ───────────────────────────────────────────────────────── */
+.chip {
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.chip-speech       { background: #e6f2ec; color: #1a5e30; }
+.chip-question     { background: #e6ecf5; color: #1a3a6e; }
+.chip-answer       { background: #f5ece6; color: #6e2a1a; }
+.chip-ruling       { background: #f0e6f5; color: #4a1a6e; }
+.chip-interruption { background: #f0f0ea; color: #555; }
+.chip-hindi        { background: #fff0e0; color: #8b4000; }
+
+/* ── Speaker name ─────────────────────────────────────────────────────────── */
+.speaker-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #0f2818;
+}
+.speaker-meta {
+  font-family: sans-serif;
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 1px;
+}
+.date-tag {
+  font-family: sans-serif;
+  font-size: 0.75rem;
+  color: #999;
+}
+
+/* ── Statement text ───────────────────────────────────────────────────────── */
+.stmt-text {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: #333;
+  margin-top: 8px;
+}
+.stmt-text.clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.expand-btn {
+  font-family: sans-serif;
+  font-size: 0.75rem;
+  color: #2a6a3a;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  margin-top: 4px;
+  font-weight: 600;
+}
+.expand-btn:hover { text-decoration: underline; }
+
+/* ── Digest block ─────────────────────────────────────────────────────────── */
+.digest-hero {
+  background: #0f2818;
+  color: #e8f2ec;
+  border-radius: 4px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+}
+.digest-hero h2 {
+  font-size: 1.5rem;
+  line-height: 1.35;
+  margin-bottom: 10px;
+  color: #fff;
+}
+.digest-hero .meta {
+  font-family: sans-serif;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 14px;
+}
+.digest-body { font-size: 0.92rem; line-height: 1.75; }
+.digest-body h2 { font-size: 1.15rem; margin: 20px 0 6px; color: #fff; }
+.digest-body h3 { font-size: 1rem; margin: 16px 0 5px; color: #c8e8d0; }
+.digest-body p  { margin-bottom: 10px; }
+.digest-body blockquote {
+  border-left: 3px solid #4a9e6a;
+  margin: 12px 0;
+  padding: 6px 14px;
+  color: #c8e8d0;
+  font-style: italic;
+}
+
+/* ── Hot topics bar ───────────────────────────────────────────────────────── */
+.topics-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.topic-pill {
+  font-family: sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  background: #e8f2ec;
+  color: #1a5e30;
+  border: 1px solid #c8dece;
+  border-radius: 20px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.topic-pill:hover {
+  background: #2a6a3a;
+  color: #fff;
+  border-color: #2a6a3a;
+  text-decoration: none;
+}
+.topic-pill.hot {
+  background: #fff0e0;
+  color: #8b4000;
+  border-color: #e8c080;
+}
+
+/* ── Sidebar widget ───────────────────────────────────────────────────────── */
+.widget {
+  background: #fff;
+  border: 1px solid #e4e0d8;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+.widget-header {
+  font-family: sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #555;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e8e4dc;
+  background: #f8f7f2;
+}
+.widget-body { padding: 12px 14px; }
+.widget-list { list-style: none; }
+.widget-list li {
+  padding: 7px 0;
+  border-bottom: 1px solid #f0ede6;
+  font-size: 0.85rem;
+}
+.widget-list li:last-child { border-bottom: none; }
+.widget-list .count {
+  font-family: sans-serif;
+  font-size: 0.72rem;
+  color: #999;
+  float: right;
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.stat-box {
+  text-align: center;
+  padding: 10px;
+  background: #f5f3ee;
+  border-radius: 4px;
+}
+.stat-number {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f2818;
+  font-family: sans-serif;
+}
+.stat-label {
+  font-family: sans-serif;
+  font-size: 0.7rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Search bar ───────────────────────────────────────────────────────────── */
+.search-strip {
+  background: #fff;
+  border: 1px solid #e4e0d8;
+  border-radius: 4px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.search-strip input {
+  flex: 1;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #d4d0c8;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  background: #fafaf8;
+  outline: none;
+  font-family: sans-serif;
+}
+.search-strip input:focus { border-color: #2a6a3a; background: #fff; }
+.btn {
+  height: 36px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: sans-serif;
+  transition: 0.15s;
+}
+.btn-primary { background: #1a4a2e; color: #fff; }
+.btn-primary:hover { background: #0f3020; }
+.btn-ghost {
+  background: transparent;
+  color: #2a6a3a;
+  border: 1px solid #2a6a3a;
+}
+.btn-ghost:hover { background: #2a6a3a; color: #fff; }
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+footer {
+  background: #0f2818;
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 20px;
+  font-family: sans-serif;
+  font-size: 0.78rem;
+  margin-top: 40px;
+}
+footer a { color: rgba(255,255,255,0.6); }
+
+/* ── Pagination ───────────────────────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+  font-family: sans-serif;
+}
+.empty-state .icon { font-size: 2.5rem; margin-bottom: 10px; }
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 780px) {
+  .masthead-top { padding: 12px 20px; }
+  .masthead-nav { padding: 0 16px; overflow-x: auto; }
+  .ticker-bar   { padding: 6px 16px; }
+  .page-container { padding: 16px; }
+  .two-col { grid-template-columns: 1fr; }
+  .side-col { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-top">
+    <div class="masthead-logo">
+      <h1><a href="/" style="color:inherit">ParamaSrota</a></h1>
+      <span class="devanagari">परम श्रोता</span>
+    </div>
+    <span class="masthead-date" id="live-date"></span>
+  </div>
+  <nav class="masthead-nav">
+    <a href="/" class="{{ 'active' if active_tab == 'home' else '' }}">Today</a>
+    <a href="/search" class="{{ 'active' if active_tab == 'search' else '' }}">Search</a>
+    <a href="/speakers" class="{{ 'active' if active_tab == 'speakers' else '' }}">Speakers</a>
+    <a href="/sessions" class="{{ 'active' if active_tab == 'sessions' else '' }}">Sessions</a>
+    <a href="/stats" class="{{ 'active' if active_tab == 'stats' else '' }}">Stats</a>
+    <a href="/admin/" class="{{ 'active' if active_tab == 'admin' else '' }}" style="margin-left:auto;opacity:0.7;">⚙ Admin</a>
+  </nav>
+  {% if ticker_text %}
+  <div class="ticker-bar">
+    <span class="ticker-label">Latest</span>{{ ticker_text }}
+  </div>
+  {% endif %}
+</header>
+
+<main>
+  {% block content %}{% endblock %}
+</main>
+
+<footer>
+  <p>ParamaSrota — Parliament Intelligence · 18th Lok Sabha · Data from <a href="https://eparlib.sansad.in" target="_blank">eparlib.sansad.in</a></p>
+  <p style="margin-top:6px">Built with Python · SQLite · Flask · Claude · Sarvam AI</p>
+</footer>
+
+<script>
+// Live date in masthead
+(function() {
+  const el = document.getElementById('live-date');
+  if (el) {
+    const d = new Date();
+    el.textContent = d.toLocaleDateString('en-IN', {
+      weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'
+    });
+  }
+})();
+
+// Expand/collapse statement text
+function toggleText(id) {
+  const el  = document.getElementById('t-' + id);
+  const btn = document.getElementById('b-' + id);
+  if (!el) return;
+  if (el.classList.contains('clamped')) {
+    el.classList.remove('clamped');
+    btn.textContent = 'Show less ▲';
+  } else {
+    el.classList.add('clamped');
+    btn.textContent = 'Show more ▼';
+  }
+}
+</script>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html>
