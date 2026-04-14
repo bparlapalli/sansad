@@ -2,6 +2,11 @@
 sansad.db
 *.db
 
+# Environment / secrets — never commit API keys
+.env
+.env.*
+.playwright_profile/
+
 # Downloaded PDFs (large files, download manually)
 pdfs/
 

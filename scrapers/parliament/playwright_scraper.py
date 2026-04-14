@@ -199,13 +199,24 @@ def upsert_catalog_items(items: list[dict]) -> int:
 
 
 def update_catalog_filename(doc_id: int, filename: str, bitstream_url: str,
-                            language: str | None = None):
+                            language: str | None = None,
+                            debate_type: str | None = None,
+                            lok_sabha_no: int | None = None,
+                            session_no: int | None = None,
+                            session_no_raw: str | None = None):
     conn = get_connection()
     conn.execute("""
-        UPDATE catalog SET filename = ?, bitstream_url = ?,
-               language = COALESCE(?, language)
+        UPDATE catalog SET
+            filename      = ?,
+            bitstream_url = ?,
+            language      = COALESCE(?, language),
+            debate_type   = COALESCE(?, debate_type),
+            lok_sabha_no  = COALESCE(?, lok_sabha_no),
+            session_no    = COALESCE(?, session_no),
+            session_no_raw= COALESCE(?, session_no_raw)
         WHERE doc_id = ?
-    """, (filename, bitstream_url, language, doc_id))
+    """, (filename, bitstream_url, language, debate_type,
+          lok_sabha_no, session_no, session_no_raw, doc_id))
     conn.commit()
     conn.close()
     sync_db()
@@ -467,21 +478,57 @@ async def resolve_filenames(page, rows: list, verbose: bool = True) -> int:
                 filename = href.split("/")[-1]
                 break
 
-        # Read the Language field from the metadata table
-        # The table is label → value rows; we watch for a "Language:" label cell
-        language = None
-        lang_cells = await page.query_selector_all("td")
-        check_next = False
-        for cell in lang_cells:
+        # Read structured metadata from the label→value table on the item page.
+        # Fields we capture: Language, Lok Sabha Number, Session Number, Debate Type.
+        # The table alternates label cells ("Language:") with value cells ("Original").
+        language       = None
+        debate_type    = None
+        lok_sabha_no   = None
+        session_no     = None
+        session_no_raw = None
+
+        meta_cells = await page.query_selector_all("td")
+        pending_label = None
+        for cell in meta_cells:
             txt = (await cell.inner_text()).strip()
-            if check_next:
+            if pending_label == "language":
                 language = txt.lower()
-                break
-            if txt == "Language:":
-                check_next = True
+                pending_label = None
+            elif pending_label == "lok_sabha":
+                try:
+                    lok_sabha_no = int(txt)
+                except ValueError:
+                    pass
+                pending_label = None
+            elif pending_label == "session":
+                session_no_raw = txt  # store raw roman e.g. "VII"
+                # Convert roman numeral to integer
+                roman_map = {"I":1,"II":2,"III":3,"IV":4,"V":5,"VI":6,
+                             "VII":7,"VIII":8,"IX":9,"X":10}
+                session_no = roman_map.get(txt.upper())
+                pending_label = None
+            elif pending_label == "debate_type":
+                debate_type = txt.upper()  # normalise to uppercase for consistency
+                pending_label = None
+            # Detect label cells
+            elif txt == "Language:":
+                pending_label = "language"
+            elif txt in ("Lok Sabha Number:", "Lok Sabha No:"):
+                pending_label = "lok_sabha"
+            elif txt in ("Session Number:", "Session No:"):
+                pending_label = "session"
+            elif txt in ("Debate Type:", "Type of Debate:"):
+                pending_label = "debate_type"
 
         if filename:
-            update_catalog_filename(doc_id, filename, bitstream_url, language)
+            update_catalog_filename(
+                doc_id, filename, bitstream_url,
+                language=language,
+                debate_type=debate_type,
+                lok_sabha_no=lok_sabha_no,
+                session_no=session_no,
+                session_no_raw=session_no_raw,
+            )
             resolved += 1
             if verbose:
                 print(f"✓ {filename}")

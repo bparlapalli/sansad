@@ -185,6 +185,10 @@ def init_db():
     """)
 
     # ── Catalog — every item discovered from eparlib browse pages ────────────
+    # debate_type: DSpace metadata field — e.g. "BUDGET (GENERAL)", "CALLING ATTENTION
+    #   (RULE-197)", "NO-CONFIDENCE MOTION", "PRESIDENTIAL ADDRESS". Populated during
+    #   the --resolve phase by reading the item detail page.
+    # lok_sabha_no / session_no: parsed from item metadata during --resolve.
     c.execute("""
         CREATE TABLE IF NOT EXISTS catalog (
             id                INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -195,6 +199,10 @@ def init_db():
             item_date_raw     TEXT,               -- original from site e.g. "6-Feb-2026"
             title             TEXT,
             language          TEXT,               -- 'english', 'hindi', 'original'
+            debate_type       TEXT,               -- DSpace debate type metadata field
+            lok_sabha_no      INTEGER,            -- from item metadata
+            session_no        INTEGER,            -- from item metadata (as integer)
+            session_no_raw    TEXT,               -- raw from site e.g. "VII"
             filename          TEXT,               -- resolved from item detail page
             bitstream_url     TEXT,               -- full download URL
             file_size_kb      INTEGER,
@@ -275,6 +283,10 @@ def _migrate_db():
             item_date_raw     TEXT,
             title             TEXT,
             language          TEXT,
+            debate_type       TEXT,
+            lok_sabha_no      INTEGER,
+            session_no        INTEGER,
+            session_no_raw    TEXT,
             filename          TEXT,
             bitstream_url     TEXT,
             file_size_kb      INTEGER,
@@ -284,6 +296,17 @@ def _migrate_db():
             downloaded_at     TEXT
         )
     """)
+    # Migrate existing catalog rows (add new columns if missing)
+    existing_catalog_cols = {row[1] for row in c.execute("PRAGMA table_info(catalog)")}
+    for col, defn in [
+        ("debate_type",   "TEXT"),
+        ("lok_sabha_no",  "INTEGER"),
+        ("session_no",    "INTEGER"),
+        ("session_no_raw","TEXT"),
+    ]:
+        if col not in existing_catalog_cols:
+            c.execute(f"ALTER TABLE catalog ADD COLUMN {col} {defn}")
+            print(f"  ↳ Migration: added catalog.{col}")
     c.execute("CREATE INDEX IF NOT EXISTS idx_catalog_date       ON catalog(item_date)")
     c.execute("CREATE INDEX IF NOT EXISTS idx_catalog_collection ON catalog(collection_handle)")
     c.execute("CREATE INDEX IF NOT EXISTS idx_catalog_downloaded ON catalog(downloaded)")
