@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block title %}{{ topic }} — Thread{% endblock %}
+
+{% block content %}
+<div class="page-container">
+
+  <!-- Topic header -->
+  <div style="margin-bottom:24px;">
+    <a href="/search" style="font-family:sans-serif;font-size:0.8rem;color:#888;">← Back to search</a>
+    <h1 style="font-size:1.6rem; margin-top:8px; line-height:1.3;">{{ topic | title }}</h1>
+    <div style="font-family:sans-serif;font-size:0.82rem;color:#888;margin-top:4px;">
+      {{ statements | length }} statements · {{ dates | length }} sitting day{{ 's' if dates|length != 1 }} · <a href="/search?q={{ topic | urlencode }}">Search this topic</a>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="main-col">
+
+      {% if not statements %}
+      <div class="empty-state">
+        <div class="icon">🔍</div>
+        <div>No statements found for "{{ topic }}"</div>
+      </div>
+      {% else %}
+
+      <!-- Timeline by date -->
+      {% set current_date = namespace(val='') %}
+      {% for s in statements %}
+
+      {% if s.sitting_date != current_date.val %}
+      {% set current_date.val = s.sitting_date %}
+      <div style="display:flex; align-items:center; gap:10px; margin: 20px 0 10px;">
+        <span style="font-family:sans-serif;font-size:0.8rem;font-weight:700;background:#0f2818;color:#fff;padding:3px 10px;border-radius:20px;">{{ s.sitting_date }}</span>
+        <div style="flex:1;height:1px;background:#e4e0d8;"></div>
+        <a href="/?date={{ s.sitting_date }}" style="font-family:sans-serif;font-size:0.75rem;color:#888;">View full day →</a>
+      </div>
+      {% endif %}
+
+      <div class="card">
+        <div class="card-body">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px;">
+            <div>
+              <div class="speaker-name">
+                <a href="/speaker/{{ s.name_normalized | urlencode }}" style="color:inherit">{{ s.speaker_raw | title }}</a>
+              </div>
+              {% if s.constituency %}
+              <div class="speaker-meta">{{ s.constituency }}{% if s.party %} · {{ s.party }}{% endif %}</div>
+              {% endif %}
+            </div>
+            <div style="display:flex; gap:6px; flex-shrink:0; flex-wrap:wrap; justify-content:flex-end;">
+              <span class="chip chip-{{ s.statement_type }}">{{ s.statement_type }}</span>
+              {% if s.original_language %}
+              <span class="chip chip-hindi">{{ s.original_language }} → EN</span>
+              {% endif %}
+              {% if s.word_count %}<span style="font-family:sans-serif;font-size:0.72rem;color:#bbb;">{{ s.word_count }}w</span>{% endif %}
+            </div>
+          </div>
+          <div class="stmt-text clamped" id="t-tp{{ loop.index }}">{{ s.statement_text }}</div>
+          {% if s.word_count and s.word_count > 60 %}
+          <button class="expand-btn" id="b-tp{{ loop.index }}" onclick="toggleText('tp{{ loop.index }}')">Show more ▼</button>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+    </div>
+
+    <!-- Sidebar -->
+    <div class="side-col">
+
+      <!-- Thread summary -->
+      <div class="widget">
+        <div class="widget-header">Thread Summary</div>
+        <div class="widget-body">
+          <div class="stat-grid">
+            <div class="stat-box">
+              <div class="stat-number">{{ statements | length }}</div>
+              <div class="stat-label">Statements</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number">{{ dates | length }}</div>
+              <div class="stat-label">Sitting days</div>
+            </div>
+          </div>
+          {% if dates %}
+          <div style="margin-top:12px; font-family:sans-serif; font-size:0.78rem; color:#888;">
+            <strong>First discussed:</strong> {{ dates[0] }}<br>
+            <strong>Last discussed:</strong> {{ dates[-1] }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Speakers on this topic -->
+      {% if speakers_on_topic %}
+      <div class="widget">
+        <div class="widget-header">Speakers on this topic</div>
+        <div class="widget-body">
+          <ul class="widget-list">
+            {% for sp in speakers_on_topic %}
+            <li>
+              <a href="/speaker/{{ sp.name_normalized | urlencode }}">{{ sp.name | title }}</a>
+              <span class="count">{{ sp.cnt }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Related topics (FTS for similar terms) -->
+      {% if related_topics %}
+      <div class="widget">
+        <div class="widget-header">Related Topics</div>
+        <div class="widget-body">
+          <div class="topics-bar" style="margin:0;">
+            {% for t in related_topics %}
+            <a href="/topic/{{ t | urlencode }}" class="topic-pill">{{ t }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleText(id) {
+  const el  = document.getElementById('t-' + id);
+  const btn = document.getElementById('b-' + id);
+  if (!el) return;
+  if (el.classList.contains('clamped')) {
+    el.classList.remove('clamped');
+    btn.textContent = 'Show less ▲';
+  } else {
+    el.classList.add('clamped');
+    btn.textContent = 'Show more ▼';
+  }
+}
+</script>
+{% endblock %}

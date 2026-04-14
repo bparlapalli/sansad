@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<div class="page-container">
+
+  <!-- Search bar -->
+  <div class="card" style="margin-bottom:24px;">
+    <div class="card-body">
+      <form action="/search" method="get">
+        <div style="display:grid; grid-template-columns:1fr auto auto auto auto; gap:8px; align-items:end; flex-wrap:wrap;">
+          <div>
+            <div style="font-family:sans-serif;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#666;margin-bottom:4px;">Search</div>
+            <input type="text" name="q" value="{{ q }}"
+              placeholder="Keyword, topic, phrase…"
+              style="width:100%;height:38px;padding:0 12px;border:1px solid #d4d0c8;border-radius:4px;font-size:0.9rem;font-family:sans-serif;outline:none;"
+              autofocus>
+          </div>
+          <div>
+            <div style="font-family:sans-serif;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#666;margin-bottom:4px;">Speaker</div>
+            <input type="text" name="speaker" value="{{ speaker }}"
+              placeholder="Name…"
+              style="width:160px;height:38px;padding:0 12px;border:1px solid #d4d0c8;border-radius:4px;font-size:0.88rem;font-family:sans-serif;outline:none;">
+          </div>
+          <div>
+            <div style="font-family:sans-serif;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#666;margin-bottom:4px;">Session</div>
+            <select name="session" style="height:38px;padding:0 10px;border:1px solid #d4d0c8;border-radius:4px;font-size:0.85rem;font-family:sans-serif;background:#fafaf8;outline:none;">
+              <option value="">All</option>
+              <option value="1" {% if session=='1' %}selected{% endif %}>Session 1 (Jun–Jul 2024)</option>
+              <option value="2" {% if session=='2' %}selected{% endif %}>Session 2 (Jul–Aug 2024)</option>
+              <option value="3" {% if session=='3' %}selected{% endif %}>Winter 2024</option>
+              <option value="4" {% if session=='4' %}selected{% endif %}>Budget 2025</option>
+              <option value="5" {% if session=='5' %}selected{% endif %}>Monsoon 2025</option>
+              <option value="6" {% if session=='6' %}selected{% endif %}>Winter 2025</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-family:sans-serif;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#666;margin-bottom:4px;">Type</div>
+            <select name="type" style="height:38px;padding:0 10px;border:1px solid #d4d0c8;border-radius:4px;font-size:0.85rem;font-family:sans-serif;background:#fafaf8;outline:none;">
+              <option value="">All</option>
+              <option value="speech"       {% if stype=='speech' %}selected{% endif %}>Speech</option>
+              <option value="question"     {% if stype=='question' %}selected{% endif %}>Question</option>
+              <option value="answer"       {% if stype=='answer' %}selected{% endif %}>Answer</option>
+              <option value="ruling"       {% if stype=='ruling' %}selected{% endif %}>Ruling</option>
+              <option value="interruption" {% if stype=='interruption' %}selected{% endif %}>Interruption</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:6px;align-items:flex-end;">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a href="/search" class="btn btn-ghost">Clear</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% if searched %}
+  <!-- Results meta -->
+  <div class="section-label" style="margin-bottom:16px;">
+    {% if total > 0 %}
+    {{ total }} result{{ 's' if total != 1 }} for
+    {% if q %}"<strong>{{ q }}</strong>"{% endif %}
+    {% if speaker %}by <strong>{{ speaker }}</strong>{% endif %}
+    {% else %}
+    No results found
+    {% endif %}
+  </div>
+
+  {% if results %}
+  {% for r in results %}
+  <div class="card">
+    <div class="card-body">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px;">
+        <div>
+          <div class="speaker-name">
+            <a href="/speaker/{{ r.name_normalized | urlencode }}" style="color:inherit">{{ r.speaker_raw | title }}</a>
+          </div>
+          {% if r.constituency %}
+          <div class="speaker-meta">{{ r.constituency }}</div>
+          {% endif %}
+        </div>
+        <div style="display:flex; gap:6px; flex-shrink:0; flex-wrap:wrap; justify-content:flex-end;">
+          <span class="chip chip-{{ r.statement_type }}">{{ r.statement_type }}</span>
+          {% if r.original_language %}
+          <span class="chip chip-hindi">{{ r.original_language }} → EN</span>
+          {% endif %}
+          <span class="date-tag">📅 {{ r.sitting_date }}</span>
+          <span class="date-tag">Sess. {{ r.session_no }}</span>
+          {% if r.word_count %}<span style="font-family:sans-serif;font-size:0.72rem;color:#bbb;">{{ r.word_count }}w</span>{% endif %}
+        </div>
+      </div>
+      <div class="stmt-text clamped" id="t-sr{{ loop.index }}">{{ r.statement_text }}</div>
+      {% if r.word_count and r.word_count > 60 %}
+      <button class="expand-btn" id="b-sr{{ loop.index }}" onclick="toggleText('sr{{ loop.index }}')">Show more ▼</button>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+
+  {% if total > results | length %}
+  <p style="text-align:center; margin-top:20px; font-family:sans-serif; font-size:0.85rem; color:#999;">
+    Showing {{ results | length }} of {{ total }} — refine your search to narrow down.
+  </p>
+  {% endif %}
+
+  {% else %}
+  <div class="empty-state">
+    <div class="icon">🔍</div>
+    <div>No matching statements found — try broader terms.</div>
+  </div>
+  {% endif %}
+
+  {% else %}
+  <!-- Default state — topic threads -->
+  <div class="two-col">
+    <div class="main-col">
+      <div class="section-label">🔥 Active Topics (across all sessions)</div>
+      {% if trending %}
+      <div class="topics-bar" style="margin-bottom:24px;">
+        {% for t in trending %}
+        <a href="/search?q={{ t.topic | urlencode }}" class="topic-pill hot">{{ t.topic }} ({{ t.cnt }})</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="section-label" style="margin-top:8px;">Recent Sitting Days</div>
+      {% for d in recent_dates %}
+      <div class="card" style="margin-bottom:10px;">
+        <div class="card-body" style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <a href="/?date={{ d.sitting_date }}" style="font-weight:700; font-size:0.95rem; color:#0f2818;">{{ d.sitting_date }}</a>
+            <div style="font-family:sans-serif; font-size:0.78rem; color:#888; margin-top:2px;">{{ d.session_name }}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:sans-serif; font-size:0.8rem; color:#555;">{{ d.stmt_count }} statements</div>
+            <div style="font-family:sans-serif; font-size:0.75rem; color:#aaa;">{{ d.speaker_count }} speakers</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="side-col">
+      <!-- Top speakers -->
+      <div class="widget">
+        <div class="widget-header">Top Speakers (all time)</div>
+        <div class="widget-body">
+          <ul class="widget-list">
+            {% for sp in top_speakers %}
+            <li>
+              <a href="/speaker/{{ sp.name_normalized | urlencode }}">{{ sp.name | title }}</a>
+              <span class="count">{{ sp.cnt }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Override toggleText for search page IDs
+function toggleText(id) {
+  const el  = document.getElementById('t-' + id);
+  const btn = document.getElementById('b-' + id);
+  if (!el) return;
+  if (el.classList.contains('clamped')) {
+    el.classList.remove('clamped');
+    btn.textContent = 'Show less ▲';
+  } else {
+    el.classList.add('clamped');
+    btn.textContent = 'Show more ▼';
+  }
+}
+</script>
+{% endblock %}

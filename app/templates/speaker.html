@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}{{ member.name | title }}{% endblock %}
+
+{% block content %}
+<div class="page-container">
+  <a href="/speakers" style="font-family:sans-serif;font-size:0.8rem;color:#888;">← All Speakers</a>
+
+  <!-- Speaker header -->
+  <div style="margin:16px 0 24px; display:flex; gap:20px; align-items:flex-start;">
+    <div style="width:60px; height:60px; background:#e8f2ec; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0;">👤</div>
+    <div>
+      <h1 style="font-size:1.5rem; margin-bottom:4px;">{{ member.name | title }}</h1>
+      <div style="font-family:sans-serif; font-size:0.85rem; color:#666;">
+        {% if member.constituency %}{{ member.constituency }}{% endif %}
+        {% if member.party %} · {{ member.party }}{% endif %}
+        · Lok Sabha
+      </div>
+      <div style="margin-top:8px; display:flex; gap:12px; font-family:sans-serif; font-size:0.8rem; color:#888;">
+        <span>{{ total }} statements</span>
+        <span>{{ dates_active }} sitting days</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="main-col">
+      <div class="section-label">Recent Statements</div>
+
+      {% if statements %}
+      {% for s in statements %}
+      <div class="card">
+        <div class="card-body">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+            <span class="date-tag">📅 {{ s.sitting_date }}</span>
+            <div style="display:flex; gap:6px;">
+              <span class="chip chip-{{ s.statement_type }}">{{ s.statement_type }}</span>
+              {% if s.original_language %}<span class="chip chip-hindi">{{ s.original_language }} → EN</span>{% endif %}
+              {% if s.word_count %}<span style="font-family:sans-serif;font-size:0.72rem;color:#bbb;">{{ s.word_count }}w</span>{% endif %}
+            </div>
+          </div>
+          <div class="stmt-text clamped" id="t-sp{{ loop.index }}">{{ s.statement_text }}</div>
+          {% if s.word_count and s.word_count > 60 %}
+          <button class="expand-btn" id="b-sp{{ loop.index }}" onclick="toggleText('sp{{ loop.index }}')">Show more ▼</button>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="empty-state">
+        <div class="icon">📄</div>
+        <div>No statements found for this speaker.</div>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="side-col">
+      <div class="widget">
+        <div class="widget-header">Activity Summary</div>
+        <div class="widget-body">
+          <div class="stat-grid">
+            <div class="stat-box">
+              <div class="stat-number">{{ total }}</div>
+              <div class="stat-label">Statements</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number">{{ dates_active }}</div>
+              <div class="stat-label">Days active</div>
+            </div>
+          </div>
+          {% if type_breakdown %}
+          <div style="margin-top:14px;">
+            {% for tb in type_breakdown %}
+            <div style="display:flex;justify-content:space-between;font-family:sans-serif;font-size:0.8rem;padding:3px 0;border-bottom:1px solid #f0ede6;">
+              <span>{{ tb.statement_type | title }}</span>
+              <span style="color:#888;">{{ tb.cnt }}</span>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleText(id) {
+  const el  = document.getElementById('t-' + id);
+  const btn = document.getElementById('b-' + id);
+  if (!el) return;
+  if (el.classList.contains('clamped')) {
+    el.classList.remove('clamped');
+    btn.textContent = 'Show less ▲';
+  } else {
+    el.classList.add('clamped');
+    btn.textContent = 'Show more ▼';
+  }
+}
+</script>
+{% endblock %}
