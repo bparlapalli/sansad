@@ -33,7 +33,7 @@ from app.query import (
     full_text_search, get_stats, get_speakers_list,
     get_latest_dates, get_statements_for_date,
     get_statements_for_topic, get_trending_topics,
-    search_by_speaker,
+    search_by_speaker, get_news_briefing, get_parsed_pdfs,
 )
 from app.digest import get_or_generate_digest, get_latest_sitting_with_data
 
@@ -202,13 +202,25 @@ def home():
     )
 
 
+@app.route("/pdfs")
+def pdfs_page():
+    pdfs = get_parsed_pdfs()
+    return render_template(
+        "pdfs.html",
+        active_tab  = "pdfs",
+        pdfs        = pdfs,
+        ticker_text = _get_ticker_text(),
+    )
+
+
 @app.route("/search")
 def search():
-    q       = request.args.get("q", "").strip()
-    speaker = request.args.get("speaker", "").strip()
-    session = request.args.get("session", "").strip()
-    stype   = request.args.get("type", "").strip()
-    searched = bool(q or speaker or session or stype)
+    q        = request.args.get("q", "").strip()
+    speaker  = request.args.get("speaker", "").strip()
+    session  = request.args.get("session", "").strip()
+    stype    = request.args.get("type", "").strip()
+    pdf_id   = request.args.get("pdf_id", "").strip()
+    searched = bool(q or speaker or session or stype or pdf_id)
 
     results = []
     total   = 0
@@ -219,13 +231,15 @@ def search():
             speaker=speaker or None,
             session=int(session) if session else None,
             stype=stype or None,
-            limit=50,
+            pdf_id=int(pdf_id) if pdf_id else None,
+            limit=100,
         )
 
-    # Sidebar data
+    # Sidebar / filter data — always loaded (needed for dropdowns)
+    all_speakers = get_speakers_list()
+    all_pdfs     = get_parsed_pdfs()
     trending     = get_trending_topics(limit=12) if not searched else []
     recent_dates = get_latest_dates(limit=8)      if not searched else []
-    top_speakers = get_speakers_list()[:10]        if not searched else []
 
     return render_template(
         "search.html",
@@ -234,13 +248,26 @@ def search():
         speaker      = speaker,
         session      = session,
         stype        = stype,
+        pdf_id       = pdf_id,
         searched     = searched,
         results      = results,
         total        = total,
+        all_speakers = all_speakers,
+        all_pdfs     = all_pdfs,
         trending     = trending,
         recent_dates = recent_dates,
-        top_speakers = top_speakers,
         ticker_text  = _get_ticker_text(),
+    )
+
+
+@app.route("/news")
+def news():
+    briefing = get_news_briefing(limit=12)
+    return render_template(
+        "news.html",
+        active_tab="news",
+        ticker_text=_get_ticker_text(),
+        briefing=briefing,
     )
 
 

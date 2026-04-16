@@ -66,7 +66,7 @@ TEST_SENTENCES = [
 ]
 
 
-def translate(text: str, source_lang: str = "hi", target_lang: str = "en-IN") -> dict:
+def translate(text: str, source_lang: str = "hi-IN", target_lang: str = "en-IN") -> dict:
     """Call Sarvam translate API. Returns full response JSON."""
     headers = {
         "api-subscription-key": SARVAM_KEY,

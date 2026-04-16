@@ -8,6 +8,12 @@ Sarvam AI specialises in Indian languages and supports:
   hi (Hindi), bn (Bengali), te (Telugu), mr (Marathi), ta (Tamil),
   gu (Gujarati), kn (Kannada), ml (Malayalam), pa (Punjabi), or (Odia)
 
+LID (Language Identification) approach:
+  - For each statement, detect language via Sarvam's /text-lid endpoint
+  - English statements are skipped — no translation needed
+  - Non-English statements are translated and original text preserved
+  - Both original_text (native script) and statement_text (English) are stored
+
 Setup:
   1. Get an API key from https://www.sarvam.ai
   2. Set environment variable: export SARVAM_API_KEY="your-key-here"
@@ -32,6 +38,7 @@ logger = logging.getLogger(__name__)
 
 # ── Supported languages ───────────────────────────────────────────────────────
 
+# 2-letter codes accepted by the Sarvam translate API
 SARVAM_SUPPORTED = {
     "hi": "Hindi",
     "bn": "Bengali",
@@ -45,10 +52,64 @@ SARVAM_SUPPORTED = {
     "or": "Odia",
 }
 
+# Maps Sarvam LID codes (e.g. "hi-IN") → 2-letter ISO used by translate API
+LID_CODE_TO_ISO = {
+    "hi-IN": "hi", "bn-IN": "bn", "te-IN": "te", "mr-IN": "mr",
+    "ta-IN": "ta", "gu-IN": "gu", "kn-IN": "kn", "ml-IN": "ml",
+    "pa-IN": "pa", "or-IN": "or", "en-IN": "en",
+}
+
 SARVAM_API_URL   = "https://api.sarvam.ai/translate"
+SARVAM_LID_URL   = "https://api.sarvam.ai/text-lid"
 SARVAM_MODEL     = "mayura:v1"
 MAX_CHUNK_CHARS  = 900    # Sarvam API limit per request (≈ 1000 chars; leave headroom)
 RETRY_DELAY      = 2.0    # seconds between retries on rate-limit
+
+
+# ── Language Identification (LID) ────────────────────────────────────────────
+
+def detect_language_lid(text: str, api_key: str) -> tuple[str, str]:
+    """
+    Detect the language of `text` using Sarvam's /text-lid endpoint.
+
+    Returns:
+        (language_code, script)
+        e.g. ("hi-IN", "Devanagari") or ("en-IN", "Latin")
+        Falls back to ("en-IN", "Latin") on any error.
+
+    Args:
+        text:    Input text (first 800 chars used; LID limit is 1000)
+        api_key: Sarvam API key
+    """
+    import requests
+
+    snippet = text[:800].strip()
+    if not snippet:
+        return "en-IN", "Latin"
+
+    try:
+        resp = requests.post(
+            SARVAM_LID_URL,
+            headers={
+                "API-Subscription-Key": api_key,
+                "Content-Type": "application/json",
+            },
+            json={"input": snippet},   # Sarvam LID uses "input", not "text"
+            timeout=10,
+        )
+        if resp.status_code == 200:
+            data      = resp.json()
+            lang_code = data.get("language_code", "en-IN")
+            script    = data.get("script", "Latin")
+            logger.debug(f"LID: {lang_code} ({script}) — '{snippet[:40]}…'")
+            return lang_code, script
+        else:
+            logger.warning(f"LID API error {resp.status_code}: {resp.text[:120]}")
+            return "en-IN", "Latin"
+
+    except Exception as e:
+        logger.warning(f"LID request failed: {e}")
+        return "en-IN", "Latin"
 
 
 # ── Core translation function ─────────────────────────────────────────────────
@@ -185,20 +246,30 @@ def _translate_chunked(text: str, source_language: str, api_key: str) -> tuple[s
     return " ".join(translated_parts), any_success
 
 
-# ── Batch translation ─────────────────────────────────────────────────────────
+# ── Batch translation (LID approach) ─────────────────────────────────────────
 
 def batch_translate(statements: list[dict]) -> list[dict]:
     """
-    Translate all non-English statements in a list in place.
+    Detect language via Sarvam LID, then translate all non-English statements.
+
+    LID approach — for EVERY statement:
+      1. Call /text-lid to get the true source language
+      2. English (en-IN) → skip translation; clear original_text
+      3. Non-English supported → translate to English; store original text
+      4. Non-English unsupported → keep as-is; mark language + original_language
 
     Each statement dict is expected to have:
         statement_text:  str
-        language:        str (ISO code)
+        language:        str (ISO code from pdf_parser heuristic)
 
-    On return, statements with language != 'en' will have:
-        statement_text:  English translation (or original if no API key)
-        original_text:   original text preserved here
-        translated:      bool — True if Sarvam was called successfully
+    On return every statement has:
+        statement_text:    English (if translated) or original (if not)
+        original_text:     Native-script text — set ONLY when translation succeeded
+                           (so the pair always has both English + original available)
+        original_language: Sarvam LID code e.g. "hi-IN" — set for any non-English stmt
+        lid_script:        Detected script e.g. "Devanagari", "Latin"
+        translated:        bool — True only if Sarvam translate call succeeded
+        language:          "english" if translated, else original ISO code
 
     Returns the modified list.
     """
@@ -206,33 +277,71 @@ def batch_translate(statements: list[dict]) -> list[dict]:
     if not api_key:
         logger.warning(
             "SARVAM_API_KEY not set — batch_translate is a no-op. "
-            "Hindi statements will remain in Hindi."
+            "Statements will remain in their original language."
         )
         for stmt in statements:
             stmt["translated"] = False
         return statements
 
-    non_english = [s for s in statements if s.get("language", "en") != "en"]
-    logger.info(f"Translating {len(non_english)} / {len(statements)} non-English statements")
+    logger.info(f"LID + translation: processing {len(statements)} statements…")
+    en_count   = 0
+    trans_ok   = 0
+    trans_fail = 0
 
-    for i, stmt in enumerate(non_english):
-        lang = stmt.get("language", "hi")
+    for i, stmt in enumerate(statements):
         text = stmt["statement_text"]
 
-        translated, ok = translate_to_english(text, source_language=lang)
-        stmt["original_text"]  = text
-        stmt["statement_text"] = translated
-        stmt["translated"]     = ok
+        # ── Step 1: Language Identification ──────────────────────────────────
+        lid_code, script = detect_language_lid(text, api_key)
+        iso_lang = LID_CODE_TO_ISO.get(lid_code, "")  # e.g. "hi", "en", ""
+
+        stmt["lid_language_code"] = lid_code   # e.g. "hi-IN"
+        stmt["lid_script"]        = script     # e.g. "Devanagari"
+
+        # ── Step 2: English — no translation needed ───────────────────────────
+        if iso_lang == "en" or lid_code == "en-IN":
+            stmt["translated"]      = False
+            stmt["original_text"]   = None
+            stmt["language"]        = "en"
+            en_count += 1
+            time.sleep(0.05)
+            if (i + 1) % 20 == 0:
+                logger.info(f"  [{i+1}/{len(statements)}] en={en_count} ok={trans_ok} fail={trans_fail}")
+            continue
+
+        # ── Step 3: Non-English — store original, attempt translation ─────────
+        stmt["original_language"] = lid_code   # always record detected language
+
+        if iso_lang not in SARVAM_SUPPORTED:
+            # Detected language not yet supported for translation (e.g. future codes)
+            logger.debug(f"LID code {lid_code} not in translate supported set — keeping original")
+            stmt["translated"]    = False
+            stmt["original_text"] = None  # no translation available; stmt_text IS the original
+            time.sleep(0.05)
+            continue
+
+        # ── Step 4: Translate ────────────────────────────────────────────────
+        translated_text, ok = translate_to_english(text, source_language=iso_lang)
+        if ok:
+            stmt["original_text"]   = text            # preserve native script
+            stmt["statement_text"]  = translated_text  # replace with English
+            stmt["language"]        = "english"
+            stmt["translated"]      = True
+            trans_ok += 1
+        else:
+            stmt["original_text"]   = None  # translation failed; stmt_text stays as original
+            stmt["translated"]      = False
+            trans_fail += 1
 
         if (i + 1) % 10 == 0:
-            logger.info(f"  Translated {i+1} / {len(non_english)}")
+            logger.info(f"  [{i+1}/{len(statements)}] en={en_count} ok={trans_ok} fail={trans_fail}")
 
-        time.sleep(0.1)  # gentle rate-limiting
+        time.sleep(0.15)  # 2 API calls per stmt — slightly gentler pacing
 
-    for stmt in statements:
-        if "translated" not in stmt:
-            stmt["translated"] = False
-
+    logger.info(
+        f"  Done — English: {en_count}, Translated: {trans_ok}, "
+        f"Failed/unsupported: {trans_fail}"
+    )
     return statements
 
 

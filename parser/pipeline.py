@@ -22,6 +22,13 @@ from pathlib import Path
 _ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_ROOT))
 
+# Load .env from project root (works on Windows too — no shell export needed)
+try:
+    from dotenv import load_dotenv
+    load_dotenv(_ROOT / ".env")
+except ImportError:
+    pass  # python-dotenv not installed; rely on env vars being set manually
+
 from core.db import get_connection, init_db
 from parser.pdf_parser import (
     extract_text_from_pdf, parse_statements,
@@ -58,8 +65,10 @@ def parse_and_translate(pdf_path: str, pdf_record: dict,
 
     try:
         # Step 1 — Extract text
-        pages = extract_text_from_pdf(pdf_path)
-        print(f"  Pages extracted: {len(pages)}")
+        pages    = extract_text_from_pdf(pdf_path)
+        cid_pages = sum(1 for p in pages if p.get("had_cid"))
+        print(f"  Pages extracted: {len(pages)}"
+              + (f"  ({cid_pages} with CID font artifacts — cleaned)" if cid_pages else ""))
 
         # Step 2 — Parse into statements
         statements = parse_statements(pages)
@@ -70,12 +79,13 @@ def parse_and_translate(pdf_path: str, pdf_record: dict,
         print(f"  Statements found: {len(statements)}  "
               f"(English: {en_count}, Hindi: {hi_count}, Other: {other})")
 
-        # Step 3 — Translate if requested
-        if translate and (hi_count + other) > 0:
-            print(f"  Translating {hi_count + other} non-English statements via Sarvam AI...")
+        # Step 3 — Translate if requested (LID approach: detects ALL languages accurately)
+        if translate:
+            print(f"  Running LID + translation via Sarvam AI ({len(statements)} statements)…")
             statements = batch_translate(statements)
             translated_count = sum(1 for s in statements if s.get("translated"))
-            print(f"  Translated: {translated_count}")
+            lid_non_en = sum(1 for s in statements if s.get("original_language"))
+            print(f"  LID detected non-English: {lid_non_en}  |  Successfully translated: {translated_count}")
 
         # Step 4 — Store
         if statements:
@@ -116,6 +126,13 @@ def parse_and_translate(pdf_path: str, pdf_record: dict,
 def _store_with_translations(conn, statements: list[dict], pdf_record: dict) -> int:
     """
     Insert statements into DB, preserving original text for translated statements.
+
+    LID approach semantics stored in DB:
+      statement_text   — English (when translated) or original (when not)
+      original_text    — Native-script original, set ONLY when translated=True
+                         (guarantees: if original_text present, statement_text is English)
+      original_language— Sarvam LID code e.g. "hi-IN" — set for any non-English stmt
+      language         — "english" when translated, otherwise detected ISO code
     """
     c     = conn.cursor()
     count = 0
@@ -125,11 +142,18 @@ def _store_with_translations(conn, statements: list[dict], pdf_record: dict) -> 
             conn, stmt["speaker_raw"], stmt.get("constituency")
         )
 
-        # If translated, store original text separately
-        original_text  = stmt.get("original_text")
-        original_lang  = stmt.get("language") if stmt.get("translated") else None
-        stored_text    = stmt["statement_text"]   # English (translated or original)
-        stored_lang    = "english" if stmt.get("translated") else stmt["language"]
+        # original_text is only set by batch_translate when translation succeeded
+        original_text = stmt.get("original_text")
+
+        # original_language: prefer what LID detected; fall back to pdf_parser heuristic
+        original_lang = (
+            stmt.get("original_language")          # set by batch_translate (LID code)
+            or (stmt.get("language")
+                if stmt.get("language") not in ("en", "english") else None)
+        )
+
+        stored_text = stmt["statement_text"]
+        stored_lang = stmt.get("language", "en")
 
         c.execute("""
             INSERT INTO statements (

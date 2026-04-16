@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}Parsed PDFs{% endblock %}
+
+{% block content %}
+<div class="page-container">
+
+  <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:20px;">
+    <h1 style="font-size:1.3rem; color:#0f2818;">Parsed Debate PDFs</h1>
+    <span style="font-family:sans-serif; font-size:0.82rem; color:#999;">{{ pdfs|length }} document{{ 's' if pdfs|length != 1 }}</span>
+  </div>
+
+  {% if not pdfs %}
+  <div class="empty-state">
+    <div class="icon">📄</div>
+    <div>No PDFs parsed yet. Run the parser to populate the database.</div>
+  </div>
+
+  {% else %}
+  <div style="background:#fff; border:1px solid #e4e0d8; border-radius:4px; overflow:hidden;">
+
+    <!-- Header row -->
+    <div style="display:grid; grid-template-columns:2fr 110px 80px 70px 70px 80px 80px;
+                gap:0; padding:10px 16px; background:#f5f2eb;
+                font-family:sans-serif; font-size:0.7rem; font-weight:700;
+                text-transform:uppercase; letter-spacing:0.5px; color:#888;
+                border-bottom:2px solid #e4e0d8;">
+      <div>Document</div>
+      <div>Date</div>
+      <div>Language</div>
+      <div style="text-align:center;">Stmts</div>
+      <div style="text-align:center;">Speakers</div>
+      <div style="text-align:center;">Translated</div>
+      <div style="text-align:center;">View</div>
+    </div>
+
+    {% for pdf in pdfs %}
+    <div style="display:grid; grid-template-columns:2fr 110px 80px 70px 70px 80px 80px;
+                gap:0; padding:12px 16px; border-bottom:1px solid #f0ede6;
+                align-items:center; {% if loop.last %}border-bottom:none;{% endif %}">
+
+      <!-- Filename + type badge -->
+      <div>
+        <div style="font-family:sans-serif; font-size:0.85rem; font-weight:600; color:#1a1a1a; margin-bottom:2px;">
+          {{ pdf.filename }}
+        </div>
+        <div style="display:flex; gap:6px; align-items:center; margin-top:3px;">
+          {% if pdf.filename_type %}
+          <span class="chip" style="font-size:0.65rem; padding:1px 6px; background:#e8f2ec; color:#1a5e30;">
+            {{ pdf.filename_type }}
+          </span>
+          {% endif %}
+          {% if pdf.session_no %}
+          <span style="font-family:sans-serif; font-size:0.72rem; color:#aaa;">
+            Session {{ pdf.session_no }}
+          </span>
+          {% endif %}
+          {% if pdf.bilingual and pdf.bilingual > 0 %}
+          <span class="chip chip-hindi" style="font-size:0.65rem; padding:1px 6px;">
+            {{ pdf.bilingual }} bilingual
+          </span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Date -->
+      <div style="font-family:sans-serif; font-size:0.82rem; color:#555;">
+        {{ pdf.sitting_date }}
+      </div>
+
+      <!-- Language -->
+      <div>
+        {% if pdf.language == 'hindi' or pdf.language == 'hi' %}
+        <span class="chip chip-hindi" style="font-size:0.7rem;">Hindi</span>
+        {% elif pdf.language == 'english' %}
+        <span class="chip chip-speech" style="font-size:0.7rem;">English</span>
+        {% else %}
+        <span style="font-family:sans-serif; font-size:0.78rem; color:#888;">{{ pdf.language or '—' }}</span>
+        {% endif %}
+      </div>
+
+      <!-- Statement count -->
+      <div style="text-align:center;">
+        {% if pdf.stmt_count %}
+        <span style="font-family:sans-serif; font-size:0.88rem; font-weight:700; color:#0f2818;">{{ pdf.stmt_count }}</span>
+        {% else %}
+        <span style="color:#ccc;">—</span>
+        {% endif %}
+      </div>
+
+      <!-- Speaker count -->
+      <div style="text-align:center;">
+        <span style="font-family:sans-serif; font-size:0.85rem; color:#555;">{{ pdf.speaker_count or '—' }}</span>
+      </div>
+
+      <!-- Translated -->
+      <div style="text-align:center;">
+        {% if pdf.non_english and pdf.non_english > 0 %}
+        <span style="font-family:sans-serif; font-size:0.82rem; color:#8b4000;">{{ pdf.non_english }}</span>
+        {% else %}
+        <span style="color:#ccc;">—</span>
+        {% endif %}
+      </div>
+
+      <!-- View button -->
+      <div style="text-align:center;">
+        {% if pdf.stmt_count and pdf.stmt_count > 0 %}
+        <a href="/search?pdf_id={{ pdf.id }}"
+           class="btn btn-primary"
+           style="font-size:0.75rem; padding:4px 12px;">
+          View →
+        </a>
+        {% else %}
+        <span style="font-family:sans-serif; font-size:0.75rem; color:#ccc;">empty</span>
+        {% endif %}
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

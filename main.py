@@ -19,6 +19,13 @@ Usage:
 import argparse
 from pathlib import Path
 
+# Load .env from project root (works on Windows without shell export)
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parent / ".env")
+except ImportError:
+    pass
+
 from db import init_db, get_connection, get_sitting_dates_summary
 from scraper import run_scraper
 from parser import parse_pdf_file
@@ -27,7 +34,7 @@ from sessions_data import ALL_SESSIONS
 PDF_DIR = Path(__file__).parent / "pdfs"
 
 
-def run_pipeline(dates=None, parse_only=False, max_pdfs=5,
+def run_pipeline(dates=None, parse_only=False, translate=False, max_pdfs=5,
                  lok_sabha=18, session=4, all_sessions=False):
 
     print("\n🏛  Sansad Parliament Data Pipeline")
@@ -73,8 +80,8 @@ def run_pipeline(dates=None, parse_only=False, max_pdfs=5,
     for pdf_record in pending:
         local_path = PDF_DIR / pdf_record["filename"]
         if local_path.exists():
-            count = parse_pdf_file(str(local_path), pdf_record)
-            total_statements += count
+            result = parse_pdf_file(str(local_path), pdf_record, translate=translate)
+            total_statements += result.get("stored", 0) if isinstance(result, dict) else result
         else:
             print(f"  ✗ PDF not found locally: {pdf_record['filename']}")
 
@@ -101,6 +108,8 @@ if __name__ == "__main__":
                         help="Scrape all known sessions (overrides --session)")
     parser.add_argument("--parse-only",   action="store_true",
                         help="Skip download; re-parse existing PDFs only")
+    parser.add_argument("--translate",    action="store_true",
+                        help="Run Sarvam AI translation on Hindi/regional statements")
     parser.add_argument("--max-pdfs",     type=int, default=5,
                         help="Max PDFs to download per session (default: 5)")
     parser.add_argument("--status",       action="store_true",
@@ -114,6 +123,7 @@ if __name__ == "__main__":
         run_pipeline(
             dates=args.dates,
             parse_only=args.parse_only,
+            translate=args.translate,
             max_pdfs=args.max_pdfs,
             lok_sabha=args.lok_sabha,
             session=args.session,

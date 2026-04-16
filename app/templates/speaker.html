@@ -42,6 +42,15 @@
           {% if s.word_count and s.word_count > 60 %}
           <button class="expand-btn" id="b-sp{{ loop.index }}" onclick="toggleText('sp{{ loop.index }}')">Show more ▼</button>
           {% endif %}
+          {% if s.original_text %}
+          <div class="original-block">
+            <div class="original-block-label">{{ s.original_language or 'Original' }}</div>
+            <div class="original-block-text clamped" id="ot-sp{{ loop.index }}">{{ s.original_text }}</div>
+            {% if s.original_text | length > 300 %}
+            <button class="expand-btn" id="ob-sp{{ loop.index }}" onclick="toggleOriginal('sp{{ loop.index }}')">Show full original ▼</button>
+            {% endif %}
+          </div>
+          {% endif %}
         </div>
       </div>
       {% endfor %}
@@ -96,6 +105,18 @@ function toggleText(id) {
   } else {
     el.classList.add('clamped');
     btn.textContent = 'Show more ▼';
+  }
+}
+function toggleOriginal(id) {
+  const el  = document.getElementById('ot-' + id);
+  const btn = document.getElementById('ob-' + id);
+  if (!el) return;
+  if (el.classList.contains('clamped')) {
+    el.classList.remove('clamped');
+    btn.textContent = 'Show less ▲';
+  } else {
+    el.classList.add('clamped');
+    btn.textContent = 'Show full original ▼';
   }
 }
 </script>

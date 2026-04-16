@@ -87,6 +87,15 @@ python app/app.py</pre>
             {% if s.word_count and s.word_count > 60 %}
             <button class="expand-btn" id="b-{{ loop.index }}" onclick="toggleText({{ loop.index }})">Show more ▼</button>
             {% endif %}
+            {% if s.original_text %}
+            <div class="original-block">
+              <div class="original-block-label">{{ s.original_language or 'Original' }}</div>
+              <div class="original-block-text clamped" id="ot-{{ loop.index }}">{{ s.original_text }}</div>
+              {% if s.original_text | length > 300 %}
+              <button class="expand-btn" id="ob-{{ loop.index }}" onclick="toggleOriginal({{ loop.index }})">Show full original ▼</button>
+              {% endif %}
+            </div>
+            {% endif %}
           </div>
         </div>
         {% endfor %}
@@ -178,4 +187,29 @@ python app/app.py</pre>
   {% endif %}
 
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleText(idx) {
+  const el  = document.getElementById('t-' + idx);
+  const btn = document.getElementById('b-' + idx);
+  if (!el) return;
+  if (el.classList.contains('clamped')) {
+    el.classList.remove('clamped'); btn.textContent = 'Show less ▲';
+  } else {
+    el.classList.add('clamped');    btn.textContent = 'Show more ▼';
+  }
+}
+function toggleOriginal(idx) {
+  const el  = document.getElementById('ot-' + idx);
+  const btn = document.getElementById('ob-' + idx);
+  if (!el) return;
+  if (el.classList.contains('clamped')) {
+    el.classList.remove('clamped'); btn.textContent = 'Show less ▲';
+  } else {
+    el.classList.add('clamped');    btn.textContent = 'Show full original ▼';
+  }
+}
+</script>
 {% endblock %}

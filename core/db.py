@@ -14,12 +14,13 @@ Virtiofs note:
 
 import shutil
 import sqlite3
+import tempfile
 from pathlib import Path
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 _ROOT    = Path(__file__).resolve().parent.parent
 DB_PATH  = _ROOT / "sansad.db"          # canonical location (may be virtiofs)
-_WORK_DB = Path(f"/tmp/sansad_work_{__import__('os').getenv('USER', 'default')}.db")  # local working copy (always writable)
+_WORK_DB = Path(tempfile.gettempdir()) / f"sansad_work_{__import__('os').getenv('USERNAME') or __import__('os').getenv('USER', 'default')}.db"  # local working copy (always writable)
 
 # Cached after first check
 _use_local: bool | None = None

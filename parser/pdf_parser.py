@@ -2,33 +2,60 @@
 parser/pdf_parser.py — Extracts attributed statements from Lok Sabha debate PDFs
 
 The debate PDFs follow this structure:
-  SHRI RAHUL GANDHI (WAYANAD): This is what I said...
-  THE SPEAKER: Order, order.
-  SHRI NARENDRA MODI (VARANASI): My response is...
+
+  English (UCD files):
+    SHRI RAHUL GANDHI (WAYANAD): This is what I said...
+    THE SPEAKER: Order, order.
+
+  Hindi (lsd files):
+    श्री राहुल गांधी (वायनाड) : यह सदन में मैं कहना चाहता हूं...
+    अध्यक्ष महोदय : आपका समय समाप्त हो गया।
 
 We parse each page, detect speaker transitions, and split into
 atomic statement records.
 
 Supports:
   - English (UCD + lsd PDFs): full parsing
-  - Hindi / regional (lsd PDFs): statement extraction with language detection,
+  - Hindi / regional (lsd PDFs): full parsing with Devanagari patterns
     translation handled separately in translator.py
 """
 
 import sys
 import re
+import logging
 import sqlite3
 import pdfplumber
 from pathlib import Path
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 _ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_ROOT))
 
 from core.db import get_connection
 
-# ── Speaker detection patterns ────────────────────────────────────────────────
-SPEAKER_PATTERNS = [
+# ── Devanagari Unicode range ──────────────────────────────────────────────────
+DEVANAGARI_RE = re.compile(r'[\u0900-\u097F]')
+
+# ── CID artifact cleanup ──────────────────────────────────────────────────────
+# pdfplumber outputs (cid:NNN) when a PDF uses a custom/non-standard font
+# encoding it can't resolve — common in Indian government PDFs.
+# We strip these so text is readable (some chars will be missing, but the
+# structure and key words remain intact for speaker detection + translation).
+CID_RE = re.compile(r'\(cid:\d+\)')
+
+def clean_extracted_text(text: str) -> str:
+    """
+    Remove pdfplumber CID artifacts and normalise whitespace.
+    Example: 'अ(cid:197)य (cid:177)' → 'अय' (incomplete but matchable).
+    """
+    text = CID_RE.sub('', text)          # drop (cid:NNN) placeholders
+    text = re.sub(r'[ \t]{2,}', ' ', text)  # collapse multiple spaces/tabs
+    return text
+
+# ── English speaker detection patterns ───────────────────────────────────────
+ENGLISH_SPEAKER_PATTERNS = [
     # Standard MP with constituency: SHRI RAHUL GANDHI (WAYANAD):
     r'^((?:SHRI|SHRIMATI|SMT\.|DR\.|PROF\.|KUM\.|KUMARI|ADV\.|SUSHRI)\s+[A-Z][A-Z\s\.\-]+?)\s*\(([A-Z][A-Z\s\-]+?)\)\s*:',
     # Standard MP without constituency: SHRI ARUN NEHRU:
@@ -41,15 +68,62 @@ SPEAKER_PATTERNS = [
     r'^(MR\.\s+(?:SPEAKER|DEPUTY SPEAKER|CHAIRMAN))\s*:',
 ]
 
+# ── Hindi (Devanagari) speaker detection patterns ─────────────────────────────
+# Lok Sabha Hindi debate format: श्री [NAME] ([CONSTITUENCY]) : [text]
+# Titles: श्री (Shri), श्रीमती (Shrimati), डॉ. (Dr.), प्रो. (Prof.), कुमारी (Kumari)
+# Presiding officers: अध्यक्ष महोदय, उपाध्यक्ष महोदय, सभापति महोदय
+# Ministers: [title] मंत्री
+#
+# Note: constituency may be in Hindi OR English; colon may be preceded by space.
+_D = r'[\u0900-\u097F]'          # any Devanagari char (shorthand)
+_DWORD = rf'{_D}[\u0900-\u097F\s\.\-]*'   # Devanagari word(s)
+
+HINDI_SPEAKER_PATTERNS = [
+    # श्री / श्रीमती NAME (CONSTITUENCY) :
+    rf'^((?:श्री|श्रीमती|डॉ\.?\s*|प्रो\.?\s*|कुमारी\s*|सुश्री\s*|अध्यक्ष\s*){_DWORD}?)\s*\(([^)]+)\)\s*:',
+    # Same but name may contain English chars (transliterated or mixed)
+    rf'^((?:श्री|श्रीमती|डॉ\.?\s*|प्रो\.?\s*|कुमारी\s*|सुश्री\s*)\s*[A-Za-z\u0900-\u097F][A-Za-z\u0900-\u097F\s\.\-]+?)\s*\(([^)]+)\)\s*:',
+    # Presiding officers without constituency
+    rf'^((?:माननीय\s+)?(?:अध्यक्ष|उपाध्यक्ष|सभापति|उपसभापति)\s*(?:महोदय|महोदया)?)\s*:',
+    # Minister patterns
+    rf'^((?:श्री|श्रीमती|डॉ\.?\s*)?{_DWORD}(?:मंत्री|मंत्रालय){_D}*)\s*:',
+    # Simple: title + name with no constituency (fallback)
+    rf'^((?:श्री|श्रीमती|डॉ\.?\s*|प्रो\.?\s*|कुमारी\s*|सुश्री\s*){_DWORD})\s*:',
+
+    # ── CID-tolerant patterns ─────────────────────────────────────────────────
+    # For PDFs with custom font encoding: (cid:NNN) already stripped by
+    # clean_extracted_text(), but name chars may be missing → match loosely.
+    #
+    # माननीय + any short word(s) + optional (CONSTITUENCY) + colon
+    # Matches: 'माननीय अय  :', 'माननीय सदयगण,', 'माननीय अय (वाराणसी) :'
+    rf'^(माननीय\s+\S{{1,30}}(?:\s+\S{{1,10}})?)\s*(?:\([^)]*\)\s*)?:',
+    # Secretary-General announcing items (English in Hindi PDF)
+    r'^(SECRETARY-GENERAL)\s*:',
+]
+
+# Combined pattern list — Hindi first (more specific), then English
+SPEAKER_PATTERNS = HINDI_SPEAKER_PATTERNS + ENGLISH_SPEAKER_PATTERNS
+
 SPEAKER_RE = re.compile(
     '|'.join(f'(?:{p})' for p in SPEAKER_PATTERNS),
-    re.MULTILINE
+    re.MULTILINE | re.UNICODE
 )
 
-TITLE_PREFIXES = ['SHRI', 'SHRIMATI', 'SMT.', 'DR.', 'PROF.', 'KUM.', 'KUMARI', 'ADV.', 'MR.']
+TITLE_PREFIXES = ['SHRI', 'SHRIMATI', 'SMT.', 'DR.', 'PROF.', 'KUM.', 'KUMARI', 'ADV.', 'MR.',
+                  'श्री', 'श्रीमती', 'डॉ', 'प्रो', 'कुमारी', 'सुश्री']
 
-# Devanagari Unicode range
-DEVANAGARI_RE = re.compile(r'[\u0900-\u097F]')
+# ── Hindi page noise patterns to skip ────────────────────────────────────────
+HINDI_NOISE_RE = re.compile(
+    r'^(?:'
+    r'लोक\s*सभा\s*वाद-विवाद|'      # "Lok Sabha debates" header
+    r'राज्य\s*सभा\s*वाद-विवाद|'
+    r'\d+\s*लोक\s*सभा|'             # "18 Lok Sabha" page number area
+    r'सत्र\s*\d+|'                  # "Session N"
+    r'बैठक\s*संख्या\s*\d+|'        # "Sitting number N"
+    r'^\d+$'                         # bare page numbers
+    r')',
+    re.UNICODE
+)
 
 
 def detect_language(text: str) -> str:
@@ -72,30 +146,103 @@ def normalize_name(raw_name: str) -> str:
     return name.lower().strip()
 
 
+def _extract_with_pdfminer(pdf_path: str) -> dict[int, str]:
+    """
+    Extract text using pdfminer.six — sometimes handles custom Hindi font
+    encodings better than pdfplumber (decodes more glyphs correctly).
+    Returns {page_num: text} dict (1-indexed). Empty dict if pdfminer unavailable.
+    """
+    try:
+        from pdfminer.high_level import extract_pages
+        from pdfminer.layout import LTTextContainer, LAParams
+    except ImportError:
+        return {}
+
+    result = {}
+    laparams = LAParams(line_margin=0.5, word_margin=0.1)
+    try:
+        for page_num, layout in enumerate(extract_pages(pdf_path, laparams=laparams), start=1):
+            lines = []
+            for element in layout:
+                if isinstance(element, LTTextContainer):
+                    lines.append(element.get_text())
+            text = "".join(lines).strip()
+            if text:
+                result[page_num] = text
+    except Exception as e:
+        logger.warning(f"pdfminer extraction failed: {e}")
+    return result
+
+
 def extract_text_from_pdf(pdf_path: str) -> list[dict]:
     """
-    Extract text page by page.
-    Returns list of {page_num, text} dicts.
+    Extract text page by page, cleaning CID font artifacts.
+
+    Strategy:
+      1. Extract with pdfplumber (fast, good layout)
+      2. If a page has heavy CID artifacts (>5% of chars), try pdfminer for
+         that page — it sometimes decodes custom Hindi fonts more completely.
+      3. Use whichever version has fewer CID codes (= better font decoding).
+
+    Returns list of {page_num, text, had_cid, extractor} dicts.
     """
     pages = []
+    pdfminer_cache: dict[int, str] = {}  # lazy-loaded on first CID page
+
     with pdfplumber.open(pdf_path) as pdf:
         for i, page in enumerate(pdf.pages, start=1):
-            text = page.extract_text()
-            if text:
-                pages.append({"page_num": i, "text": text})
+            raw = page.extract_text() or ""
+            had_cid = bool(CID_RE.search(raw))
+
+            if had_cid:
+                # CID ratio: if >3% of chars are inside (cid:NNN), try pdfminer
+                cid_chars = sum(len(m.group()) for m in CID_RE.finditer(raw))
+                cid_ratio = cid_chars / max(len(raw), 1)
+
+                if cid_ratio > 0.03:
+                    # Lazy-load pdfminer for the whole doc on first CID page
+                    if not pdfminer_cache:
+                        logger.debug(f"Page {i}: CID ratio {cid_ratio:.1%} — trying pdfminer")
+                        pdfminer_cache = _extract_with_pdfminer(pdf_path)
+
+                    pm_raw = pdfminer_cache.get(i, "")
+                    pm_cid = CID_RE.search(pm_raw) if pm_raw else True
+
+                    # Pick whichever has fewer CID codes
+                    if pm_raw and not pm_cid:
+                        raw      = pm_raw
+                        had_cid  = False
+                        extractor = "pdfminer"
+                    else:
+                        extractor = "pdfplumber+cleaned"
+                else:
+                    extractor = "pdfplumber"
+            else:
+                extractor = "pdfplumber"
+
+            text = clean_extracted_text(raw)
+            if text.strip():
+                pages.append({
+                    "page_num":  i,
+                    "text":      text,
+                    "had_cid":   had_cid,
+                    "extractor": extractor,
+                })
+
     return pages
 
 
 def parse_statements(pages: list[dict]) -> list[dict]:
     """
     Walk pages and split text into speaker-attributed statements.
+    Handles both English (UCD) and Hindi (lsd) Lok Sabha debate PDFs.
     Returns list of statement dicts with language detection applied.
     """
     statements = []
-    current_speaker_raw = None
+    current_speaker_raw  = None
     current_constituency = None
-    current_text_chunks = []
-    current_page = None
+    current_text_chunks  = []
+    current_page         = None
 
     def flush_statement():
         nonlocal current_speaker_raw, current_text_chunks, current_page
@@ -119,10 +266,23 @@ def parse_statements(pages: list[dict]) -> list[dict]:
             if not line:
                 continue
 
+            # ── Noise / header lines to skip ──────────────────────────────────
+            # English headers
+            if 'LOK SABHA DEBATES' in line or 'RAJYA SABHA DEBATES' in line:
+                continue
+            # Bare page numbers
+            if len(line) < 10 and line.replace(' ', '').isdigit():
+                continue
+            # Hindi headers / footers
+            if HINDI_NOISE_RE.match(line):
+                continue
+
+            # ── Speaker detection ──────────────────────────────────────────────
             match = SPEAKER_RE.match(line)
             if match:
                 flush_statement()
 
+                # Extract speaker name and constituency from first two non-None groups
                 matched_groups = match.groups()
                 speaker_name = None
                 constituency = None
@@ -131,6 +291,7 @@ def parse_statements(pages: list[dict]) -> list[dict]:
                         speaker_name = g.strip()
                     elif g is not None and constituency is None:
                         constituency = g.strip()
+                        break
 
                 current_speaker_raw  = speaker_name
                 current_constituency = constituency
@@ -138,10 +299,6 @@ def parse_statements(pages: list[dict]) -> list[dict]:
                 rest_of_line         = line[match.end():].strip()
                 current_text_chunks  = [rest_of_line] if rest_of_line else []
             else:
-                if len(line) < 10 and line.replace(' ', '').isdigit():
-                    continue
-                if 'LOK SABHA DEBATES' in line or 'RAJYA SABHA DEBATES' in line:
-                    continue
                 if current_speaker_raw is not None:
                     current_text_chunks.append(line)
 
@@ -153,12 +310,20 @@ def classify_statement_type(speaker_raw: str, text: str) -> str:
     speaker_upper = speaker_raw.upper()
     text_upper    = text.upper()[:100]
 
+    # English presiding officers
     if 'SPEAKER' in speaker_upper or 'CHAIRMAN' in speaker_upper:
         return 'ruling'
     if 'MINISTER' in speaker_upper or 'PRIME MINISTER' in speaker_upper:
         return 'answer'
     if text_upper.startswith('WILL THE MINISTER') or text_upper.startswith('WHETHER'):
         return 'question'
+
+    # Hindi presiding officers / ministers
+    if any(t in speaker_raw for t in ('अध्यक्ष', 'उपाध्यक्ष', 'सभापति', 'उपसभापति')):
+        return 'ruling'
+    if 'मंत्री' in speaker_raw:
+        return 'answer'
+
     if len(text.split()) < 15:
         return 'interruption'
     return 'speech'
