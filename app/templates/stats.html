@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% block title %}Stats{% endblock %}
+{% block content %}
+<div style="max-width:800px;margin:0 auto;padding:24px">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px">
+<div style="background:#fff;border:1px solid #e4e0d8;border-radius:4px;padding:20px;text-align:center">
+<div style="font-size:2rem;font-weight:700;color:#0f2818">{{ data.total_stmts }}</div>
+<div style="font-size:.72rem;text-transform:uppercase;color:#888;margin-top:4px">Statements</div>
+</div>
+<div style="background:#fff;border:1px solid #e4e0d8;border-radius:4px;padding:20px;text-align:center">
+<div style="font-size:2rem;font-weight:700;color:#0f2818">{{ data.unique_speakers }}</div>
+<div style="font-size:.72rem;text-transform:uppercase;color:#888;margin-top:4px">Speakers</div>
+</div>
+<div style="background:#fff;border:1px solid #e4e0d8;border-radius:4px;padding:20px;text-align:center">
+<div style="font-size:2rem;font-weight:700;color:#0f2818">{{ data.pdfs_parsed }}</div>
+<div style="font-size:.72rem;text-transform:uppercase;color:#888;margin-top:4px">PDFs Parsed</div>
+</div>
+</div>
+<h2 style="font-size:1rem;font-weight:700;margin:0 0 12px;text-transform:uppercase;color:#555">Top Speakers</h2>
+<div style="background:#fff;border:1px solid #e4e0d8;border-radius:4px;overflow:hidden;margin-bottom:24px">
+{% for s in data.top_speakers %}
+<div style="display:flex;justify-content:space-between;padding:10px 16px;border-top:1px solid #f0ede6;font-size:.85rem{% if loop.first %};border-top:none{% endif %}">
+<a href="/speaker/{{ s.name|lower|replace(' ','_') }}" style="color:#0f2818">{{ s.name|title }}</a>
+<span style="color:#888">{{ s.cnt }}</span></div>{% endfor %}</div>
+<h2 style="font-size:1rem;font-weight:700;margin:0 0 12px;text-transform:uppercase;color:#555">By Date</h2>
+<div style="background:#fff;border:1px solid #e4e0d8;border-radius:4px;overflow:hidden">
+{% for d in data.by_date %}
+<div style="display:flex;justify-content:space-between;padding:10px 16px;border-top:1px solid #f0ede6;font-size:.85rem{% if loop.first %};border-top:none{% endif %}">
+<a href="/?date={{ d.sitting_date }}" style="color:#0f2818">{{ d.sitting_date }}</a>
+<span style="color:#888">{{ d.cnt }}</span></div>{% endfor %}</div>
+</div>{% endblock %}

@@ -13,7 +13,7 @@ Scrapes Lok Sabha debate PDFs, parses attributed statements, translates Hindi/re
 ```
 sansad/
 ├── core/                    # Shared: DB schema, sessions data
-│   ├── db.py                # SQLite schema + seed. DB_PATH = root/sansad.db
+│   ├── db.py                # SQLite schema + seed + virtiofs detection. DB_PATH = root/sansad.db
 │   └── sessions_data.py     # 18th LS sessions + sitting dates + doc_id anchors
 │
 ├── scrapers/
@@ -31,17 +31,27 @@ sansad/
 │
 ├── app/
 │   ├── app.py               # Flask app (registers all blueprints)
-│   ├── admin.py             # ✅ Admin blueprint — scraper control, catalog browser, parse trigger
-│   ├── digest.py            # Claude API daily digest generator
+│   ├── admin.py             # ✅ Admin blueprint — scraper, catalog, parser, AI generation
+│   ├── search_bp.py         # ✅ Search blueprint — date/politician/party/text modes
+│   ├── digest.py            # Claude API daily digest + politician profile generator
 │   ├── query.py             # Search functions (used by app + CLI)
 │   └── templates/           # Jinja2 HTML templates
-│       ├── base.html        # Shared masthead + nav (includes Admin link)
+│       ├── base.html        # Shared masthead + nav
 │       ├── home.html        # Today's digest + proceedings
-│       ├── search.html      # FTS5 search with filters
+│       ├── search.html      # Unified search (4 modes)
+│       ├── speaker.html     # MP profile + AI profile card
+│       ├── speakers_list.html # All MPs grid with filter
+│       ├── sessions.html    # Session overview
+│       ├── stats.html       # DB statistics
 │       ├── topic.html       # Topic deep-dive with timeline
-│       └── speaker.html     # Speaker profile
+│       ├── pdfs.html        # Registered PDF list
+│       └── news.html        # Latest news briefing
 │
-├── main.py                  # Full pipeline entry point (scrape + parse + translate)
+├── main.py                  # Full pipeline entry point (scrape + parse + AI)
+├── run_stats.py             # CLI stats dashboard (run from Windows cmd)
+├── export_for_ai.py         # Export statements + top MPs to JSON for AI generation
+├── seed_parties.py          # One-time seed: party affiliations into members table
+├── ai_content.sql           # AI-generated digests + profiles (run in DB Browser)
 ├── pdfs/                    # Downloaded PDF files
 ├── sansad.db                # SQLite database (do not commit)
 └── requirements.txt
@@ -49,6 +59,9 @@ sansad/
 
 Every sub-package adds `_ROOT = Path(__file__).resolve().parent[.parent]` to `sys.path`,
 so `from core.db import ...` works regardless of where you run from.
+
+**Note**: A legacy `db.py` exists at the project root (kept for `main.py` backward compat).
+The canonical schema lives in `core/db.py` — that is what the Flask app uses.
 
 ---
 
@@ -61,84 +74,97 @@ pip install playwright && playwright install chromium   # for Playwright scraper
 python main.py --status          # init DB + show sitting date status
 
 # ── Playwright scraper (preferred) ────────────────────────────────────────────
-# Phase 1: Build catalog (scrapes browse pages, ~1 req per 20 items — FAST)
 python scrapers/parliament/playwright_scraper.py --catalog
-python scrapers/parliament/playwright_scraper.py --catalog --collections debates presidential budget
-
-# Phase 2: Resolve filenames (visits item pages to get exact PDF filename)
 python scrapers/parliament/playwright_scraper.py --resolve --limit 200
-
-# Phase 3: Download PDFs
 python scrapers/parliament/playwright_scraper.py --download --limit 30
-python scrapers/parliament/playwright_scraper.py --download --from 2024-01-01
-
-# Full pipeline in one command
-python scrapers/parliament/playwright_scraper.py --catalog --resolve --download --collections debates --limit 20
-
-# Catalog status
 python scrapers/parliament/playwright_scraper.py --status
-
-# All available collections:
-#   debates         Lok Sabha Debates (Text) — 6,458 items
-#   debates_en      Lok Sabha Debates (English only)
-#   debates_hi      Lok Sabha Debates (Hindi only)
-#   debates_ucd     Lok Sabha Debates (Uncorrected/UCD)
-#   presidential    Presidential Addresses — 181 items
-#   budget          Budget Speeches
-#   committee       Parliamentary Committee Reports
-#   pm_speeches     PM Speeches
-#   resume          Resume of Work Done by Lok Sabha
-#   bulletin1       Lok Sabha Bulletin I
-#   bulletin2       Lok Sabha Bulletin II
-#   questions_p1    Questions Part 1 (Q&A)
-#   questions_p2    Questions Part 2 (Other)
-#   historical      Historical Debates (1st–17th LS)
-#   constituent     Constituent Assembly Debates
 
 # ── Register manually dropped PDFs ────────────────────────────────────────────
 python scrapers/parliament/local_scan.py        # scan pdfs/ dir + register
-python scrapers/parliament/local_scan.py --list # list all registered PDFs
+python scrapers/parliament/local_scan.py --list # list registered PDFs
 
 # ── Parse downloaded PDFs ──────────────────────────────────────────────────────
-python main.py --parse-only                  # parse all registered PDFs
+python main.py --parse-only                  # parse all pending PDFs
 python main.py --parse-only --translate      # parse + Sarvam AI translation
+python main.py --no-ai                       # skip AI generation step
 
-# ── Test Sarvam AI key ────────────────────────────────────────────────────────
-python parser/test_sarvam.py                 # quick connectivity + translation test
+# ── Stats (Windows cmd) ───────────────────────────────────────────────────────
+python run_stats.py                          # overview, top MPs, parties, dates
+
+# ── Export for AI generation (no API key needed) ──────────────────────────────
+python export_for_ai.py                      # writes export_for_ai.json
+# → attach the JSON to a Cowork/Claude session to generate digests + profiles
+# → apply ai_content.sql in DB Browser for SQLite (Tools > Execute SQL)
 
 # ── Web app ────────────────────────────────────────────────────────────────────
 python app/app.py                            # opens at http://localhost:5100
-#   /          → home (latest news + digest)
-#   /search    → FTS5 full-text search
-#   /speakers  → all MPs
+#   /          → home (latest digest + proceedings)
+#   /search    → unified search (date / politician / party / text modes)
+#   /speakers  → all MPs grid
+#   /speaker/<slug> → MP profile + AI profile + statements
 #   /sessions  → session overview
-#   /admin/    → Admin UI (scraper control, catalog browser, parse trigger)
+#   /admin/    → Admin UI (scraper control, catalog, parser, AI generation)
 
 # ── CLI search ────────────────────────────────────────────────────────────────
 python app/query.py --stats
 python app/query.py --speaker "Rahul Gandhi"
 python app/query.py --search "Vande Mataram"
+
+# ── AI content (if ANTHROPIC_API_KEY set) ────────────────────────────────────
+python app/digest.py --all-dates             # generate all missing digests
+python app/digest.py --all-profiles          # generate all missing MP profiles
+python app/digest.py 2025-03-19 --force      # regenerate one digest
+python app/digest.py --member rahul-gandhi   # regenerate one profile
 ```
 
 ---
 
 ## AI integrations
 
-### Claude (app/digest.py)
-- Set `ANTHROPIC_API_KEY` to enable AI-generated daily summaries
+### Daily Digests (app/digest.py)
+- Generates a markdown summary for each sitting date based on that day's statements
+- Cached in `digests` table; shown on the home page
+- **Two ways to generate:**
+  1. Set `ANTHROPIC_API_KEY` and run `python app/digest.py --all-dates` or via Admin UI
+  2. Without API key: run `python export_for_ai.py`, attach JSON to Cowork session →
+     apply the generated `ai_content.sql` in DB Browser for SQLite
 - Model: `claude-sonnet-4-6`
-- Digests cached in `digests` table — regenerate with `python app/digest.py 2025-03-19 --force`
-- **Future**: Claude to run AT parse time, not after — generating contextual news articles
+- Auto-runs on `python main.py` if `ANTHROPIC_API_KEY` is set
+
+### Politician Profiles (app/digest.py)
+- Generates a structured MP bio per politician: summary, key positions, notable quotes, parliamentary style
+- Cached in `politician_profiles` table (member_id UNIQUE)
+- Shown as an "🤖 AI Profile" card on each MP's speaker page
+- Same two generation paths as digests above
+- `key_topics` stored as JSON array; rendered as clickable search chips
 
 ### Sarvam AI (parser/translator.py)
-- Key stored in `.env` as `SARVAM_API_KEY=sk_35fqajs8_...` (gitignored)
+- Key stored in `.env` as `SARVAM_API_KEY=...` (gitignored)
 - API: `https://api.sarvam.ai/translate`, model `mayura:v1`
 - Supports: hi, bn, te, mr, ta, gu, kn, ml, pa, or
-- When key absent: pipeline stores Hindi text as-is
-- Test: `python parser/test_sarvam.py` (needs network access — run on local machine)
 - Enable per-run: `python main.py --parse-only --translate`
 - **Known issue**: Hindi Devanagari PDFs (lsd files) extract 0 statements — pdf_parser.py
   needs a Hindi-aware extraction path before translation becomes useful
+
+---
+
+## DB Schema summary
+
+| Table | Purpose |
+|---|---|
+| `sessions` | One row per Parliament session |
+| `sitting_dates` | One row per calendar day Parliament sat |
+| `source_pdfs` | One row per registered/downloaded PDF |
+| `members` | MPs — name, name_normalized (no titles), party, constituency |
+| `statements` | Core fact table — one row per attributed statement |
+| `digests` | Claude-generated daily summaries (markdown) |
+| `politician_profiles` | Claude-generated MP bios (markdown + JSON key_topics) |
+| `member_history` | Party/constituency changes over time |
+| `catalog` | eparlib item index (doc_id, title, date, filename, download status) |
+| `statements_fts` | FTS5 virtual table over statements |
+
+**name_normalized** in `members` strips honorifics (SHRI, SHRIMATI, DR., PROF., etc.) and lowercases.
+Always pass `member["name_normalized"]` (not `member["name"]`) to `search_by_speaker()`.
 
 ---
 
@@ -156,37 +182,19 @@ python app/query.py --search "Vande Mataram"
 
 ---
 
-## PDFs currently downloaded / registered
+## PDFs parsed / registered
 
-| File | Session | Language | Notes |
-|------|---------|----------|-------|
-| `UCD_18_4_19-03-2025_Fullday.pdf` | 4 | English | Parsed OK — 50+ statements |
-| `lsd_18_VI_08-12-2025.pdf` | 6 | Hindi | 1404 pages — needs Hindi parser fix |
-| `lsd_18_VI_19-12-2025.pdf` | 6 | Hindi | 8 pages valedictory |
-| `lsd_18_VII_28-01-2026_original_corrected.pdf` | 7 | Hindi | 89 pages |
-| `lsd_18_VII_03-02-2026_original_corrected.pdf` | 7 | Hindi | Large |
-| `lsd_18_VI_05-12-2025.pdf` | 6 | Hindi | 15MB — parse on local machine |
+| File | Session | Language | Statements | Notes |
+|------|---------|----------|-----------|-------|
+| `UCD_18_4_19-03-2025_Fullday.pdf` | 4 | English | ~50 | Parsed OK |
+| Multiple Aug 2025 UCD files | 5 | English | ~330 | Monsoon Session Q&A |
+| `lsd_18_VI_05-12-2025.pdf` | 6 | Hindi | ~450 | 15MB — parsed locally |
+| `lsd_18_VI_08-12-2025.pdf` | 6 | Hindi | ~200 | 1404 pages |
+| `lsd_18_VI_19-12-2025.pdf` | 6 | Hindi | 2 | Valedictory |
+| `lsd_18_VII_28-01-2026_original_corrected.pdf` | 7 | Hindi | ~10 | Presidential Address |
+| `lsd_18_VII_03-02-2026_original_corrected.pdf` | 7 | Hindi | ~320 | Budget Session |
 
----
-
-## eparlib.sansad.in site structure
-
-DSpace instance. No REST API or OAI-PMH exposed.
-
-| Collection name | Handle | Count | Notes |
-|---|---|---|---|
-| Lok Sabha Debates (Text) | 7 | 6,458 | All debates 1952–2026 |
-| Lok Sabha Debates (English) | 2963706 | — | English subset |
-| Lok Sabha Debates (Hindi) | 796090 | — | Hindi subset |
-| Lok Sabha Debates (Uncorrected) | 2953354 | — | UCD files |
-| Presidential Addresses | 14 | 181 | From 1950 onwards |
-| Budget Speeches | 12 | — | General + Railway budgets |
-| Parliamentary Committee Reports | 13 | — | All committees |
-| PM Speeches | 800962 | — | |
-
-Browse URL pattern: `https://eparlib.sansad.in/handle/123456789/{handle}?offset={N}`
-Item URL: `https://eparlib.sansad.in/handle/123456789/{doc_id}`
-Bitstream URL: `https://eparlib.sansad.in/bitstream/123456789/{doc_id}/1/{filename}`
+**Current DB state**: ~1,800+ statements across 16 sitting dates, 100+ members
 
 ---
 
@@ -194,66 +202,34 @@ Bitstream URL: `https://eparlib.sansad.in/bitstream/123456789/{doc_id}/1/{filena
 
 Flask Blueprint (`app/admin.py`) mounted at `/admin`. Features:
 
-- **Dashboard** — stat cards (catalog total, downloaded, ready-to-dl, unresolved, registered PDFs, statements) + recent downloads + collection/debate-type breakdowns
-- **Catalog** — AJAX-paginated table of all catalog items; filter by collection, language, status, debate type, date range, title keyword
-- **Scraper** — trigger playwright_scraper phases (catalog/resolve/download) with collection checkboxes, limit, date range; live SSE log stream
-- **Parser** — trigger main.py --parse-only (+ optional --translate); show registered PDFs + parse status; live SSE log
+- **Dashboard** — stat cards (catalog, downloaded, registered PDFs, statements, digests, profiles) + recent downloads + collection breakdowns
+- **AI Generation panel** — buttons to trigger bulk digest generation and bulk profile generation; live SSE log stream
+- **Catalog** — AJAX-paginated table; filter by collection, language, status, debate type, date, title
+- **Scraper** — trigger playwright_scraper phases with collection checkboxes + date range; live SSE log
+- **Parser** — trigger main.py parse (+ optional translate); show registered PDFs + parse status; live SSE log
 
 All jobs run as background subprocesses, stdout streamed live to browser terminal widget.
-
-GitHub issue: #42
-
----
-
-## New UI Vision — v2 redesign
-
-**See docs/UI_DESIGN.md for full spec.** Summary:
-
-### 1 — Wiki (knowledge graph)
-Each "entity" (person, topic, event, place, bill) has its own page that cross-links to everything else. Like Wikipedia, but every claim links back to the exact Lok Sabha statement that supports it.
-
-- `/wiki/person/{slug}` — MP profile: party, constituency, all statements, key positions, rhetoric over time
-- `/wiki/topic/{slug}` — Topic page: timeline of all Parliament debates on a topic across sessions + speakers
-- `/wiki/event/{slug}` — Major events (budget presentation, no-confidence vote, presidential address)
-- `/wiki/bill/{slug}` — Bill page: every reading, amendments, who spoke for/against
-- Every statement on every page links back to its source PDF page
-
-DB additions needed: `entities` table + `entity_mentions` linking statements ↔ entities. Claude extracts entities at parse time.
-
-### 2 — News (context-first, Claude at parse time)
-Instead of generating a gist AFTER parsing, Claude runs DURING the parse pipeline:
-1. As statements are extracted, Claude identifies the 3–5 key stories of the day
-2. For each story, Claude queries past statements (same topic/speaker) for context
-3. Claude writes a full news article with historical context embedded — not a summary
-4. Article stored in `news_articles` table, shown on home page
-
-Result: every news item already has "this connects to X said in 2024" baked in, not added later.
-
-### 3 — Forum (data-backed discussion)
-Each news article + wiki page has a threaded discussion section. Users can ask questions in free text ("when did BJP last raise this?") and the system queries the DB (FTS5 + eventually vector search) to surface relevant past statements.
-
-- `discussions` table + `posts` table
-- "Research thread" UI: question → AI finds relevant statements → community annotates
-- Turns the site from read-only into a collaborative intelligence tool
 
 ---
 
 ## Known issues / decisions
 
-- **eparlib blocks requests** — Use playwright_scraper.py (real Chromium browser).
-- **Hindi PDF parser** — pdf_parser.py extracts 0 statements from Devanagari PDFs. Needs separate Hindi-aware extraction path (pdfminer or tesseract OCR for scanned pages).
-- **Large PDFs time out in Cowork sandbox** — Files >5MB must be parsed on local machine.
-- **Session 7 dates** — Jan 28–29 2026 PDFs exist but dates not in sessions_data.py. Add them.
-- **DB schema** — `statements` has `original_text`/`original_language` for translations; `catalog` has `debate_type`, `lok_sabha_no`, `session_no`; `digests` caches Claude summaries.
+- **eparlib blocks direct requests** — Use playwright_scraper.py (real Chromium browser).
+- **Hindi PDF parser** — pdf_parser.py extracts 0 statements from Devanagari PDFs. Needs Hindi-aware extraction (pdfminer or tesseract OCR). Hindi statements parsed but not translated yet.
+- **Large PDFs time out in Cowork sandbox** — Files >5MB must be parsed on local Windows machine.
+- **Session 7 dates** — Jan 28–29 2026 PDFs exist but dates not yet in sessions_data.py. Add them.
+- **Legacy db.py at root** — `sansad/db.py` is a legacy file used by `main.py`. Flask uses `core/db.py`. Both point to the same `sansad.db`. Do not delete the root `db.py` until `main.py` imports are updated to `from core.db import ...`.
+- **virtiofs (Cowork sandbox)** — `core/db.py` detects virtiofs on Linux/macOS and uses a temp copy. On Windows it always reads sansad.db directly. The Cowork sandbox cannot read the Windows-format WAL-mode DB directly.
 
 ---
 
 ## Roadmap
 
 ### In progress / next
-- [ ] Fix Hindi PDF parser — extract text from Devanagari PDFs
+- [ ] Fix Hindi PDF parser — extract text from Devanagari PDFs (pdfminer/tesseract path)
 - [ ] Test Sarvam AI translation locally (`python parser/test_sarvam.py`)
 - [ ] Add Session 7 sitting dates (Jan 28–29 2026) to sessions_data.py
+- [ ] Set `ANTHROPIC_API_KEY` in `.env` to enable on-demand AI generation
 - [ ] **UI v2** — Wiki + News + Forum (see docs/UI_DESIGN.md for spec)
 
 ### Scrapers

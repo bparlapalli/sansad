@@ -12,6 +12,8 @@ Virtiofs note:
   in-place after every commit.  Call sync_db() explicitly after bulk operations.
 """
 
+import os
+import platform
 import shutil
 import sqlite3
 import tempfile
@@ -20,26 +22,35 @@ from pathlib import Path
 # ── Paths ─────────────────────────────────────────────────────────────────────
 _ROOT    = Path(__file__).resolve().parent.parent
 DB_PATH  = _ROOT / "sansad.db"          # canonical location (may be virtiofs)
-_WORK_DB = Path(tempfile.gettempdir()) / f"sansad_work_{__import__('os').getenv('USERNAME') or __import__('os').getenv('USER', 'default')}.db"  # local working copy (always writable)
+_username = os.getenv("USERNAME") or os.getenv("USER") or "default"
+_WORK_DB = Path(tempfile.gettempdir()) / f"sansad_work_{_username}.db"
 
 # Cached after first check
 _use_local: bool | None = None
 
 
 def _active_db() -> Path:
-    """Return the DB path to use (local copy if virtiofs, canonical otherwise)."""
+    """Return the DB path to use (local copy if virtiofs, canonical otherwise).
+
+    On Windows the project folder is a real local filesystem — always use DB_PATH
+    directly.  On Linux/macOS the folder may be virtiofs-mounted (Cowork sandbox),
+    in which case SQLite file-locking fails; we copy the DB to /tmp and work there.
+    """
     global _use_local
     if _use_local is None:
-        try:
-            c = sqlite3.connect(str(DB_PATH), timeout=2)
-            # Test with a real write: virtiofs allows reads but blocks SQLite locking
-            c.execute("CREATE TABLE IF NOT EXISTS _write_test (x INTEGER)")
-            c.execute("DROP TABLE IF EXISTS _write_test")
-            c.commit()
-            c.close()
+        # Windows: local files are always writable — skip virtiofs detection
+        if platform.system() == "Windows":
             _use_local = False
-        except sqlite3.OperationalError:
-            _use_local = True
+        else:
+            try:
+                c = sqlite3.connect(str(DB_PATH), timeout=2)
+                c.execute("CREATE TABLE IF NOT EXISTS _write_test (x INTEGER)")
+                c.execute("DROP TABLE IF EXISTS _write_test")
+                c.commit()
+                c.close()
+                _use_local = False
+            except sqlite3.OperationalError:
+                _use_local = True
 
     if _use_local:
         # Sync from canonical if local copy is stale or missing
@@ -321,6 +332,33 @@ def _migrate_db():
             hot_topics   TEXT,
             created_at   TEXT   DEFAULT (datetime('now')),
             model_used   TEXT   DEFAULT 'claude-sonnet-4-6'
+        )
+    """)
+
+    # ── Politician profiles — Claude-generated MP bios ────────────────────────
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS politician_profiles (
+            id           INTEGER PRIMARY KEY AUTOINCREMENT,
+            member_id    INTEGER NOT NULL UNIQUE REFERENCES members(id),
+            profile_text TEXT    NOT NULL,
+            key_topics   TEXT,
+            generated_at TEXT    DEFAULT (datetime('now')),
+            model_used   TEXT    DEFAULT 'claude-sonnet-4-6'
+        )
+    """)
+
+    # ── Member history — party / constituency changes over time ───────────────
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS member_history (
+            id             INTEGER PRIMARY KEY AUTOINCREMENT,
+            member_id      INTEGER NOT NULL REFERENCES members(id),
+            attribute      TEXT    NOT NULL,
+            old_value      TEXT,
+            new_value      TEXT    NOT NULL,
+            effective_date TEXT,
+            source         TEXT    DEFAULT 'manual',
+            notes          TEXT,
+            created_at     TEXT    DEFAULT (datetime('now'))
         )
     """)
 

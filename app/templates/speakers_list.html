@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block title %}All Speakers{% endblock %}
+{% block content %}
+<div style="max-width:900px;margin:0 auto;padding:24px">
+<input type="text" id="filter" placeholder="Filter speakers…" oninput="filterList(this.value)"
+  style="width:100%;max-width:400px;height:38px;padding:0 12px;border:1px solid #d4d0c8;border-radius:4px;font-size:.9rem;margin-bottom:20px;outline:none">
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px" id="grid">
+{% for sp in speakers %}
+<div class="sp-card" data-name="{{ sp.name|lower }}"
+  style="background:#fff;border:1px solid #e4e0d8;border-radius:4px;padding:14px 16px">
+<div><a href="/speaker/{{ sp.name_normalized }}" style="color:#0f2818;font-weight:700;font-size:.9rem">{{ sp.name|title }}</a></div>
+{% if sp.constituency %}<div style="font-size:.77rem;color:#888;margin-top:2px">{{ sp.constituency }}</div>{% endif %}
+{% if sp.party %}<div style="font-size:.77rem;color:#888;margin-top:2px">{{ sp.party }}</div>{% endif %}
+<div style="font-size:.75rem;color:#2a6a3a;margin-top:4px;font-weight:600">{{ sp.cnt }} statement{{ 's' if sp.cnt != 1 }}</div>
+</div>{% endfor %}
+</div></div>
+{% endblock %}
+{% block extra_js %}
+<script>
+function filterList(q){q=q.toLowerCase();document.querySelectorAll(".sp-card").forEach(el=>{el.style.display=el.dataset.name.includes(q)?"":"none"})}
+</script>{% endblock %}

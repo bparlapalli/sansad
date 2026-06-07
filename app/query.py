@@ -50,7 +50,7 @@ def _clean_snippet(text: str, max_chars: int = 300) -> str:
     return f"{cut}..."
 
 
-def _extract_terms(text: str, limit: int = 8) -> list[str]:
+def _extract_terms(text: str, limit: int = 8) -> list:
     words = re.findall(r"[A-Za-z][A-Za-z-]{3,}", text or "")
     counts = Counter(w.lower() for w in words if w.lower() not in _NEWS_STOPWORDS)
     return [w for w, _ in counts.most_common(limit)]
@@ -101,7 +101,7 @@ def _headline_for_statement(row: dict) -> str:
     return f"{speaker} speaks on {theme.lower()}"
 
 
-def _related_older_items(current: dict, candidates: list[dict], limit: int = 3) -> list[dict]:
+def _related_older_items(current: dict, candidates: list, limit: int = 3) -> list:
     current_terms = set(_extract_terms(current.get("statement_text", ""), 12))
     current_speaker = (current.get("speaker_raw") or "").lower()
     current_theme = current.get("theme") or _infer_theme(current.get("statement_text", ""))
@@ -142,7 +142,7 @@ def _related_older_items(current: dict, candidates: list[dict], limit: int = 3) 
 
 
 def search_by_speaker(name: str, from_date: str = None, to_date: str = None,
-                      limit: int = 20) -> list[dict]:
+                      limit: int = 20) -> list:
     conn = get_connection()
     c    = conn.cursor()
 
@@ -150,10 +150,10 @@ def search_by_speaker(name: str, from_date: str = None, to_date: str = None,
         SELECT s.sitting_date, s.speaker_raw, m.constituency, m.party,
                s.statement_type, s.statement_text, s.original_text,
                s.word_count, s.page_number,
-               p.filename, s.original_language
+               p.filename, s.original_language, m.name_normalized
         FROM statements s
-        JOIN members m     ON s.member_id   = m.id
-        JOIN source_pdfs p ON s.source_pdf_id = p.id
+        JOIN members m          ON s.member_id    = m.id
+        LEFT JOIN source_pdfs p ON s.source_pdf_id = p.id
         WHERE m.name_normalized LIKE ?
     """
     params = [f"%{name.lower()}%"]
@@ -177,11 +177,7 @@ def search_by_speaker(name: str, from_date: str = None, to_date: str = None,
 def full_text_search(query_text: str, speaker: str = None,
                      session: int = None, stype: str = None,
                      pdf_id: int = None,
-                     limit: int = 50) -> tuple[list[dict], int]:
-    """
-    FTS5 search over statement text.
-    Returns (results, total_count).
-    """
+                     limit: int = 50) -> tuple:
     conn = get_connection()
     c    = conn.cursor()
 
@@ -189,7 +185,7 @@ def full_text_search(query_text: str, speaker: str = None,
         sql    = """
             SELECT s.speaker_raw, s.sitting_date, s.session_no,
                    s.statement_type, s.statement_text, s.original_text,
-                   s.word_count, m.constituency, m.name_normalized,
+                   s.word_count, m.constituency, m.name_normalized, m.party,
                    s.original_language
             FROM statements_fts
             JOIN statements s ON statements_fts.rowid = s.id
@@ -201,7 +197,7 @@ def full_text_search(query_text: str, speaker: str = None,
         sql    = """
             SELECT s.speaker_raw, s.sitting_date, s.session_no,
                    s.statement_type, s.statement_text, s.original_text,
-                   s.word_count, m.constituency, m.name_normalized,
+                   s.word_count, m.constituency, m.name_normalized, m.party,
                    s.original_language
             FROM statements s
             JOIN members m ON s.member_id = m.id
@@ -270,7 +266,7 @@ def get_stats() -> dict:
     }
 
 
-def get_speakers_list() -> list[dict]:
+def get_speakers_list() -> list:
     conn = get_connection()
     c    = conn.cursor()
     c.execute("""
@@ -286,11 +282,7 @@ def get_speakers_list() -> list[dict]:
     return rows
 
 
-def get_latest_dates(limit: int = 10) -> list[dict]:
-    """Return the most recent sitting dates that have parsed statements.
-    Queries statements table directly — works even for PDFs registered via
-    local_scan.py where sitting_dates.has_debate_pdf may not be set.
-    """
+def get_latest_dates(limit: int = 10) -> list:
     conn = get_connection()
     c    = conn.cursor()
     c.execute("""
@@ -313,8 +305,7 @@ def get_latest_dates(limit: int = 10) -> list[dict]:
     return rows
 
 
-def get_parsed_pdfs() -> list[dict]:
-    """Return all source PDFs that have been parsed, with statement counts."""
+def get_parsed_pdfs() -> list:
     conn = get_connection()
     c    = conn.cursor()
     c.execute("""
@@ -336,8 +327,114 @@ def get_parsed_pdfs() -> list[dict]:
     return rows
 
 
-def get_trending_topics(from_date: str = None, limit: int = 8) -> list[dict]:
-    """Return topics with the most statements in recent period."""
+# ── New: party + date summary functions ──────────────────────────────────────
+
+def get_parties_list() -> list:
+    """Return parties with member and statement counts."""
+    conn = get_connection()
+    c    = conn.cursor()
+    c.execute("""
+        SELECT m.party, COUNT(DISTINCT m.id) as member_count,
+               COUNT(s.id) as stmt_count
+        FROM members m
+        LEFT JOIN statements s ON s.member_id = m.id
+        WHERE m.party IS NOT NULL
+        GROUP BY m.party
+        ORDER BY stmt_count DESC, member_count DESC
+    """)
+    rows = [dict(r) for r in c.fetchall()]
+    conn.close()
+    return rows
+
+
+def search_by_party(party: str, date_str: str = None, query_text: str = None,
+                    limit: int = 100) -> tuple:
+    """Return (members, statements) for a given party."""
+    conn = get_connection()
+    c    = conn.cursor()
+
+    c.execute("""
+        SELECT m.id, m.name, m.name_normalized, m.constituency,
+               COUNT(s.id) as stmt_count
+        FROM members m
+        LEFT JOIN statements s ON s.member_id = m.id
+        WHERE m.party = ?
+        GROUP BY m.id
+        ORDER BY stmt_count DESC
+    """, (party,))
+    members = [dict(r) for r in c.fetchall()]
+
+    if query_text:
+        sql = """
+            SELECT s.speaker_raw, s.sitting_date, s.session_no,
+                   s.statement_type, s.statement_text, s.original_text,
+                   s.word_count, m.name_normalized, m.constituency, m.party,
+                   s.original_language
+            FROM statements_fts
+            JOIN statements s ON statements_fts.rowid = s.id
+            JOIN members m    ON s.member_id = m.id
+            WHERE statements_fts MATCH ? AND m.party = ?
+        """
+        params = [query_text, party]
+    else:
+        sql = """
+            SELECT s.speaker_raw, s.sitting_date, s.session_no,
+                   s.statement_type, s.statement_text, s.original_text,
+                   s.word_count, m.name_normalized, m.constituency, m.party,
+                   s.original_language
+            FROM statements s
+            JOIN members m ON s.member_id = m.id
+            WHERE m.party = ?
+        """
+        params = [party]
+
+    if date_str:
+        sql    += " AND s.sitting_date = ?"
+        params.append(date_str)
+
+    sql += " ORDER BY s.sitting_date DESC, s.page_number ASC LIMIT ?"
+    params.append(limit)
+    c.execute(sql, params)
+    statements = [dict(r) for r in c.fetchall()]
+    conn.close()
+    return members, statements
+
+
+def get_date_summary(date_str: str) -> dict:
+    """Party breakdown + speaker list for a given sitting date."""
+    conn = get_connection()
+    c    = conn.cursor()
+
+    c.execute("""
+        SELECT COALESCE(m.party, 'Unknown') as party,
+               COUNT(DISTINCT m.id)  as speakers,
+               COUNT(s.id)           as stmts
+        FROM statements s
+        JOIN members m ON s.member_id = m.id
+        WHERE s.sitting_date = ?
+        GROUP BY m.party
+        ORDER BY stmts DESC
+    """, (date_str,))
+    parties = [dict(r) for r in c.fetchall()]
+
+    c.execute("""
+        SELECT m.name, m.name_normalized, COALESCE(m.party, 'Unknown') as party,
+               m.constituency, COUNT(s.id) as stmts
+        FROM statements s
+        JOIN members m ON s.member_id = m.id
+        WHERE s.sitting_date = ?
+        GROUP BY m.id
+        ORDER BY stmts DESC
+    """, (date_str,))
+    speakers = [dict(r) for r in c.fetchall()]
+
+    conn.close()
+    return {"parties": parties, "speakers": speakers}
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+
+def get_trending_topics(from_date: str = None, limit: int = 8) -> list:
     conn = get_connection()
     c    = conn.cursor()
     sql  = """
@@ -357,7 +454,7 @@ def get_trending_topics(from_date: str = None, limit: int = 8) -> list[dict]:
     return rows
 
 
-def get_statements_for_date(date_str: str, limit: int = 60) -> list[dict]:
+def get_statements_for_date(date_str: str, limit: int = 60) -> list:
     conn = get_connection()
     c    = conn.cursor()
     c.execute("""
@@ -377,14 +474,13 @@ def get_statements_for_date(date_str: str, limit: int = 60) -> list[dict]:
     return rows
 
 
-def get_statements_for_topic(topic_query: str, limit: int = 40) -> list[dict]:
-    """FTS search restricted to topic-bearing statements."""
+def get_statements_for_topic(topic_query: str, limit: int = 40) -> list:
     conn = get_connection()
     c    = conn.cursor()
     c.execute("""
         SELECT s.speaker_raw, s.sitting_date, s.session_no,
                s.statement_type, s.statement_text, s.word_count,
-               m.constituency, m.party, s.original_language
+               m.constituency, m.party, s.original_language, m.name_normalized
         FROM statements_fts
         JOIN statements s ON statements_fts.rowid = s.id
         JOIN members m    ON s.member_id = m.id
@@ -399,11 +495,6 @@ def get_statements_for_topic(topic_query: str, limit: int = 40) -> list[dict]:
 
 
 def get_news_briefing(limit: int = 12) -> dict:
-    """
-    Build a local news-style briefing from parsed statements.
-    Items come from the latest dates with parsed statements and link to older
-    debates by shared subject terms and recurring speakers.
-    """
     conn = get_connection()
     c = conn.cursor()
 
@@ -456,7 +547,7 @@ def get_news_briefing(limit: int = 12) -> dict:
     older_rows = [dict(r) for r in c.fetchall()]
     conn.close()
 
-    seen_themes: Counter[str] = Counter()
+    seen_themes = Counter()
     items = []
     for row in latest_rows:
         row = dict(row)
@@ -502,31 +593,29 @@ if __name__ == "__main__":
 
     if args.stats:
         stats = get_stats()
-        print(f"\n📊 Database Stats")
+        print(f"\nDatabase Stats")
         print(f"  PDFs parsed:      {stats['pdfs_parsed']}")
         print(f"  Total statements: {stats['total_stmts']}")
         print(f"  Unique speakers:  {stats['unique_speakers']}")
-        print(f"\n  Top speakers:")
         for s in stats["top_speakers"]:
             print(f"    {s['name']:<35} {s['cnt']:>4}")
-        print(f"\n  By date:")
         for d in stats["by_date"]:
-            print(f"    {d['sitting_date']}  →  {d['cnt']} statements")
+            print(f"    {d['sitting_date']}  ->  {d['cnt']} statements")
 
     elif args.speaker:
         rows = search_by_speaker(args.speaker, args.from_date, args.to_date, args.limit)
         if not rows:
             print(f"No statements found for: '{args.speaker}'")
         for r in rows:
-            print(f"\n📅 {r['sitting_date']}  |  {r['speaker_raw']}")
+            print(f"\n{r['sitting_date']}  |  {r['speaker_raw']}")
             print(f"   Type: {r['statement_type'].upper()}  |  {r['word_count']} words")
             print(f"   {r['statement_text'][:300]}...")
 
     elif args.search:
         rows, total = full_text_search(args.search, limit=args.limit)
-        print(f"\nSearch: '{args.search}' — {total} results")
+        print(f"\nSearch: '{args.search}' -- {total} results")
         for r in rows:
-            print(f"\n📅 {r['sitting_date']}  |  {r['speaker_raw']}")
+            print(f"\n{r['sitting_date']}  |  {r['speaker_raw']}")
             print(f"   {r['statement_text'][:300]}...")
 
     else:

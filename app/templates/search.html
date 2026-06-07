@@ -1,200 +1,407 @@
 {% extends "base.html" %}
-{% block title %}Search{% endblock %}
+{% block title %}Search — ParamaSrota{% endblock %}
+
+{% block extra_head %}
+<style>
+/* ── Layout ──────────────────────────────────────────────────────────────── */
+.search-page { max-width: 1100px; margin: 0 auto; padding: 24px 20px; }
+
+/* ── Mode tabs ───────────────────────────────────────────────────────────── */
+.mode-tabs {
+  display: flex; gap: 6px; margin-bottom: 20px;
+  border-bottom: 2px solid #e4e0d8; padding-bottom: 0;
+}
+.mode-tab {
+  padding: 8px 18px; font-size: 0.85rem; font-weight: 600;
+  border: none; background: none; cursor: pointer; color: #777;
+  border-bottom: 3px solid transparent; margin-bottom: -2px;
+  border-radius: 4px 4px 0 0; transition: color 0.15s;
+}
+.mode-tab:hover { color: #0f2818; }
+.mode-tab.active { color: #0f2818; border-bottom-color: #0f2818; }
+
+/* ── Search panels ───────────────────────────────────────────────────────── */
+.search-panel { display: none; margin-bottom: 24px; }
+.search-panel.active { display: block; }
+
+.search-row {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.search-input {
+  flex: 1; min-width: 200px; height: 42px; padding: 0 14px;
+  border: 1.5px solid #d4d0c8; border-radius: 6px;
+  font-size: 0.92rem; outline: none; background: #fff;
+  transition: border-color 0.15s;
+}
+.search-input:focus { border-color: #0f2818; }
+.search-select {
+  height: 42px; padding: 0 12px; border: 1.5px solid #d4d0c8;
+  border-radius: 6px; font-size: 0.88rem; background: #fff;
+  outline: none; cursor: pointer;
+}
+.search-select:focus { border-color: #0f2818; }
+.search-btn {
+  height: 42px; padding: 0 22px; background: #0f2818; color: #fff;
+  border: none; border-radius: 6px; font-size: 0.88rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+}
+.search-btn:hover { background: #1a4030; }
+.search-hint { font-size: 0.78rem; color: #999; margin-top: 6px; }
+
+/* ── Date drill-down ─────────────────────────────────────────────────────── */
+.date-summary { margin-bottom: 20px; }
+.date-summary-title {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.6px;
+  color: #888; margin-bottom: 10px; font-weight: 600;
+}
+.party-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.party-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 20px; font-size: 0.82rem;
+  font-weight: 600; cursor: pointer; border: 2px solid transparent;
+  transition: all 0.15s; text-decoration: none; color: inherit;
+}
+.party-chip:hover { opacity: 0.85; transform: translateY(-1px); }
+.party-chip.selected { border-color: #0f2818 !important; box-shadow: 0 0 0 2px rgba(15,40,24,0.3); }
+.party-chip .chip-count {
+  font-size: 0.72rem; font-weight: 700;
+  background: rgba(0,0,0,0.15); padding: 1px 6px; border-radius: 10px;
+}
+
+/* ── Speaker chips ───────────────────────────────────────────────────────── */
+.speaker-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.speaker-chip {
+  padding: 4px 10px; border-radius: 16px; font-size: 0.78rem;
+  background: #f0ede6; border: 1.5px solid #d4d0c8;
+  cursor: pointer; text-decoration: none; color: #333; transition: all 0.15s;
+}
+.speaker-chip:hover { background: #e4e0d8; border-color: #aaa; }
+.speaker-chip .sc-party { font-size: 0.7rem; color: #888; }
+
+/* ── Filter bar ──────────────────────────────────────────────────────────── */
+.filter-bar {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  margin-bottom: 16px; padding: 10px 14px;
+  background: #f5f3ee; border-radius: 6px; border: 1px solid #e4e0d8;
+}
+.filter-bar-label { font-size: 0.75rem; color: #777; margin-right: 4px; }
+.filter-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 600;
+  background: #0f2818; color: #fff;
+}
+.filter-tag a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; }
+.filter-tag a:hover { color: #fff; }
+.filter-refine {
+  margin-left: auto; display: flex; gap: 6px; align-items: center;
+}
+.refine-input {
+  height: 32px; padding: 0 10px; border: 1.5px solid #d4d0c8;
+  border-radius: 16px; font-size: 0.82rem; outline: none; background: #fff; width: 200px;
+}
+.refine-input:focus { border-color: #0f2818; }
+.refine-btn {
+  height: 32px; padding: 0 14px; background: #2a6a3a; color: #fff;
+  border: none; border-radius: 16px; font-size: 0.78rem; font-weight: 600; cursor: pointer;
+}
+
+/* ── Results ─────────────────────────────────────────────────────────────── */
+.results-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+}
+.results-count { font-size: 0.82rem; color: #666; }
+.results-count strong { color: #0f2818; }
+
+.result-card {
+  background: #fff; border: 1px solid #e4e0d8; border-radius: 6px;
+  padding: 14px 16px; margin-bottom: 8px; transition: border-color 0.1s;
+}
+.result-card:hover { border-color: #aaa; }
+.result-meta {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 8px;
+}
+.result-speaker {
+  font-weight: 700; font-size: 0.88rem; color: #0f2818; text-decoration: none;
+}
+.result-speaker:hover { text-decoration: underline; }
+.result-date { font-size: 0.78rem; color: #888; }
+.result-party-badge {
+  font-size: 0.7rem; font-weight: 700; padding: 2px 8px;
+  border-radius: 3px; text-transform: uppercase; letter-spacing: 0.3px;
+}
+.result-type-badge {
+  font-size: 0.7rem; padding: 2px 8px; border-radius: 3px;
+  background: #f0ede6; color: #666; text-transform: uppercase;
+}
+.result-text {
+  font-size: 0.85rem; line-height: 1.6; color: #2a2a2a;
+  white-space: pre-wrap; word-break: break-word;
+}
+.result-expand {
+  font-size: 0.75rem; color: #2a6a3a; cursor: pointer;
+  margin-top: 4px; display: inline-block; user-select: none;
+}
+
+/* ── Party colours ───────────────────────────────────────────────────────── */
+.party-BJP            { background: #FF9933; color: #fff; }
+.party-INC            { background: #19A1E2; color: #fff; }
+.party-AITC           { background: #2E8B57; color: #fff; }
+.party-DMK            { background: #c0392b; color: #fff; }
+.party-TDP            { background: #4d7c0f; color: #fff; }
+.party-SP             { background: #E91E63; color: #fff; }
+.party-CPI_M_         { background: #991b1b; color: #fff; }
+.party-YSRCP          { background: #1565C0; color: #fff; }
+.party-NCP            { background: #8D6E63; color: #fff; }
+.party-NCPSP_         { background: #6d28d9; color: #fff; }
+.party-AIMIM          { background: #2C3E50; color: #fff; }
+.party-AAP            { background: #0073CF; color: #fff; }
+.party-SAD            { background: #4CAF50; color: #fff; }
+.party-ShivSena_UBT_  { background: #FF6F00; color: #fff; }
+.party-MDMK           { background: #7c3aed; color: #fff; }
+.party-BRS            { background: #d97706; color: #fff; }
+.party-RSP            { background: #065f46; color: #fff; }
+.party-IUML           { background: #1e3a8a; color: #fff; }
+.party-LJP_RV_        { background: #b45309; color: #fff; }
+.party-VCK            { background: #be185d; color: #fff; }
+.party-KCM_           { background: #166534; color: #fff; }
+.party-JDS_           { background: #92400e; color: #fff; }
+.party-Unknown        { background: #90A4AE; color: #fff; }
+
+.empty-state {
+  text-align: center; padding: 60px 20px; color: #999; font-size: 0.9rem;
+}
+.empty-state .big { font-size: 2.5rem; margin-bottom: 12px; }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="page-container">
+<div class="search-page">
 
-  <!-- Search bar -->
-  <div class="card" style="margin-bottom:24px;">
-    <div class="card-body">
-      <form action="/search" method="get">
-        <!-- Row 1: keyword + action buttons -->
-        <div style="display:grid; grid-template-columns:1fr auto; gap:8px; align-items:end; margin-bottom:10px;">
-          <div>
-            <div style="font-family:sans-serif;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#666;margin-bottom:4px;">Search</div>
-            <input type="text" name="q" value="{{ q }}"
-              placeholder="Keyword, topic, phrase…"
-              style="width:100%;height:38px;padding:0 12px;border:1px solid #d4d0c8;border-radius:4px;font-size:0.9rem;font-family:sans-serif;outline:none;"
-              autofocus>
-          </div>
-          <div style="display:flex;gap:6px;align-items:flex-end;">
-            <button type="submit" class="btn btn-primary">Search</button>
-            <a href="/search" class="btn btn-ghost">Clear</a>
-          </div>
-        </div>
-
-        <!-- Row 2: filters -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:8px;">
-
-          <!-- Speaker dropdown -->
-          <div>
-            <div style="font-family:sans-serif;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#666;margin-bottom:4px;">Speaker</div>
-            <select name="speaker" style="width:100%;height:38px;padding:0 10px;border:1px solid #d4d0c8;border-radius:4px;font-size:0.82rem;font-family:sans-serif;background:#fafaf8;outline:none;">
-              <option value="">All speakers</option>
-              {% for sp in all_speakers %}
-              <option value="{{ sp.name_normalized }}"
-                {% if speaker == sp.name_normalized %}selected{% endif %}>
-                {{ sp.name | title }}{% if sp.constituency %} ({{ sp.constituency }}){% endif %}
-              </option>
-              {% endfor %}
-            </select>
-          </div>
-
-          <!-- PDF dropdown -->
-          <div>
-            <div style="font-family:sans-serif;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#666;margin-bottom:4px;">Document</div>
-            <select name="pdf_id" style="width:100%;height:38px;padding:0 10px;border:1px solid #d4d0c8;border-radius:4px;font-size:0.82rem;font-family:sans-serif;background:#fafaf8;outline:none;">
-              <option value="">All documents</option>
-              {% for p in all_pdfs %}
-              <option value="{{ p.id }}" {% if pdf_id == p.id|string %}selected{% endif %}>
-                {{ p.sitting_date }} — {{ p.filename[:30] }}{% if p.filename|length > 30 %}…{% endif %}
-              </option>
-              {% endfor %}
-            </select>
-          </div>
-
-          <!-- Session -->
-          <div>
-            <div style="font-family:sans-serif;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#666;margin-bottom:4px;">Session</div>
-            <select name="session" style="width:100%;height:38px;padding:0 10px;border:1px solid #d4d0c8;border-radius:4px;font-size:0.85rem;font-family:sans-serif;background:#fafaf8;outline:none;">
-              <option value="">All</option>
-              <option value="1" {% if session=='1' %}selected{% endif %}>Session 1 (Jun–Jul 2024)</option>
-              <option value="2" {% if session=='2' %}selected{% endif %}>Session 2 (Jul–Aug 2024)</option>
-              <option value="3" {% if session=='3' %}selected{% endif %}>Winter 2024</option>
-              <option value="4" {% if session=='4' %}selected{% endif %}>Budget 2025</option>
-              <option value="5" {% if session=='5' %}selected{% endif %}>Monsoon 2025</option>
-              <option value="6" {% if session=='6' %}selected{% endif %}>Winter 2025</option>
-              <option value="7" {% if session=='7' %}selected{% endif %}>Budget 2026</option>
-            </select>
-          </div>
-
-          <!-- Type -->
-          <div>
-            <div style="font-family:sans-serif;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#666;margin-bottom:4px;">Type</div>
-            <select name="type" style="width:100%;height:38px;padding:0 10px;border:1px solid #d4d0c8;border-radius:4px;font-size:0.85rem;font-family:sans-serif;background:#fafaf8;outline:none;">
-              <option value="">All types</option>
-              <option value="speech"       {% if stype=='speech' %}selected{% endif %}>Speech</option>
-              <option value="question"     {% if stype=='question' %}selected{% endif %}>Question</option>
-              <option value="answer"       {% if stype=='answer' %}selected{% endif %}>Answer</option>
-              <option value="ruling"       {% if stype=='ruling' %}selected{% endif %}>Ruling</option>
-              <option value="interruption" {% if stype=='interruption' %}selected{% endif %}>Interruption</option>
-            </select>
-          </div>
-
-        </div>
-      </form>
-    </div>
+  <!-- ── Mode tabs ──────────────────────────────────────────────────────── -->
+  <div class="mode-tabs">
+    <button class="mode-tab {% if mode == 'date' or not mode %}active{% endif %}"
+            onclick="switchMode('date', this)">📅 By Date</button>
+    <button class="mode-tab {% if mode == 'politician' %}active{% endif %}"
+            onclick="switchMode('politician', this)">🧑‍💼 Politician</button>
+    <button class="mode-tab {% if mode == 'party' %}active{% endif %}"
+            onclick="switchMode('party', this)">🏛 Party</button>
+    <button class="mode-tab {% if mode == 'text' %}active{% endif %}"
+            onclick="switchMode('text', this)">🔍 Free Text</button>
   </div>
 
-  {% if searched %}
-  <!-- Results meta -->
-  <div class="section-label" style="margin-bottom:16px;">
-    {% if total > 0 %}
-    {{ total }} result{{ 's' if total != 1 }} for
-    {% if q %}"<strong>{{ q }}</strong>"{% endif %}
-    {% if speaker %}by <strong>{{ speaker }}</strong>{% endif %}
-    {% else %}
-    No results found
+  <!-- ── Date panel ─────────────────────────────────────────────────────── -->
+  <div class="search-panel {% if mode == 'date' or not mode %}active{% endif %}" id="panel-date">
+    <form method="get" action="/search">
+      <input type="hidden" name="mode" value="date">
+      <div class="search-row">
+        <select name="date" class="search-select" style="flex:1;max-width:240px;">
+          <option value="">— pick a sitting date —</option>
+          {% for d in all_dates %}
+          <option value="{{ d.sitting_date }}"
+            {% if d.sitting_date == date %}selected{% endif %}>
+            {{ d.sitting_date }}  ({{ d.stmt_count }} statements)
+          </option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="search-btn">View Day</button>
+      </div>
+      <p class="search-hint">See every MP and party that spoke, then drill into statements.</p>
+    </form>
+
+    {% if mode == 'date' and date and date_summary %}
+    <div class="date-summary" style="margin-top:20px;">
+      <div class="date-summary-title">Parties active on {{ date }}</div>
+      <div class="party-chips">
+        {% for p in date_summary.parties %}
+        {% set slug = p.party | replace(' ','_') | replace('(','') | replace(')','') | replace('/','_') | replace('-','_') %}
+        <a class="party-chip party-{{ slug }}
+              {% if party_filter == p.party %}selected{% endif %}"
+           href="/search?mode=date&date={{ date }}&party={{ p.party | urlencode }}">
+          {{ p.party }}
+          <span class="chip-count">{{ p.stmts }}</span>
+        </a>
+        {% endfor %}
+      </div>
+
+      <div class="date-summary-title">All speakers ({{ date_summary.speakers | length }})</div>
+      <div class="speaker-chips">
+        {% for sp in date_summary.speakers %}
+        <a class="speaker-chip"
+           href="/search?mode=date&date={{ date }}&speaker={{ sp.name_normalized | urlencode }}">
+          {{ sp.name | replace('Shri ','') | replace('Shrimati ','') | replace('Dr. ','') | replace('Adv. ','') | replace('Sushri ','') }}
+          {% if sp.party %}<span class="sc-party">· {{ sp.party }}</span>{% endif %}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
     {% endif %}
+  </div>
+
+  <!-- ── Politician panel ───────────────────────────────────────────────── -->
+  <div class="search-panel {% if mode == 'politician' %}active{% endif %}" id="panel-politician">
+    <form method="get" action="/search">
+      <input type="hidden" name="mode" value="politician">
+      <div class="search-row">
+        <input list="speakers-list" name="speaker" class="search-input"
+               placeholder="MP name — e.g. Shashi Tharoor, Nirmala…"
+               value="{{ speaker or '' }}">
+        <datalist id="speakers-list">
+          {% for sp in all_speakers %}
+          <option value="{{ sp.name }}">{{ sp.name }} ({{ sp.stmt_count }} statements)</option>
+          {% endfor %}
+        </datalist>
+        <button type="submit" class="search-btn">Search</button>
+      </div>
+      <p class="search-hint">Finds all statements by this MP across all dates.</p>
+    </form>
+  </div>
+
+  <!-- ── Party panel ────────────────────────────────────────────────────── -->
+  <div class="search-panel {% if mode == 'party' %}active{% endif %}" id="panel-party">
+    <form method="get" action="/search">
+      <input type="hidden" name="mode" value="party">
+      <div class="search-row">
+        <select name="party" class="search-select" style="flex:1;max-width:300px;">
+          <option value="">— pick a party —</option>
+          {% for p in all_parties %}
+          <option value="{{ p.party }}" {% if p.party == party %}selected{% endif %}>
+            {{ p.party }}  ({{ p.member_count }} MPs · {{ p.stmt_count }} statements)
+          </option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="search-btn">View Party</button>
+      </div>
+      <p class="search-hint">Shows all MPs from this party and their statements.</p>
+    </form>
+
+    {% if mode == 'party' and party and party_members %}
+    <div style="margin-top:16px;">
+      <div class="date-summary-title">{{ party_members | length }} MPs — {{ party }}</div>
+      <div class="speaker-chips">
+        {% for m in party_members %}
+        <a class="speaker-chip"
+           href="/search?mode=party&party={{ party | urlencode }}&speaker={{ m.name_normalized | urlencode }}">
+          {{ m.name | replace('Shri ','') | replace('Shrimati ','') | replace('Dr. ','') | replace('Adv. ','') | replace('Sushri ','') }}
+          {% if m.stmt_count %}<span class="sc-party">{{ m.stmt_count }}</span>{% endif %}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- ── Free text panel ────────────────────────────────────────────────── -->
+  <div class="search-panel {% if mode == 'text' %}active{% endif %}" id="panel-text">
+    <form method="get" action="/search">
+      <input type="hidden" name="mode" value="text">
+      <div class="search-row">
+        <input type="text" name="q" class="search-input"
+               placeholder="Search Parliament debates — e.g. GST, climate, farmers…"
+               value="{{ q or '' }}">
+        <button type="submit" class="search-btn">Search</button>
+      </div>
+      <p class="search-hint">Full-text search across all parsed debate statements.</p>
+    </form>
+  </div>
+
+  <!-- ── Active filter bar ──────────────────────────────────────────────── -->
+  {% if searched %}
+  <div class="filter-bar">
+    <span class="filter-bar-label">Active filters:</span>
+
+    {% if date %}
+    <span class="filter-tag">
+      📅 {{ date }}
+      <a href="/search?mode={{ mode }}{% if party %}&party={{ party | urlencode }}{% endif %}{% if speaker %}&speaker={{ speaker | urlencode }}{% endif %}{% if q %}&q={{ q | urlencode }}{% endif %}">×</a>
+    </span>
+    {% endif %}
+
+    {% if party %}
+    <span class="filter-tag">
+      🏛 {{ party }}
+      <a href="/search?mode={{ mode }}{% if date %}&date={{ date }}{% endif %}{% if speaker %}&speaker={{ speaker | urlencode }}{% endif %}{% if q %}&q={{ q | urlencode }}{% endif %}">×</a>
+    </span>
+    {% endif %}
+
+    {% if speaker %}
+    <span class="filter-tag">
+      🧑 {{ speaker }}
+      <a href="/search?mode={{ mode }}{% if date %}&date={{ date }}{% endif %}{% if party %}&party={{ party | urlencode }}{% endif %}{% if q %}&q={{ q | urlencode }}{% endif %}">×</a>
+    </span>
+    {% endif %}
+
+    {% if q %}
+    <span class="filter-tag">
+      🔍 "{{ q }}"
+      <a href="/search?mode={{ mode }}{% if date %}&date={{ date }}{% endif %}{% if party %}&party={{ party | urlencode }}{% endif %}{% if speaker %}&speaker={{ speaker | urlencode }}{% endif %}">×</a>
+    </span>
+    {% endif %}
+
+    {% if not q and (date or party or speaker) %}
+    <form class="filter-refine" method="get" action="/search">
+      <input type="hidden" name="mode" value="{{ mode }}">
+      {% if date   %}<input type="hidden" name="date"    value="{{ date }}">{% endif %}
+      {% if party  %}<input type="hidden" name="party"   value="{{ party }}">{% endif %}
+      {% if speaker%}<input type="hidden" name="speaker" value="{{ speaker }}">{% endif %}
+      <input type="text" name="q" class="refine-input" placeholder="Refine with free text…">
+      <button type="submit" class="refine-btn">Filter</button>
+    </form>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <!-- ── Results ────────────────────────────────────────────────────────── -->
+  {% if searched %}
+  <div class="results-header">
+    <div class="results-count">
+      <strong>{{ total }}</strong> statement{{ 's' if total != 1 }}{% if total > results|length %} (showing {{ results|length }}){% endif %}
+    </div>
   </div>
 
   {% if results %}
   {% for r in results %}
-  <div class="card">
-    <div class="card-body">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:8px;">
-        <div>
-          <div class="speaker-name">
-            <a href="/speaker/{{ r.name_normalized | urlencode }}" style="color:inherit">{{ r.speaker_raw | title }}</a>
-          </div>
-          {% if r.constituency %}
-          <div class="speaker-meta">{{ r.constituency }}</div>
-          {% endif %}
-        </div>
-        <div style="display:flex; gap:6px; flex-shrink:0; flex-wrap:wrap; justify-content:flex-end;">
-          <span class="chip chip-{{ r.statement_type }}">{{ r.statement_type }}</span>
-          {% if r.original_language %}
-          <span class="chip chip-hindi">{{ r.original_language }} → EN</span>
-          {% endif %}
-          <span class="date-tag">📅 {{ r.sitting_date }}</span>
-          <span class="date-tag">Sess. {{ r.session_no }}</span>
-          {% if r.word_count %}<span style="font-family:sans-serif;font-size:0.72rem;color:#bbb;">{{ r.word_count }}w</span>{% endif %}
-        </div>
-      </div>
-      <div class="stmt-text clamped" id="t-sr{{ loop.index }}">{{ r.statement_text }}</div>
-      {% if r.word_count and r.word_count > 60 %}
-      <button class="expand-btn" id="b-sr{{ loop.index }}" onclick="toggleText('sr{{ loop.index }}')">Show more ▼</button>
+  {% set party_slug = (r.party or 'Unknown') | replace(' ','_') | replace('(','') | replace(')','') | replace('/','_') | replace('-','_') %}
+  <div class="result-card">
+    <div class="result-meta">
+      <a class="result-speaker" href="/speaker/{{ r.name_normalized }}">
+        {{ r.speaker_raw | title }}
+      </a>
+      {% if r.party %}
+      <span class="result-party-badge party-{{ party_slug }}">{{ r.party }}</span>
       {% endif %}
-      {% if r.original_text %}
-      <div class="original-block" id="orig-sr{{ loop.index }}">
-        <div class="original-block-label">{{ r.original_language or 'Original' }}</div>
-        <div class="original-block-text clamped" id="ot-sr{{ loop.index }}">{{ r.original_text }}</div>
-        {% if r.original_text | length > 300 %}
-        <button class="expand-btn" id="ob-sr{{ loop.index }}" onclick="toggleOriginal('sr{{ loop.index }}')">Show full original ▼</button>
-        {% endif %}
-      </div>
+      <span class="result-date">{{ r.sitting_date }}</span>
+      {% if r.statement_type %}
+      <span class="result-type-badge">{{ r.statement_type }}</span>
+      {% endif %}
+      {% if r.constituency %}
+      <span class="result-date">{{ r.constituency }}</span>
       {% endif %}
     </div>
+    {% set full_text = r.statement_text or '' %}
+    {% set short_text = full_text[:400] %}
+    <div class="result-text {% if r.original_language and r.original_language != 'en' %}hindi{% endif %}"
+         id="rtext-{{ loop.index }}">{{ short_text }}{% if full_text|length > 400 %}…{% endif %}</div>
+    {% if full_text|length > 400 %}
+    <span class="result-expand" onclick="toggleExpand({{ loop.index }}, this, `{{ full_text | replace('`','\\`') | replace('\n',' ') }}`, `{{ short_text | replace('`','\\`') | replace('\n',' ') }}`)">
+      Show more ▾
+    </span>
+    {% endif %}
   </div>
   {% endfor %}
 
-  {% if total > results | length %}
-  <p style="text-align:center; margin-top:20px; font-family:sans-serif; font-size:0.85rem; color:#999;">
-    Showing {{ results | length }} of {{ total }} — refine your search to narrow down.
-  </p>
-  {% endif %}
-
   {% else %}
   <div class="empty-state">
-    <div class="icon">🔍</div>
-    <div>No matching statements found — try broader terms.</div>
+    <div class="big">🔍</div>
+    <div>No statements found for these filters.</div>
   </div>
   {% endif %}
 
-  {% else %}
-  <!-- Default state — topic threads -->
-  <div class="two-col">
-    <div class="main-col">
-      <div class="section-label">🔥 Active Topics (across all sessions)</div>
-      {% if trending %}
-      <div class="topics-bar" style="margin-bottom:24px;">
-        {% for t in trending %}
-        <a href="/search?q={{ t.topic | urlencode }}" class="topic-pill hot">{{ t.topic }} ({{ t.cnt }})</a>
-        {% endfor %}
-      </div>
-      {% endif %}
-
-      <div class="section-label" style="margin-top:8px;">Recent Sitting Days</div>
-      {% for d in recent_dates %}
-      <div class="card" style="margin-bottom:10px;">
-        <div class="card-body" style="display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <a href="/?date={{ d.sitting_date }}" style="font-weight:700; font-size:0.95rem; color:#0f2818;">{{ d.sitting_date }}</a>
-            <div style="font-family:sans-serif; font-size:0.78rem; color:#888; margin-top:2px;">{{ d.session_name }}</div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-family:sans-serif; font-size:0.8rem; color:#555;">{{ d.stmt_count }} statements</div>
-            <div style="font-family:sans-serif; font-size:0.75rem; color:#aaa;">{{ d.speaker_count }} speakers</div>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-    <div class="side-col">
-      <!-- Top speakers -->
-      <div class="widget">
-        <div class="widget-header">Top Speakers (all time)</div>
-        <div class="widget-body">
-          <ul class="widget-list">
-            {% for sp in top_speakers %}
-            <li>
-              <a href="/speaker/{{ sp.name_normalized | urlencode }}">{{ sp.name | title }}</a>
-              <span class="count">{{ sp.cnt }}</span>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
+  {% elif not mode or mode == 'date' %}
+  <div class="empty-state">
+    <div class="big">🏛</div>
+    <div>Pick a date, politician, party, or search term above</div>
+    <div style="margin-top:8px;font-size:0.78rem;color:#bbb;">
+      {{ all_dates | length }} dates · {{ all_speakers | length }} MPs · {{ all_parties | length }} parties
     </div>
   </div>
   {% endif %}
@@ -204,28 +411,25 @@
 
 {% block extra_js %}
 <script>
-function toggleText(id) {
-  const el  = document.getElementById('t-' + id);
-  const btn = document.getElementById('b-' + id);
-  if (!el) return;
-  if (el.classList.contains('clamped')) {
-    el.classList.remove('clamped');
-    btn.textContent = 'Show less ▲';
-  } else {
-    el.classList.add('clamped');
-    btn.textContent = 'Show more ▼';
-  }
+function switchMode(mode, btn) {
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.search-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + mode).classList.add('active');
+  btn.classList.add('active');
+  const url = new URL(window.location);
+  url.search = '?mode=' + mode;
+  history.replaceState({}, '', url);
 }
-function toggleOriginal(id) {
-  const el  = document.getElementById('ot-' + id);
-  const btn = document.getElementById('ob-' + id);
-  if (!el) return;
-  if (el.classList.contains('clamped')) {
-    el.classList.remove('clamped');
-    btn.textContent = 'Show less ▲';
+function toggleExpand(idx, btn, full, short) {
+  const el = document.getElementById('rtext-' + idx);
+  if (btn.dataset.expanded === '1') {
+    el.textContent = short + '…';
+    btn.textContent = 'Show more ▾';
+    btn.dataset.expanded = '0';
   } else {
-    el.classList.add('clamped');
-    btn.textContent = 'Show full original ▼';
+    el.textContent = full;
+    btn.textContent = 'Show less ▴';
+    btn.dataset.expanded = '1';
   }
 }
 </script>

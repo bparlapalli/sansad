@@ -33,3 +33,15 @@ env/
 *.swp
 *.swo
 
+# Logs
+*.log
+flask.out.log
+flask.err.log
+
+# Large exports / local scratch files
+export_for_ai.json
+sansad_recovered.sql
+sansad_new.db-journal
+test.txt
+copy
+

@@ -650,8 +650,61 @@ _DASHBOARD_TMPL = _ADMIN_BASE.replace(
     </div>
   </div>
 </div>
+
+<div class="panel" style="margin-top:24px;">
+  <div class="panel-header">&#129302; AI Generation</div>
+  <div style="display:flex;gap:32px;padding:16px 20px;flex-wrap:wrap;align-items:flex-start;">
+    <div style="flex:1;min-width:220px;">
+      <div style="font-family:sans-serif;font-size:0.78rem;font-weight:700;color:#444;margin-bottom:4px;">Date Digests</div>
+      <p style="font-family:sans-serif;font-size:0.78rem;color:#777;margin-bottom:10px;">Generate Claude-powered news summaries for all sitting dates that don&#39;t have one yet.</p>
+      <button class="btn" style="background:#0f2818;color:#fff;padding:6px 16px;font-size:0.82rem;" onclick="runAiJob(&#39;generate-digests&#39;)">&#9654; Generate Date Digests</button>
+    </div>
+    <div style="flex:1;min-width:220px;">
+      <div style="font-family:sans-serif;font-size:0.78rem;font-weight:700;color:#444;margin-bottom:4px;">Politician Profiles</div>
+      <p style="font-family:sans-serif;font-size:0.78rem;color:#777;margin-bottom:10px;">Generate AI-written bios for all MPs with parsed statements but no profile yet.</p>
+      <button class="btn" style="background:#0f2818;color:#fff;padding:6px 16px;font-size:0.82rem;" onclick="runAiJob(&#39;generate-profiles&#39;)">&#9654; Generate Politician Profiles</button>
+    </div>
+  </div>
+  <div id="ai-log-wrap" style="display:none;">
+    <div style="padding:6px 20px;background:#f5f3ee;border-top:1px solid #e4e0d8;font-family:sans-serif;font-size:0.72rem;color:#888;display:flex;justify-content:space-between;">
+      <span id="ai-log-status">Running&#8230;</span>
+      <button onclick="document.getElementById(&#39;ai-log-wrap&#39;).style.display=&#39;none&#39;" style="background:none;border:none;cursor:pointer;color:#999;font-size:0.8rem;">&#x2715;</button>
+    </div>
+    <pre id="ai-log" style="background:#1a1a1a;color:#d4d4d4;padding:14px 16px;font-family:monospace;font-size:0.74rem;max-height:220px;overflow-y:auto;margin:0;white-space:pre-wrap;word-break:break-all;"></pre>
+  </div>
+</div>
 {% endblock %}"""
-).replace("{% block extra_js %}{% endblock %}", "")
+).replace("{% block extra_js %}{% endblock %}", """{% block extra_js %}
+<script>
+function runAiJob(type) {
+  var wrap = document.getElementById('ai-log-wrap');
+  var log  = document.getElementById('ai-log');
+  var stat = document.getElementById('ai-log-status');
+  wrap.style.display = 'block';
+  log.textContent = '';
+  stat.textContent = 'Starting...';
+  fetch('/admin/api/' + type, {method: 'POST'})
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!data.job_id) { log.textContent = 'Failed to start job.'; return; }
+      stat.textContent = 'Running job ' + data.job_id + '...';
+      var es = new EventSource('/admin/api/stream/' + data.job_id);
+      es.onmessage = function(e) {
+        if (e.data === '[DONE]' || e.data === '[ERROR]') {
+          es.close();
+          stat.textContent = e.data === '[DONE]' ? 'Complete' : 'Error';
+          log.textContent += e.data + '\n';
+        } else {
+          log.textContent += e.data + '\n';
+          log.scrollTop = log.scrollHeight;
+        }
+      };
+      es.onerror = function() { es.close(); stat.textContent = 'Connection lost'; };
+    })
+    .catch(function(e) { log.textContent = 'Error: ' + e; });
+}
+</script>
+{% endblock %}""")
 
 
 @admin_bp.route("/")
@@ -1252,6 +1305,28 @@ def api_job(job_id: str):
     if not job:
         return jsonify({"error": "Job not found"}), 404
     return jsonify({k: v for k, v in job.items() if k not in ("process",)})
+
+
+# ── API — AI generation jobs ─────────────────────────────────────────────────
+
+@admin_bp.route("/api/generate-digests", methods=["POST"])
+def api_generate_digests():
+    force = request.json.get("force", False) if request.is_json else False
+    cmd = [sys.executable, "app/digest.py", "--all-dates"]
+    if force:
+        cmd.append("--force")
+    job_id = _start_job(cmd, cwd=_ROOT)
+    return jsonify({"job_id": job_id})
+
+
+@admin_bp.route("/api/generate-profiles", methods=["POST"])
+def api_generate_profiles():
+    force = request.json.get("force", False) if request.is_json else False
+    cmd = [sys.executable, "app/digest.py", "--all-profiles"]
+    if force:
+        cmd.append("--force")
+    job_id = _start_job(cmd, cwd=_ROOT)
+    return jsonify({"job_id": job_id})
 
 
 # ── API — SSE log stream ──────────────────────────────────────────────────────
