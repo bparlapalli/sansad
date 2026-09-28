@@ -25,35 +25,45 @@ sansad/
 │
 ├── parser/
 │   ├── pdf_parser.py        # Text extraction + speaker attribution + language detection
+│   ├── chunker.py           # Splits a statement into ~60-word search chunks (chunks_fts)
 │   ├── translator.py        # Sarvam AI (Hindi/regional → English)
-│   ├── pipeline.py          # Orchestrates parse + translate + store
+│   ├── pipeline.py          # Orchestrates parse + translate + chunk + store — THE live parse path
+│   ├── backfill_chunks.py   # One-time: chunk statements parsed before chunking existed
+│   ├── export_public_db.py  # Trims sansad.db to last N days → public.db (for deployment)
 │   └── test_sarvam.py       # Quick Sarvam API connectivity test (run locally)
 │
 ├── app/
 │   ├── app.py               # Flask app (registers all blueprints)
 │   ├── admin.py             # ✅ Admin blueprint — scraper, catalog, parser, AI generation
+│   │                         #    (never registered when APP_ENV=production — no auth of its own)
 │   ├── search_bp.py         # ✅ Search blueprint — date/politician/party/text modes
+│   ├── ingest_bp.py         # POST /ingest/db — token-gated endpoint that receives public.db
 │   ├── digest.py            # Claude API daily digest + politician profile generator
 │   ├── query.py             # Search functions (used by app + CLI)
 │   └── templates/           # Jinja2 HTML templates
 │       ├── base.html        # Shared masthead + nav
 │       ├── home.html        # Today's digest + proceedings
-│       ├── search.html      # Unified search (4 modes)
+│       ├── search.html      # Unified search (4 modes) — shows matching chunk, not full statement
+│       ├── how_to_use.html  # Public-facing "how to use this site" page
 │       ├── speaker.html     # MP profile + AI profile card
 │       ├── speakers_list.html # All MPs grid with filter
 │       ├── sessions.html    # Session overview
 │       ├── stats.html       # DB statistics
-│       ├── topic.html       # Topic deep-dive with timeline
+│       ├── topic.html       # Topic deep-dive with timeline (NOT yet chunked — see Known issues)
 │       ├── pdfs.html        # Registered PDF list
 │       └── news.html        # Latest news briefing
 │
 ├── main.py                  # Full pipeline entry point (scrape + parse + AI)
+├── daily_update.py           # Local daily job: scrape → parse+chunk → export_public_db → push_public_db
+├── push_public_db.py         # Sends public.db to the live site's /ingest/db (never via GitHub)
 ├── run_stats.py             # CLI stats dashboard (run from Windows cmd)
 ├── export_for_ai.py         # Export statements + top MPs to JSON for AI generation
 ├── seed_parties.py          # One-time seed: party affiliations into members table
 ├── ai_content.sql           # AI-generated digests + profiles (run in DB Browser)
+├── render.yaml               # Render web service config (build/start command, env vars)
 ├── pdfs/                    # Downloaded PDF files
-├── sansad.db                # SQLite database (do not commit)
+├── sansad.db                # SQLite database — full local archive (do not commit)
+├── public.db                # Trimmed export for deployment (do not commit — regenerate anytime)
 └── requirements.txt
 ```
 
@@ -62,6 +72,17 @@ so `from core.db import ...` works regardless of where you run from.
 
 **Note**: A legacy `db.py` exists at the project root (kept for `main.py` backward compat).
 The canonical schema lives in `core/db.py` — that is what the Flask app uses.
+
+**Import gotcha**: there's a root-level `parser.py` (legacy, primitive, no Hindi/CID support) *and* a
+`parser/` package — Python's import system resolves `from parser import parse_pdf_file` (used by `main.py`)
+to the **package** (`parser/__init__.py` → `parser.pipeline.parse_and_translate`), not the root file, even
+though the root file also defines a function with a similar name. Confirmed empirically — don't assume from
+filenames which one actually runs. The real live parse path for `main.py --parse-only` (and the Admin UI's
+Parser trigger, which just runs `main.py --parse-only` as a subprocess) is:
+`main.py` → `parser/__init__.py` → `parser/pipeline.py::parse_and_translate` → its own
+`_store_with_translations()` (NOT `parser/pdf_parser.py::store_statements`, which is a separate insert path
+only used when `pdf_parser.py` is invoked directly). Chunking (see below) is wired into `pipeline.py`'s store
+function for this reason.
 
 ---
 
@@ -115,6 +136,15 @@ python app/digest.py --all-dates             # generate all missing digests
 python app/digest.py --all-profiles          # generate all missing MP profiles
 python app/digest.py 2025-03-19 --force      # regenerate one digest
 python app/digest.py --member rahul-gandhi   # regenerate one profile
+
+# ── Backfill search chunks (one-time, only needed after upgrading old data) ──
+python parser/backfill_chunks.py             # chunk statements parsed before chunking existed
+
+# ── Daily local update + push to live site ────────────────────────────────────
+python daily_update.py                       # scrape → parse+chunk → export → push
+python daily_update.py --skip-scrape         # just re-parse/export/push
+python parser/export_public_db.py --days 30  # build public.db by hand
+python push_public_db.py                     # push public.db to LIVE_SITE_URL (needs .env)
 ```
 
 ---
@@ -162,6 +192,8 @@ python app/digest.py --member rahul-gandhi   # regenerate one profile
 | `member_history` | Party/constituency changes over time |
 | `catalog` | eparlib item index (doc_id, title, date, filename, download status) |
 | `statements_fts` | FTS5 virtual table over statements |
+| `statement_chunks` | ~60-word, sentence-safe slices of each statement — what search actually matches |
+| `chunks_fts` | FTS5 virtual table over statement_chunks |
 
 **name_normalized** in `members` strips honorifics (SHRI, SHRIMATI, DR., PROF., etc.) and lowercases.
 Always pass `member["name_normalized"]` (not `member["name"]`) to `search_by_speaker()`.
@@ -194,7 +226,7 @@ Always pass `member["name_normalized"]` (not `member["name"]`) to `search_by_spe
 | `lsd_18_VII_28-01-2026_original_corrected.pdf` | 7 | Hindi | ~10 | Presidential Address |
 | `lsd_18_VII_03-02-2026_original_corrected.pdf` | 7 | Hindi | ~320 | Budget Session |
 
-**Current DB state**: ~1,800+ statements across 16 sitting dates, 100+ members
+**Current DB state** (local `sansad.db`, 2026-09-28): 3,073+ statements, 54,500+ search chunks, 100+ members. The live site shows a trimmed ~30-day subset of this (see Deployment section).
 
 ---
 
@@ -212,6 +244,48 @@ All jobs run as background subprocesses, stdout streamed live to browser termina
 
 ---
 
+## Deployment — ✅ LIVE (2026-09-28)
+
+Live at **https://sansad-b039.onrender.com** (Render free tier). Unlisted — `robots.txt` disallows all,
+no password gate, not linked from anywhere public. Public "how to use" page at `/how-to-use`.
+
+**Hard rule: the full `sansad.db` never leaves the local machine, and never goes to GitHub in any form** —
+not committed, not as a Release asset, public or private. This was an explicit decision (protects the
+scraped/parsed dataset as the project's actual asset — a one-click full bulk download would defeat that even
+if gated). GitHub holds code only.
+
+**How data reaches the live site:**
+1. Locally: `main.py --all-sessions` / `playwright_scraper.py` scrapes new PDFs → `main.py --parse-only`
+   parses + chunks them into the full local `sansad.db` (unbounded history, grows forever, ~106MB and
+   counting as of this writing).
+2. `parser/export_public_db.py --days 30` copies **only** the last N days of statements (+ the members,
+   chunks, source_pdfs, digests, profiles they depend on) into a small standalone `public.db`. "Last N days"
+   is relative to the newest sitting date *in the data*, not wall-clock today — debate PDFs lag the real
+   calendar by months.
+3. `push_public_db.py` POSTs `public.db` directly to the live app's `/ingest/db` (bearer-token auth via
+   `INGEST_TOKEN`, matching value set in both local `.env` and the Render service's env vars). The endpoint
+   validates it's a real statements DB, then atomically swaps it in (`app/ingest_bp.py`).
+4. `daily_update.py` chains all of the above into one command, meant for a Windows Task Scheduler entry
+   (**not yet set up** — see Roadmap). Until then, run it by hand.
+
+**Render service config** (`render.yaml`):
+- `buildCommand: pip install -r requirements.txt`
+- `startCommand: python -m gunicorn app.app:app --bind 0.0.0.0:$PORT` — use `python -m gunicorn`, not bare
+  `gunicorn`; the bare binary wasn't resolvable on PATH in Render's venv even though pip install succeeded.
+- Env vars: `APP_ENV=production` (hides `/admin`), `SANSAD_DB_PATH=/opt/render/project/src/public.db`,
+  `INGEST_TOKEN` (set manually in the dashboard, `sync: false` — never committed).
+- **No persistent disk.** Free tier, ephemeral filesystem. Data survives idle spin-down/spin-up fine; it's
+  only wiped by an actual redeploy (a `git push` to `main`, or a manual redeploy). Re-run `push_public_db.py`
+  once after any code deploy to refresh the data.
+- `/admin` is only registered in `app/app.py` when `APP_ENV != production` — it spawns local subprocesses
+  and has zero auth of its own, must never be reachable in production.
+
+**Old `.github/workflows/scraper.yml` is disabled** (schedule removed, `workflow_dispatch` only) — it used
+the legacy request-based `scraper.py` (blocked by eparlib) and committed `sansad.db` to git (harmless only
+because `*.db` is gitignored — the intent was wrong regardless, now that data is local-only by policy).
+
+---
+
 ## Known issues / decisions
 
 - **eparlib blocks direct requests** — Use playwright_scraper.py (real Chromium browser).
@@ -220,12 +294,23 @@ All jobs run as background subprocesses, stdout streamed live to browser termina
 - **Session 7 dates** — Jan 28–29 2026 PDFs exist but dates not yet in sessions_data.py. Add them.
 - **Legacy db.py at root** — `sansad/db.py` is a legacy file used by `main.py`. Flask uses `core/db.py`. Both point to the same `sansad.db`. Do not delete the root `db.py` until `main.py` imports are updated to `from core.db import ...`.
 - **virtiofs (Cowork sandbox)** — `core/db.py` detects virtiofs on Linux/macOS and uses a temp copy. On Windows it always reads sansad.db directly. The Cowork sandbox cannot read the Windows-format WAL-mode DB directly.
+- **`/topic` page not yet chunked** — `search.html` (the `/search` route) shows matching `statement_chunks`, but `topic.html` (`/topic/<topic>`) still does its own FTS match against whole statements and CSS-clamps the display. Same underlying "wall of text" issue, just not fixed there yet — wasn't in scope for the search fix, flagged as a follow-up.
+- **`sansad.db` is not gitignored by accident** — it (and `public.db`) must stay gitignored. If either ever shows up in `git status` as trackable, something is wrong; do not commit them (see Deployment § hard rule above).
 
 ---
 
 ## Roadmap
 
+### Done (2026-09-28 session)
+- [x] Chunk-level search (`statement_chunks` + `chunks_fts`) — search shows the matching paragraph, not the whole speech
+- [x] Live deployment on Render (free tier) — see Deployment section above
+- [x] Local-only full DB + trimmed rolling-window public export/push pipeline
+- [x] `/admin` gated out of production; `robots.txt` disallow-all
+- [x] Public "how to use this site" page (`/how-to-use`, mirrored in `docs/HOW_TO_USE.md`)
+
 ### In progress / next
+- [ ] **Set up Windows Task Scheduler** to run `daily_update.py` automatically — currently run by hand
+- [ ] Apply chunking to `/topic` page too (currently only `/search` shows chunks — see Known issues)
 - [ ] Fix Hindi PDF parser — extract text from Devanagari PDFs (pdfminer/tesseract path)
 - [ ] Test Sarvam AI translation locally (`python parser/test_sarvam.py`)
 - [ ] Add Session 7 sitting dates (Jan 28–29 2026) to sessions_data.py
@@ -252,7 +337,6 @@ All jobs run as background subprocesses, stdout streamed live to browser termina
 
 ### Later
 - [ ] Migrate SQLite → Postgres (Neon) for production
-- [ ] Deploy on Railway/Render
 - [ ] REST API (FastAPI)
 - [ ] Historical sessions (1st–17th Lok Sabha)
 - [ ] Courts + Tenders data cross-joins

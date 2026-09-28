@@ -1,0 +1,58 @@
+{% extends "base.html" %}{% block title %}How to Use{% endblock %}
+{% block content %}
+<div class="page-container" style="max-width:820px;margin:0 auto;">
+
+  <div class="digest-hero">
+    <h2>How to use ParamaSrota</h2>
+    <div class="meta">A searchable record of what was actually said on the floor of the Lok Sabha</div>
+    <div class="digest-body">
+      <p>ParamaSrota parses Lok Sabha debate PDFs into individual, attributed statements — who said what, on
+      which date, on which subject — and makes them searchable instead of leaving them buried in a scanned
+      transcript.</p>
+    </div>
+  </div>
+
+  <div class="section-label">Search modes</div>
+  <div class="card"><div class="card-body">
+    <p style="margin-bottom:10px"><strong>By Date</strong> — pick a sitting day and see everything said that day, in order.</p>
+    <p style="margin-bottom:10px"><strong>Politician</strong> — pull up every statement from a specific MP, optionally combined with a keyword.</p>
+    <p style="margin-bottom:10px"><strong>Party</strong> — see all MPs from a party and what they've said, optionally filtered by date or keyword.</p>
+    <p style="margin-bottom:0"><strong>Free Text</strong> — search across every statement for a word or phrase (a bill name, a scheme, a topic).</p>
+  </div></div>
+
+  <div class="section-label" style="margin-top:24px">Reading a result</div>
+  <div class="card"><div class="card-body">
+    <p style="margin-bottom:10px">A speech in the House can run to hundreds of words covering several subjects. When you search by keyword,
+    each result shows the specific passage that matched — not the whole speech — so you're not hunting through
+    a wall of text to find why it came up.</p>
+    <p style="margin-bottom:0">Click <strong>"Show full statement"</strong> under a result to expand it to the complete remarks, with full
+    speaker, date, and page context.</p>
+  </div></div>
+
+  <div class="section-label" style="margin-top:24px">What's in the data right now</div>
+  <div class="card"><div class="card-body">
+    <p style="margin-bottom:0">This is an early, actively-growing dataset. It currently covers recent sitting days rather than the full
+    parliamentary record — older sessions are being added over time. If a date or debate you're looking for
+    isn't here yet, it's likely still in the pipeline.</p>
+  </div></div>
+
+  <div class="section-label" style="margin-top:24px">Other pages</div>
+  <div class="card"><div class="card-body">
+    <p style="margin-bottom:10px"><strong>Today</strong> — the latest sitting day's summary and proceedings.</p>
+    <p style="margin-bottom:10px"><strong>News</strong> — a running briefing of recent parliamentary activity.</p>
+    <p style="margin-bottom:10px"><strong>PDFs</strong> — the source debate documents that have been processed so far.</p>
+    <p style="margin-bottom:10px"><strong>Speakers</strong> — every MP with a statement in the dataset, with a profile page each.</p>
+    <p style="margin-bottom:0"><strong>Sessions</strong> — an overview of Lok Sabha sessions and their sitting dates.</p>
+  </div></div>
+
+  <div class="section-label" style="margin-top:24px">Where this comes from</div>
+  <div class="card"><div class="card-body">
+    <p style="margin-bottom:0">Source PDFs are published by the Lok Sabha Secretariat at
+    <a href="https://eparlib.sansad.in" target="_blank">eparlib.sansad.in</a>. Statements are extracted and
+    attributed automatically, non-English statements are translated where noted, and daily summaries are
+    AI-generated from the parsed statements — treat them as a starting point for finding the primary source,
+    not a substitute for it.</p>
+  </div></div>
+
+</div>
+{% endblock %}

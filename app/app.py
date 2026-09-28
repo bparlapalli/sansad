@@ -44,9 +44,19 @@ app.register_blueprint(search_bp)
 app.register_blueprint(ingest_bp)
 
 
+@app.context_processor
+def _inject_env_flags():
+    return {"is_production": os.getenv("APP_ENV") == "production"}
+
+
 @app.route("/robots.txt")
 def robots_txt():
     return "User-agent: *\nDisallow: /\n", 200, {"Content-Type": "text/plain"}
+
+
+@app.route("/how-to-use")
+def how_to_use():
+    return render_template("how_to_use.html", active_tab="how_to_use", ticker_text=_ticker())
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
