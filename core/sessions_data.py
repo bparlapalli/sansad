@@ -192,6 +192,47 @@ SESSIONS_18 = [
             "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08",
         ],
     },
+    {
+        "lok_sabha_no":  18,
+        "session_no":    8,
+        "session_name":  "Monsoon Session 2026",
+        "session_type":  SESSION_TYPE_MONSOON,
+        "start_date":    "2026-07-20",
+        "end_date":      "2026-08-13",
+        "total_sittings": 19,
+        "notes": (
+            "Confirmed by Ministry of Parliamentary Affairs: Jul 20 - Aug 13, 2026, "
+            "19 sittings. sitting_dates below are all weekdays in that window (19 of "
+            "them, matching the confirmed sitting count exactly) — not yet verified "
+            "against actual eparlib PDFs, so treat as a strong estimate, not confirmed "
+            "per-day. No confirmed eparlib doc_id anchor yet for this session."
+        ),
+        "sitting_dates": [
+            "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24",
+            "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31",
+            "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07",
+            "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13",
+        ],
+    },
+    {
+        "lok_sabha_no":  18,
+        "session_no":    9,
+        "session_name":  "Winter Session 2026",
+        "session_type":  SESSION_TYPE_WINTER,
+        "start_date":    "2026-12-01",
+        "end_date":      "2026-12-19",
+        "total_sittings": None,   # to be confirmed
+        "notes": (
+            "Scheduled Dec 1-19, 2026 per newsonair.gov.in. Hasn't started yet as of "
+            "2026-09-28 — sitting_dates below are placeholder weekdays, not confirmed. "
+            "Nothing to scrape here until the session actually begins."
+        ),
+        "sitting_dates": [
+            "2026-12-01", "2026-12-02", "2026-12-03", "2026-12-04",
+            "2026-12-07", "2026-12-08", "2026-12-09", "2026-12-10", "2026-12-11",
+            "2026-12-14", "2026-12-15", "2026-12-16", "2026-12-17", "2026-12-18",
+        ],
+    },
 ]
 
 # ── All sessions (expand when adding Rajya Sabha or older Lok Sabhas) ─────────

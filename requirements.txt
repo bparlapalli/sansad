@@ -18,6 +18,11 @@ anthropic>=0.25         # Claude API (digest.py) — needs ANTHROPIC_API_KEY
 # Until then, translator.py uses requests directly with SARVAM_API_KEY
 
 # ── Playwright scraper ────────────────────────────────────────────────────────
-playwright>=1.40        # Real browser scraper for eparlib.sansad.in
+playwright>=1.40        # Real browser scraper for eparlib.sansad.in and PIB
 #   Install: pip install playwright && playwright install chromium
-#   Used by: scrapers/parliament/playwright_scraper.py
+#   Used by: scrapers/parliament/playwright_scraper.py, scrapers/pib/explore_pib.py
+
+# ── YouTube transcript sourcing (exploratory) ─────────────────────────────────
+yt-dlp>=2024.1                # Lists a channel's recent uploads without downloading video
+youtube-transcript-api>=0.6   # Pulls existing captions for a video id (no API key needed)
+#   Used by: scrapers/youtube/explore_transcripts.py
