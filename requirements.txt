@@ -5,6 +5,8 @@ urllib3>=2.0
 
 # ── Web app ───────────────────────────────────────────────────────────────────
 flask>=3.0              # app/ news + admin site
+gunicorn>=21.0           # production WSGI server (Render)
+python-dotenv>=1.0       # loads .env for local scripts (push_public_db.py etc.)
 
 # ── Status dashboard (legacy) ─────────────────────────────────────────────────
 fastapi>=0.110          # status.py dashboard

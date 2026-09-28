@@ -21,7 +21,9 @@ from pathlib import Path
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 _ROOT    = Path(__file__).resolve().parent.parent
-DB_PATH  = _ROOT / "sansad.db"          # canonical location (may be virtiofs)
+# SANSAD_DB_PATH overrides the DB location — used in production (Render) to
+# point at a small, ingested public.db instead of the full local sansad.db.
+DB_PATH  = Path(os.getenv("SANSAD_DB_PATH", str(_ROOT / "sansad.db")))
 _username = os.getenv("USERNAME") or os.getenv("USER") or "default"
 _WORK_DB = Path(tempfile.gettempdir()) / f"sansad_work_{_username}.db"
 
@@ -254,6 +256,47 @@ def init_db():
         AFTER INSERT ON statements BEGIN
             INSERT INTO statements_fts(rowid, statement_text, speaker_raw, topic)
             VALUES (new.id, new.statement_text, new.speaker_raw, new.topic);
+        END
+    """)
+
+    # ── Statement chunks — paragraph-sized slices of a statement for search ───
+    # A single statement (one speaker turn) can run to a full speech covering
+    # several subjects. Chunks give search a unit small enough that the match
+    # is visible in the snippet, while statement_id still links back to the
+    # full text and its speaker/date/page context.
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS statement_chunks (
+            id              INTEGER PRIMARY KEY AUTOINCREMENT,
+            statement_id    INTEGER NOT NULL REFERENCES statements(id),
+            chunk_index     INTEGER NOT NULL,
+            chunk_text      TEXT    NOT NULL,
+            word_count      INTEGER,
+            UNIQUE(statement_id, chunk_index)
+        )
+    """)
+    c.execute("CREATE INDEX IF NOT EXISTS idx_chunks_statement ON statement_chunks(statement_id)")
+
+    c.execute("""
+        CREATE VIRTUAL TABLE IF NOT EXISTS chunks_fts
+        USING fts5(
+            chunk_text,
+            content='statement_chunks',
+            content_rowid='id'
+        )
+    """)
+
+    c.execute("""
+        CREATE TRIGGER IF NOT EXISTS chunks_ai
+        AFTER INSERT ON statement_chunks BEGIN
+            INSERT INTO chunks_fts(rowid, chunk_text)
+            VALUES (new.id, new.chunk_text);
+        END
+    """)
+    c.execute("""
+        CREATE TRIGGER IF NOT EXISTS chunks_ad
+        AFTER DELETE ON statement_chunks BEGIN
+            INSERT INTO chunks_fts(chunks_fts, rowid, chunk_text)
+            VALUES ('delete', old.id, old.chunk_text);
         END
     """)
 

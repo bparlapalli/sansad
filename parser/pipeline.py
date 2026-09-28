@@ -35,6 +35,7 @@ from parser.pdf_parser import (
     store_statements, get_or_create_member,
 )
 from parser.translator import batch_translate
+from parser.chunker import store_chunks
 
 
 def get_pending_pdfs() -> list[dict]:
@@ -178,6 +179,7 @@ def _store_with_translations(conn, statements: list[dict], pdf_record: dict) -> 
             stored_lang,
             stmt["word_count"],
         ))
+        store_chunks(conn, c.lastrowid, stored_text)
         count += 1
 
     conn.commit()

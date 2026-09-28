@@ -34,6 +34,7 @@ _ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_ROOT))
 
 from core.db import get_connection
+from parser.chunker import store_chunks
 
 # ── Devanagari Unicode range ──────────────────────────────────────────────────
 DEVANAGARI_RE = re.compile(r'[\u0900-\u097F]')
@@ -380,6 +381,7 @@ def store_statements(conn: sqlite3.Connection, statements: list[dict],
             stmt["language"],
             stmt["word_count"],
         ))
+        store_chunks(conn, c.lastrowid, stmt["statement_text"])
         count += 1
 
     conn.commit()

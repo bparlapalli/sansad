@@ -18,8 +18,8 @@ sys.path.insert(0, str(_ROOT))
 
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from core.db import get_connection, init_db
-from app.admin import admin_bp
 from app.search_bp import search_bp
+from app.ingest_bp import ingest_bp
 from app.query import (
     get_stats, get_speakers_list, get_latest_dates,
     get_statements_for_date, get_statements_for_topic,
@@ -32,8 +32,21 @@ logging.basicConfig(level=logging.INFO)
 init_db()
 
 app = Flask(__name__, template_folder=str(Path(__file__).parent / "templates"))
-app.register_blueprint(admin_bp)
+
+# admin_bp spawns local subprocesses (scraper/parser against main.py + pdfs/)
+# and has no auth of its own ("localhost-only" by design) — never register it
+# in production. APP_ENV=production is set explicitly in the Render env.
+if os.getenv("APP_ENV") != "production":
+    from app.admin import admin_bp
+    app.register_blueprint(admin_bp)
+
 app.register_blueprint(search_bp)
+app.register_blueprint(ingest_bp)
+
+
+@app.route("/robots.txt")
+def robots_txt():
+    return "User-agent: *\nDisallow: /\n", 200, {"Content-Type": "text/plain"}
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────

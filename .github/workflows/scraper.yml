@@ -1,9 +1,18 @@
 name: Daily Lok Sabha Scraper
 
+# DISABLED (2026-09-28): scraping + parsing now run locally on a schedule
+# (Task Scheduler -> main.py --all-sessions / --parse-only, then
+# parser/export_public_db.py + push_public_db.py to the live site).
+# Two reasons this stopped being the right place for it:
+#   1. It called the legacy request-based scraper.py, which eparlib blocks —
+#      the working scraper (Playwright) lives in scrapers/parliament/.
+#   2. The full sansad.db is a deliberately local-only asset now; it must
+#      never be committed to GitHub, which the "Commit updated sansad.db"
+#      step below did (harmlessly, since sansad.db is gitignored — but the
+#      intent was wrong regardless).
+# Kept for reference; workflow_dispatch still works if you want to run it
+# manually against a fixed-up scraper step in the future.
 on:
-  schedule:
-    # Runs at 02:00 UTC daily (7:30 AM IST)
-    - cron: '0 2 * * *'
   workflow_dispatch:
 
 jobs:

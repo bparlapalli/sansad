@@ -186,11 +186,12 @@ def full_text_search(query_text: str, speaker: str = None,
             SELECT s.speaker_raw, s.sitting_date, s.session_no,
                    s.statement_type, s.statement_text, s.original_text,
                    s.word_count, m.constituency, m.name_normalized, m.party,
-                   s.original_language
-            FROM statements_fts
-            JOIN statements s ON statements_fts.rowid = s.id
-            JOIN members m    ON s.member_id = m.id
-            WHERE statements_fts MATCH ?
+                   s.original_language, ch.chunk_text
+            FROM chunks_fts
+            JOIN statement_chunks ch ON chunks_fts.rowid = ch.id
+            JOIN statements s        ON ch.statement_id  = s.id
+            JOIN members m           ON s.member_id      = m.id
+            WHERE chunks_fts MATCH ?
         """
         params = [query_text]
     else:
@@ -369,11 +370,12 @@ def search_by_party(party: str, date_str: str = None, query_text: str = None,
             SELECT s.speaker_raw, s.sitting_date, s.session_no,
                    s.statement_type, s.statement_text, s.original_text,
                    s.word_count, m.name_normalized, m.constituency, m.party,
-                   s.original_language
-            FROM statements_fts
-            JOIN statements s ON statements_fts.rowid = s.id
-            JOIN members m    ON s.member_id = m.id
-            WHERE statements_fts MATCH ? AND m.party = ?
+                   s.original_language, ch.chunk_text
+            FROM chunks_fts
+            JOIN statement_chunks ch ON chunks_fts.rowid = ch.id
+            JOIN statements s        ON ch.statement_id  = s.id
+            JOIN members m           ON s.member_id      = m.id
+            WHERE chunks_fts MATCH ? AND m.party = ?
         """
         params = [query_text, party]
     else:

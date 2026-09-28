@@ -378,6 +378,14 @@
       {% endif %}
     </div>
     {% set full_text = r.statement_text or '' %}
+    {% if r.chunk_text %}
+    {% set short_text = r.chunk_text %}
+    <div class="result-text {% if r.original_language and r.original_language != 'en' %}hindi{% endif %}"
+         id="rtext-{{ loop.index }}">{{ short_text }}</div>
+    <span class="result-expand" onclick="toggleExpandChunk({{ loop.index }}, this, `{{ full_text | replace('`','\\`') | replace('\n',' ') }}`, `{{ short_text | replace('`','\\`') | replace('\n',' ') }}`)">
+      Show full statement ▾
+    </span>
+    {% else %}
     {% set short_text = full_text[:400] %}
     <div class="result-text {% if r.original_language and r.original_language != 'en' %}hindi{% endif %}"
          id="rtext-{{ loop.index }}">{{ short_text }}{% if full_text|length > 400 %}…{% endif %}</div>
@@ -385,6 +393,7 @@
     <span class="result-expand" onclick="toggleExpand({{ loop.index }}, this, `{{ full_text | replace('`','\\`') | replace('\n',' ') }}`, `{{ short_text | replace('`','\\`') | replace('\n',' ') }}`)">
       Show more ▾
     </span>
+    {% endif %}
     {% endif %}
   </div>
   {% endfor %}
@@ -425,6 +434,19 @@ function toggleExpand(idx, btn, full, short) {
   if (btn.dataset.expanded === '1') {
     el.textContent = short + '…';
     btn.textContent = 'Show more ▾';
+    btn.dataset.expanded = '0';
+  } else {
+    el.textContent = full;
+    btn.textContent = 'Show less ▴';
+    btn.dataset.expanded = '1';
+  }
+}
+
+function toggleExpandChunk(idx, btn, full, short) {
+  const el = document.getElementById('rtext-' + idx);
+  if (btn.dataset.expanded === '1') {
+    el.textContent = short;
+    btn.textContent = 'Show full statement ▾';
     btn.dataset.expanded = '0';
   } else {
     el.textContent = full;
