@@ -37,6 +37,12 @@ from pathlib import Path
 _ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_ROOT))
 
+try:  # use the OS certificate store — Python's bundled CAs fail on some Windows setups and
+    import truststore  # on sites that omit their intermediate cert (same fix as scrapers/pib).
+    truststore.inject_into_ssl()
+except ImportError:
+    pass
+
 from core.db import get_connection, init_db, sync_db  # noqa: E402
 
 COUNTING = {"news", "research", "official_statement", "dataset"}
@@ -87,6 +93,8 @@ def fetch(source: dict, cache_dir: Path, offline: bool) -> tuple[str | None, str
         r = requests.get(source["url"], timeout=30, headers={"User-Agent": UA})
     except requests.exceptions.ProxyError as e:
         return None, "blocked_env", f"proxy/egress refused: {e.__class__.__name__}"
+    except requests.exceptions.SSLError as e:  # certificate problem — a fault to report, never bypassed
+        return None, "tls_error", f"SSLError: {str(e)[:120]}"
     except Exception as e:  # network down, DNS, TLS …
         return None, "blocked_env", f"{e.__class__.__name__}: {str(e)[:120]}"
     if r.status_code in (401, 407):
