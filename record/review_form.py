@@ -46,7 +46,8 @@ def human_date(d: str | None, precision: str) -> str:
             return d[:4]
         if precision == "month" or len(d) == 7:
             return date.fromisoformat(d[:7] + "-01").strftime("%b %Y")
-        return date.fromisoformat(d[:10]).strftime("%-d %b %Y") + (" (approx.)" if precision == "approx" else "")
+        dt = date.fromisoformat(d[:10])   # "%-d" isn't supported by Windows' strftime → build the day by hand
+        return f"{dt.day} {dt.strftime('%b %Y')}" + (" (approx.)" if precision == "approx" else "")
     except ValueError:
         return d
 
