@@ -38,9 +38,9 @@ Consequences, following the brief's rule that there's no node without a located 
 (the founder's Windows box):
 
 ```bash
-python record/load.py data/hyderabad        # into sansad.db
-python record/verify.py data/hyderabad      # fetch, cache, locate, grade
-python record/wiki.py data/hyderabad/wiki --story hyd-post-1
+python record/load.py data/research/hyderabad        # into sansad.db
+python record/verify.py data/research/hyderabad      # fetch, cache, locate, grade
+python record/wiki.py data/research/hyderabad/wiki --story hyd-post-1
 ```
 
 For each span reported "paraphrase only; closest sentence …", paste the real passage into the
@@ -52,8 +52,8 @@ rerun here.
 
 The repo is public and the brief says don't publish, so the research bundle, DRAFT v0 and wiki
 stubs are in the **private** repo `bparlapalli/Sansad_research` (`hyderabad/`, pushed
-2026-09-29). Put it at `sansad/data/hyderabad/` (gitignored here) to use it with the code in
-this repo. `record.db` is never committed; `record/load.py` rebuilds it.
+2026-09-29). Clone it to `sansad/data/research/` (gitignored here); bundles are then at
+`data/research/<story>/`. Task board, handoffs and worker IDs live in its `coord/`. `record.db` is never committed; `record/load.py` rebuilds it.
 
 ### What was collected
 

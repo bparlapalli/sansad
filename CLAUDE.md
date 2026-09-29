@@ -397,7 +397,9 @@ because `*.db` is gitignored — the intent was wrong regardless, now that data 
   The single-file UI prototype was **rejected as unusable** by the founder (2026-09-28); keep the JSON
   schema, redesign the UI. Not yet in the DB or Flask app.
 - **Private research repo** — `bparlapalli/Sansad_research` (PRIVATE) holds research bundles,
-  drafts, wiki stubs and review forms (e.g. `hyderabad/`). Clone it into `data/` here (gitignored).
+  drafts, wiki stubs, review forms (e.g. `hyderabad/`) and the coordination system for people and
+  agents (`coord/`: roster of worker IDs, task board, meetings, handoffs — protocol in its CLAUDE.md).
+  Clone it to `data/research/` here (gitignored).
   Never copy its contents into this public repo. Hyderabad post status: `docs/logs/hyderabad-post.md`.
 - **Strategy** — `docs/PRODUCT_STRATEGY.md`: both reviews say the product is sourced, party-dated quotes
   (+ alerts), not the hidden-links map; hypotheses stay internal; prove a paid pilot by day 90.
