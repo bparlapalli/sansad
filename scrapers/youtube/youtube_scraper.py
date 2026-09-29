@@ -117,8 +117,14 @@ def match_person(title: str, people):
     return best[1] if best else None
 
 
+COOKIES_FROM = None   # set by --cookies-from-browser (e.g. "firefox")
+
+
 def _ydl(**extra):
     opts = {"quiet": True, "no_warnings": True, "skip_download": True}
+    if COOKIES_FROM:
+        # Logged-in requests get far looser caption rate limits than anonymous ones.
+        opts["cookiesfrombrowser"] = (COOKIES_FROM,)
     opts.update(extra)
     return yt_dlp.YoutubeDL(opts)
 
@@ -415,8 +421,13 @@ def main():
     ap.add_argument("--limit", type=int, help="Max videos to fetch this run")
     ap.add_argument("--english", action="store_true",
                     help="Also store YouTube's English auto-translation (2x caption requests)")
+    ap.add_argument("--cookies-from-browser", metavar="BROWSER",
+                    help="Use this browser's YouTube login (firefox works best on Windows; "
+                         "Chrome/Edge cookie encryption usually blocks this)")
     ap.add_argument("--status", action="store_true")
     args = ap.parse_args()
+    global COOKIES_FROM
+    COOKIES_FROM = args.cookies_from_browser
 
     init_db()
     conn = get_connection()
