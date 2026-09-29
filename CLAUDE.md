@@ -29,6 +29,13 @@ sansad/
 │       ├── youtube_scraper.py   # ✅ list channel tabs → fetch metadata + captions → media_items/media_chunks
 │       └── explore_transcripts.py # Original feasibility probe — superseded, kept for reference
 │
+├── record/                  # The Record (docs/STORY_ENGINE.md): sourced entities, dated attrs, nodes, edges
+│   ├── load.py              # load a research bundle (JSON under data/, private) into rec_* tables
+│   ├── verify.py            # verifier: fetch source, locate EXACT span, grade (only place grades are set)
+│   ├── wiki.py              # generate private wiki stubs from rec_* tables
+│   ├── review_form.py       # build a Google Apps Script → Google Form for non-technical reviewers
+│   └── import_reviews.py    # Form CSV export → rec_reviews (+ founder to-do list)
+│
 ├── core/party_registry.py   # WHO we track off-floor: parties, people, dated affiliations, accounts (edit + --seed)
 ├── core/sources.py          # Source registry — feeds /feed and /t/<topic> (see Known issues § Multi-source)
 ├── parser/
@@ -348,6 +355,13 @@ because `*.db` is gitignored — the intent was wrong regardless, now that data 
   in both automatically. Only a source-specific browse page (like `/pib`) needs its own route in
   `app/feed_bp.py`. To add a source: scraper → table (+FTS with triggers) → register in `core/sources.py`
   → add its rows to `export_public_db.py` → add a step to `daily_update.py`.
+- **Private `/draft` section (`app/draft_bp.py`)** — serves a research bundle (draft post, claims/verification
+  page, wiki stubs) for a handful of reviewers. The content is **not in this repo**: `push_research.py`
+  zips it from the private research repo (`data/research/`, gitignored) and POSTs it to `/ingest/research`
+  (same `INGEST_TOKEN` as the DB push); the server keeps it in an ephemeral folder next to the DB, so a
+  redeploy wipes it → re-run `push_research.py` (like `push_public_db.py`). **Open by default** (hidden,
+  unlinked, noindex — founder's decision); set `DRAFT_PASSWORD` in the Render dashboard to lock it.
+  Never commit research content here.
 - **PIB in production** — `export_public_db.py` copies fetched `pib_releases` for the last N days
   (window measured from the newest PIB release, not the debate lag); `daily_update.py` scrapes the last 3
   days of PIB each run. Historical backfill stays local until we decide what the live site should hold.
@@ -389,6 +403,11 @@ because `*.db` is gitignored — the intent was wrong regardless, now that data 
   claim / internal hypothesis), evidence computed from independent sources, everything-is-a-node linking.
   The single-file UI prototype was **rejected as unusable** by the founder (2026-09-28); keep the JSON
   schema, redesign the UI. Not yet in the DB or Flask app.
+- **Private research repo** — `bparlapalli/Sansad_research` (PRIVATE) holds research bundles,
+  drafts, wiki stubs, review forms (e.g. `hyderabad/`) and the coordination system for people and
+  agents (`coord/`: roster of worker IDs, task board, meetings, handoffs — protocol in its CLAUDE.md).
+  Clone it to `data/research/` here (gitignored).
+  Never copy its contents into this public repo. Hyderabad post status: `docs/logs/hyderabad-post.md`.
 - **Strategy** — `docs/PRODUCT_STRATEGY.md`: both reviews say the product is sourced, party-dated quotes
   (+ alerts), not the hidden-links map; hypotheses stay internal; prove a paid pilot by day 90.
 - **`sansad.db` is not gitignored by accident** — it (and `public.db`) must stay gitignored. If either ever shows up in `git status` as trackable, something is wrong; do not commit them (see Deployment § hard rule above).

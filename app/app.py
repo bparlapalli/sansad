@@ -21,6 +21,7 @@ from core.db import get_connection, init_db
 from app.search_bp import search_bp
 from app.ingest_bp import ingest_bp
 from app.feed_bp import feed_bp
+from app.draft_bp import draft_bp
 from app.query import (
     get_stats, get_speakers_list, get_latest_dates,
     get_statements_for_date, get_statements_for_topic,
@@ -44,6 +45,16 @@ if os.getenv("APP_ENV") != "production":
 app.register_blueprint(search_bp)
 app.register_blueprint(ingest_bp)
 app.register_blueprint(feed_bp)
+app.register_blueprint(draft_bp)
+
+# Session cookies (used only by the password-protected /draft section). Derived from secrets that
+# already exist in the environment, so no extra config is needed; SECRET_KEY overrides it.
+import hashlib
+app.secret_key = os.getenv("SECRET_KEY") or hashlib.sha256(
+    ("paramasrota-session|" + (os.getenv("DRAFT_PASSWORD") or "") + "|" + (os.getenv("INGEST_TOKEN") or "")).encode()
+).hexdigest()
+app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE="Lax",
+                  SESSION_COOKIE_SECURE=os.getenv("APP_ENV") == "production")
 
 
 @app.context_processor
