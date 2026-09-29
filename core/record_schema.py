@@ -29,7 +29,7 @@ RECORD_DDL = [
         title            TEXT,
         publisher        TEXT,                      -- 'Govt of Telangana, MA&UD', 'The Hindu'
         independence_key TEXT,                      -- same key = not independent (one outlet / one wire story)
-        source_kind      TEXT NOT NULL,             -- primary | court | official_statement | news | research | listing | party_statement | reference
+        source_kind      TEXT NOT NULL,             -- primary | court | official_statement | news | research | dataset | listing | blog | party_statement | reference
         published_date   TEXT,                      -- ISO date if known
         retrieved_at     TEXT,                      -- when WE last fetched it (NULL = never fetched)
         discovered_via   TEXT,                      -- 'web_search', 'manual', 'sansad.db'
@@ -67,6 +67,7 @@ RECORD_DDL = [
         date_precision TEXT DEFAULT 'day',          -- day | month | year | approx
         source_id      TEXT REFERENCES rec_sources(id),
         span_text      TEXT,                        -- passage that supports it
+        span_is_verbatim INTEGER NOT NULL DEFAULT 0,
         span_status    TEXT NOT NULL DEFAULT 'unlocated',  -- unlocated | located | not_found | source_unreachable
         evidence_grade TEXT,                        -- confirmed | reported | claimed | NULL (unverified)
         recorded_at    TEXT DEFAULT (datetime('now')),

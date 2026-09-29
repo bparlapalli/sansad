@@ -10,7 +10,7 @@ not public until the founder publishes. Bundle files:
   sources.json   [{id, url, title, publisher, independence_key, source_kind,
                    published_date, discovered_via, access, access_notes, terms_notes}]
   entities.json  [{id, type, name, aliases[], summary,
-                   attrs: [{attr, value, valid_from, valid_to, precision, source, span}]}]
+                   attrs: [{attr, value, valid_from, valid_to, precision, source, span, verbatim}]}]
   nodes.json     [{id, story, section, date, precision, actor, action, decision_text,
                    role, weight, intent, counterfactual, comparison, layer, claimant,
                    entities: [[entity_id, relation]], sources: [{source, span, verbatim}]}]
@@ -37,7 +37,7 @@ from core.db import get_connection, init_db, sync_db  # noqa: E402
 ROLES   = {"deliberate_bet", "spillover", "unblocker", "roadblock", "wildcard"}
 WEIGHTS = {"essential", "accelerant", "minor"}
 KINDS   = {"primary", "court", "official_statement", "news", "research",
-           "listing", "party_statement", "reference", "dataset"}
+           "listing", "party_statement", "reference", "dataset", "blog"}
 
 
 def _read(bundle: Path, name: str) -> list:
@@ -58,7 +58,9 @@ def validate(bundle: Path) -> list[str]:
             errs.append(f"source {s['id']}: bad source_kind {s.get('source_kind')!r}")
     for e in entities.values():
         for a in e.get("attrs", []):
-            if a.get("source") and a["source"] not in sources:
+            if not a.get("source") or not a.get("span"):
+                errs.append(f"entity {e['id']}.{a['attr']}: attribute without source + span")
+            elif a["source"] not in sources:
                 errs.append(f"entity {e['id']}.{a['attr']}: unknown source {a['source']}")
     for n in nodes:
         if not n.get("sources"):
@@ -117,10 +119,11 @@ def load(bundle: Path) -> dict:
             # append-only: INSERT OR IGNORE, never UPDATE
             c.execute("""
                 INSERT OR IGNORE INTO rec_entity_attrs
-                    (entity_id, attr, value, valid_from, valid_to, date_precision, source_id, span_text)
-                VALUES (?,?,?,?,?,?,?,?)
+                    (entity_id, attr, value, valid_from, valid_to, date_precision, source_id,
+                     span_text, span_is_verbatim)
+                VALUES (?,?,?,?,?,?,?,?,?)
             """, (e["id"], a["attr"], str(a["value"]), a.get("valid_from"), a.get("valid_to"),
-                  a.get("precision", "day"), a.get("source"), a.get("span")))
+                  a.get("precision", "day"), a.get("source"), a.get("span"), int(bool(a.get("verbatim")))))
             counts["attrs"] += c.rowcount
 
     for s in _read(bundle, "stories.json"):
