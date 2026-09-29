@@ -48,13 +48,12 @@ bundle with `verbatim: true` and rerun. That is the verifier-in-the-loop step. A
 widen this cloud environment's network access (environment settings → Network access) and
 rerun here.
 
-### ⚠ Private data is not in git
+### Private data lives in the private repo
 
-The repo is public, and the brief says don't publish, so the research bundle, draft and wiki
-stubs live only in `data/hyderabad/` (gitignored) **in this cloud container, which is ephemeral**.
-An attempt to back them up to the founder's Drive was not permitted in this session.
-They need copying somewhere private before the container is reclaimed.
-The code that regenerates everything from the bundle *is* committed.
+The repo is public and the brief says don't publish, so the research bundle, DRAFT v0 and wiki
+stubs are in the **private** repo `bparlapalli/Sansad_research` (`hyderabad/`, pushed
+2026-09-29). Put it at `sansad/data/hyderabad/` (gitignored here) to use it with the code in
+this repo. `record.db` is never committed; `record/load.py` rebuilds it.
 
 ### What was collected
 
@@ -229,5 +228,5 @@ Generated from `rec_sources`. "used by" counts node and attribute links. Kinds: 
    - The Kokapet auctions' winning bidders (a developer) are in the sources but left out of the draft.
    - Officials named: Naidu, Vajpayee, KTR, Revanth Reddy, Ranganath, Modi, Trump, with role on
      date only and no characterisation.
-8. **Preserving the private bundle**: where should `data/hyderabad/` live (see ⚠ above)?
+8. ~~Preserving the private bundle~~ → done: private repo `Sansad_research`.
 9. **Network**: widen this environment's egress, or run the verifier locally?
