@@ -2,6 +2,10 @@
 sansad.db
 *.db
 
+# Local research data — full timeline editions incl. hypotheses/inferred links
+# about named people. Public edition lives in docs/timelines/ (build_public_edition.py).
+data/
+
 # Environment / secrets — never commit API keys
 .env
 .env.*
@@ -46,3 +50,6 @@ test.txt
 copy
 scrapers/pib/_probe_output.html
 
+
+# Holds a GitHub token — local tool, never commit
+create_github_issues.py

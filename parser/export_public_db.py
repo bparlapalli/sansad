@@ -85,13 +85,29 @@ def export_public_db(source_path: Path, out_path: Path, days: int):
         n_pib = _copy(conn, "pib_releases",
                       "fetch_status = 'fetched' AND release_date >= ?", (pib_cutoff,))
 
+    # Party/leader YouTube: registry tables whole (small), fetched videos +
+    # their quote chunks for the last N days measured from the newest video.
+    n_media = n_mchunks = 0
+    for t in ("parties", "people", "affiliations", "source_accounts"):
+        _copy(conn, t)
+    media_latest = conn.execute(
+        "SELECT MAX(published_date) FROM media_items WHERE fetch_status = 'fetched'").fetchone()[0]
+    if media_latest:
+        media_cutoff = (date.fromisoformat(media_latest) - timedelta(days=days)).isoformat()
+        n_media = _copy(conn, "media_items",
+                        "fetch_status = 'fetched' AND published_date >= ?", (media_cutoff,))
+        n_mchunks = _copy(conn, "media_chunks",
+            "item_id IN (SELECT id FROM main.media_items "
+            "WHERE fetch_status = 'fetched' AND published_date >= ?)", (media_cutoff,))
+
     conn.commit()
     conn.execute("DETACH DATABASE pub")
     conn.close()
 
     print(f"Exported public.db (last {days} days, cutoff {cutoff}) -> {out_path}")
     print(f"  statements={n_stmts} members={n_members} source_pdfs={n_pdfs} "
-          f"chunks={n_chunks} digests={n_digests} profiles={n_profiles} pib_releases={n_pib}")
+          f"chunks={n_chunks} digests={n_digests} profiles={n_profiles} pib_releases={n_pib} "
+          f"videos={n_media} video_chunks={n_mchunks}")
     print(f"  size: {out_path.stat().st_size / 1_048_576:.1f} MB")
 
 

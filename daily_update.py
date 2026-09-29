@@ -60,6 +60,9 @@ def main():
         # skips anything already stored, so overlap is free.
         if not run([py, "scrapers/pib/pib_scraper.py", "--days", "3"]):
             print("PIB step failed — continuing without fresh PIB data.")
+        # Party & leader YouTube — same 3-day overlap; already-stored videos are skipped.
+        if not run([py, "scrapers/youtube/youtube_scraper.py", "--days", "3"]):
+            print("YouTube step failed — continuing without fresh video transcripts.")
 
     if not run([py, "main.py", "--parse-only"]):
         print("Parse step failed — aborting (public.db would be stale/incomplete).")

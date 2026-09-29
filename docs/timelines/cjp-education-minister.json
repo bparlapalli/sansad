@@ -1,0 +1,2805 @@
+{
+ "issue": {
+  "slug": "cjp-education-minister",
+  "title": "CJP & the Education Minister's resignation",
+  "summary": "How a satirical youth party born from a Chief Justice's 'cockroaches' remark (15-16 May 2026) turned the NEET-UG 2026 paper-leak anger into a Jantar Mantar movement that ended with Education Minister Dharmendra Pradhan's resignation on 25 July 2026, and where it went next (CJP-D split, Election Commission ultimatum).",
+  "as_of": "2026-09-28",
+  "lanes": [
+   "executive",
+   "parliament",
+   "courts",
+   "protest",
+   "security",
+   "party",
+   "international",
+   "media"
+  ],
+  "also_issues": [
+   {
+    "slug": "neet-paper-leak",
+    "title": "NEET-UG 2026 paper leak & exam reform (candidate issue)"
+   }
+  ],
+  "edition": "public: confirmed, reported and disputed facts plus attributed claims. Inferred events, inferred links and hypotheses are kept in the local research edition only."
+ },
+ "entities": [
+  {
+   "id": "aap",
+   "type": "party",
+   "name": "Aam Aadmi Party (AAP)"
+  },
+  {
+   "id": "assam",
+   "type": "place",
+   "name": "Assam",
+   "parent": "india"
+  },
+  {
+   "id": "bihar",
+   "type": "place",
+   "name": "Bihar",
+   "parent": "india"
+  },
+  {
+   "id": "bjp",
+   "type": "party",
+   "name": "Bharatiya Janata Party (BJP)",
+   "hub": true
+  },
+  {
+   "id": "brahmbhatt",
+   "type": "person",
+   "name": "Manish Brahmbhatt"
+  },
+  {
+   "id": "cbi",
+   "type": "org",
+   "name": "Central Bureau of Investigation (CBI)"
+  },
+  {
+   "id": "cji",
+   "type": "person",
+   "name": "CJI Surya Kant"
+  },
+  {
+   "id": "cjp",
+   "type": "party",
+   "name": "Cockroach Janta Party (CJP)"
+  },
+  {
+   "id": "cjp-d",
+   "type": "party",
+   "name": "CJP-Democratic (breakaway)"
+  },
+  {
+   "id": "cpim",
+   "type": "party",
+   "name": "CPI(M)"
+  },
+  {
+   "id": "delhi-hc",
+   "type": "org",
+   "name": "Delhi High Court"
+  },
+  {
+   "id": "delhi-police",
+   "type": "org",
+   "name": "Delhi Police"
+  },
+  {
+   "id": "dipke",
+   "type": "person",
+   "name": "Abhijeet Dipke"
+  },
+  {
+   "id": "eci",
+   "type": "org",
+   "name": "Election Commission of India"
+  },
+  {
+   "id": "govt-india",
+   "type": "org",
+   "name": "Government of India (Union govt)",
+   "hub": true
+  },
+  {
+   "id": "gyanesh",
+   "type": "person",
+   "name": "Gyanesh Kumar (CEC)"
+  },
+  {
+   "id": "inc",
+   "type": "party",
+   "name": "Indian National Congress (INC)",
+   "hub": true
+  },
+  {
+   "id": "india",
+   "type": "place",
+   "name": "India",
+   "hub": true
+  },
+  {
+   "id": "indian-express",
+   "type": "org",
+   "name": "The Indian Express"
+  },
+  {
+   "id": "jantar-mantar",
+   "type": "place",
+   "name": "Jantar Mantar",
+   "parent": "new-delhi"
+  },
+  {
+   "id": "jitendra-singh",
+   "type": "person",
+   "name": "Jitendra Singh"
+  },
+  {
+   "id": "lok-sabha",
+   "type": "org",
+   "name": "Lok Sabha",
+   "hub": true
+  },
+  {
+   "id": "medanta",
+   "type": "place",
+   "name": "Medanta Hospital, Gurugram",
+   "parent": "india"
+  },
+  {
+   "id": "meity",
+   "type": "org",
+   "name": "Ministry of Electronics & IT (MeitY)"
+  },
+  {
+   "id": "meta",
+   "type": "org",
+   "name": "Meta (Instagram)"
+  },
+  {
+   "id": "mha",
+   "type": "org",
+   "name": "Union Home Ministry (MHA)"
+  },
+  {
+   "id": "modi",
+   "type": "person",
+   "name": "Narendra Modi"
+  },
+  {
+   "id": "mumbai",
+   "type": "place",
+   "name": "Mumbai",
+   "parent": "india"
+  },
+  {
+   "id": "nadda",
+   "type": "person",
+   "name": "J.P. Nadda"
+  },
+  {
+   "id": "new-delhi",
+   "type": "place",
+   "name": "New Delhi",
+   "parent": "india",
+   "hub": true
+  },
+  {
+   "id": "nilekani",
+   "type": "person",
+   "name": "Nandan Nilekani"
+  },
+  {
+   "id": "nitin-nabin",
+   "type": "person",
+   "name": "Nitin Nabin"
+  },
+  {
+   "id": "nta",
+   "type": "org",
+   "name": "National Testing Agency (NTA)"
+  },
+  {
+   "id": "pradhan",
+   "type": "person",
+   "name": "Dharmendra Pradhan"
+  },
+  {
+   "id": "pralhad-joshi",
+   "type": "person",
+   "name": "Pralhad Joshi"
+  },
+  {
+   "id": "pub-exams-act",
+   "type": "document",
+   "name": "Public Examinations (Prevention of Unfair Means) Act, 2024"
+  },
+  {
+   "id": "pub-exams-bill",
+   "type": "document",
+   "name": "Public Examinations (Prevention of Unfair Means) Amendment Bill, 2026"
+  },
+  {
+   "id": "rahul",
+   "type": "person",
+   "name": "Rahul Gandhi"
+  },
+  {
+   "id": "rail-bhavan",
+   "type": "place",
+   "name": "Rail Bhavan / Rafi Marg",
+   "parent": "new-delhi"
+  },
+  {
+   "id": "sachin-pilot",
+   "type": "person",
+   "name": "Sachin Pilot"
+  },
+  {
+   "id": "sandhu",
+   "type": "person",
+   "name": "Sukhbir Singh Sandhu (EC)"
+  },
+  {
+   "id": "shah",
+   "type": "person",
+   "name": "Amit Shah"
+  },
+  {
+   "id": "sir",
+   "type": "document",
+   "name": "Special Intensive Revision (SIR) of electoral rolls"
+  },
+  {
+   "id": "supreme-court",
+   "type": "org",
+   "name": "Supreme Court of India",
+   "hub": true
+  },
+  {
+   "id": "tamil-nadu",
+   "type": "place",
+   "name": "Tamil Nadu",
+   "parent": "india"
+  },
+  {
+   "id": "tmc",
+   "type": "party",
+   "name": "Trinamool Congress (TMC)"
+  },
+  {
+   "id": "tn-govt",
+   "type": "org",
+   "name": "Tamil Nadu government"
+  },
+  {
+   "id": "vijay-tn",
+   "type": "person",
+   "name": "Vijay (Tamil Nadu CM)"
+  },
+  {
+   "id": "vijayendra",
+   "type": "person",
+   "name": "B.Y. Vijayendra"
+  },
+  {
+   "id": "vivek-joshi",
+   "type": "person",
+   "name": "Vivek Joshi (EC)"
+  },
+  {
+   "id": "wangchuk",
+   "type": "person",
+   "name": "Sonam Wangchuk"
+  },
+  {
+   "id": "west-bengal",
+   "type": "place",
+   "name": "West Bengal",
+   "parent": "india"
+  },
+  {
+   "id": "x-corp",
+   "type": "org",
+   "name": "X Corp"
+  }
+ ],
+ "events": [
+  {
+   "id": "c01",
+   "date": "2026-05-01",
+   "date_precision": "month",
+   "lane": "executive",
+   "kind": "action",
+   "title": "NEET-UG 2026 held; later cancelled by NTA, CBI probe, re-exam set for 21 June",
+   "summary": "Outlook's timeline says NEET-UG was held on 3 and 7 May 2026, the NTA cancelled both, the CBI opened an investigation with multiple arrests, and a re-exam followed on 21 June. Exact cancellation date not established in sources read.",
+   "evidence": "reported",
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.outlookindia.com/national/dharmendra-pradhan-and-neet-paper-leaks-a-timeline",
+     "outlet": "Outlook India",
+     "accessed": "2026-09-28",
+     "title": "Dharmendra Pradhan And NEET Paper Leaks: A Timeline"
+    },
+    {
+     "type": "web",
+     "url": "https://organiser.org/2026/05/18/354048/bharat/neet-ug-2026-paper-leak-parliamentary-panel-summons-nta-chief-pradeep-joshi-education-ministry-officials/",
+     "outlet": "Organiser",
+     "accessed": "2026-09-28",
+     "title": "NEET-UG 2026 Paper Leak: Parliamentary panel summons NTA Chief"
+    }
+   ],
+   "entities": [
+    {
+     "id": "nta",
+     "role": "ordered"
+    },
+    {
+     "id": "cbi",
+     "role": "located_at"
+    },
+    {
+     "id": "pradhan",
+     "role": "mentioned"
+    }
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c02",
+   "date": "2026-05-15",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "press_conference",
+   "title": "Pradhan tells media briefing the real questions had been leaked 'under the guise of a guess paper'",
+   "summary": "Per Outlook, the Education Minister acknowledged the breach at a 15 May briefing (same day as the CJI remark below). He later shifted to accusing the opposition of exploiting students.",
+   "evidence": "reported",
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "mentions": [
+    "c01"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.outlookindia.com/national/dharmendra-pradhan-and-neet-paper-leaks-a-timeline",
+     "outlet": "Outlook India",
+     "accessed": "2026-09-28",
+     "title": "Dharmendra Pradhan And NEET Paper Leaks: A Timeline"
+    }
+   ],
+   "links": [
+    {
+     "to": "c01",
+     "relation": "related",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "pradhan",
+     "role": "spoke"
+    },
+    {
+     "id": "nta",
+     "role": "mentioned"
+    }
+   ]
+  },
+  {
+   "id": "c03",
+   "date": "2026-05-18",
+   "date_precision": "approx",
+   "lane": "parliament",
+   "kind": "action",
+   "title": "Parliamentary panel decides to review NTA reforms and NEET-UG 2026 leak; summons NTA chief Pradeep Joshi",
+   "summary": "Organiser (18 May 2026) reports a parliamentary committee summoned the NTA chief and Education Ministry officials. Committee name and hearing date not confirmed.",
+   "evidence": "reported",
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://organiser.org/2026/05/18/354048/bharat/neet-ug-2026-paper-leak-parliamentary-panel-summons-nta-chief-pradeep-joshi-education-ministry-officials/",
+     "outlet": "Organiser",
+     "accessed": "2026-09-28",
+     "title": "NEET-UG 2026 Paper Leak: Parliamentary panel summons NTA Chief"
+    }
+   ],
+   "links": [
+    {
+     "to": "c01",
+     "relation": "responded_to",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "nta",
+     "role": "mentioned"
+    },
+    {
+     "id": "lok-sabha",
+     "role": "mentioned"
+    },
+    {
+     "id": "pradhan",
+     "role": "mentioned"
+    }
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c04",
+   "date": "2026-05-15",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "statement",
+   "title": "CJI Surya Kant calls unemployed youth who take to social media/RTI 'cockroaches' and 'parasites' (hearing on fake law degrees)",
+   "summary": "During a Supreme Court hearing on 15 May the CJI reportedly said 'youngsters like cockroaches' who cannot get jobs in a profession turn to social media and RTI activism, and that some who 'sneaked into media, social media and other noble professions' are 'parasites'.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.thequint.com/news/breaking-news/cockroach-comment-for-those-with-fake-degrees-clarifies-chief-justice-of-india-surya-kant",
+     "outlet": "The Quint",
+     "accessed": "2026-09-28",
+     "title": "Cockroach comment for those with fake degrees, clarifies CJI"
+    },
+    {
+     "type": "web",
+     "url": "https://www.bwlegalworld.com/article/cji-surya-kant-clarifies-cockroach-remark-says-media-misquoted-607141",
+     "outlet": "BW Legal World",
+     "accessed": "2026-09-28",
+     "title": "CJI Surya Kant clarifies 'cockroach' remark, says media misquoted"
+    },
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/features/2026/5/20/cockroach-janata-party-top-indian-judges-comment-sparks-satire-protest",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "'Cockroach Janta Party': Top Indian judge's comment sparks satire, protest"
+    },
+    {
+     "type": "web",
+     "url": "https://lawbeat.in/top-stories/dont-be-sentimental-cji-surya-kant-on-cockroach-janta-party-viral-campaign-1595536",
+     "outlet": "LawBeat",
+     "accessed": "2026-09-28",
+     "title": "'Don't Be Sentimental': CJI on Cockroach Janta Party"
+    }
+   ],
+   "entities": [
+    {
+     "id": "cji",
+     "role": "spoke"
+    },
+    {
+     "id": "supreme-court",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c05",
+   "date": "2026-05-16",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "statement",
+   "title": "CJI clarifies: remark aimed at holders of fake degrees, not youth; says media misquoted",
+   "summary": "CJI said he specifically criticised those entering professions such as the Bar with fake/bogus degrees and that he regards Indian youth as 'pillars of a developed India'. Critics and CJP did not accept the clarification as undoing the harm.",
+   "evidence": "confirmed",
+   "mentions": [
+    "c04"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.thequint.com/news/breaking-news/cockroach-comment-for-those-with-fake-degrees-clarifies-chief-justice-of-india-surya-kant",
+     "outlet": "The Quint",
+     "accessed": "2026-09-28",
+     "title": "Cockroach comment for those with fake degrees, clarifies CJI"
+    },
+    {
+     "type": "web",
+     "url": "https://www.bwlegalworld.com/article/cji-surya-kant-clarifies-cockroach-remark-says-media-misquoted-607141",
+     "outlet": "BW Legal World",
+     "accessed": "2026-09-28",
+     "title": "CJI Surya Kant clarifies 'cockroach' remark, says media misquoted"
+    }
+   ],
+   "links": [
+    {
+     "to": "c04",
+     "relation": "responded_to",
+     "evidence": "confirmed"
+    },
+    {
+     "to": "manipur:m44",
+     "relation": "related",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "cji",
+     "role": "spoke"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ]
+  },
+  {
+   "id": "c06",
+   "date": "2026-05-16",
+   "date_precision": "day",
+   "lane": "protest",
+   "kind": "action",
+   "title": "Abhijeet Dipke launches the Cockroach Janta Party online as satire ('Voice of the Lazy & Unemployed')",
+   "summary": "Dipke, a political communications strategist, launched the CJP website/handles in response to the CJI remark. Al Jazeera reports ~1 million joined in about a week.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/features/2026/5/20/cockroach-janata-party-top-indian-judges-comment-sparks-satire-protest",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "'Cockroach Janta Party': Top Indian judge's comment sparks satire, protest"
+    },
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/5/23/cockroach-janta-partys-founder-says-indian-government-took-website-down",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party's founder says Indian government took website down"
+    },
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "links": [
+    {
+     "to": "c04",
+     "relation": "responded_to",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "dipke",
+     "role": "spoke"
+    },
+    {
+     "id": "cjp",
+     "role": "located_at"
+    },
+    {
+     "id": "cji",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c07",
+   "date": "2026-05-22",
+   "date_precision": "approx",
+   "lane": "media",
+   "kind": "action",
+   "title": "CJP Instagram passes 15M (Wikipedia) / 22M (Al Jazeera) followers within about a week",
+   "summary": "Sources disagree on the follower figure: Wikipedia (citing India Today) says 15 million by end of the first week; Al Jazeera (23 May) says over 22 million in one week. Both agree growth was extremely fast.",
+   "evidence": "disputed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/5/23/cockroach-janta-partys-founder-says-indian-government-took-website-down",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party's founder says Indian government took website down"
+    },
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "would_confirm": "A dated Instagram follower snapshot (e.g. archive.org capture) or CJP/Meta statement.",
+   "entities": [
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    },
+    {
+     "id": "dipke",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c08",
+   "date": "2026-05-21",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "action",
+   "title": "CJP's X account withheld in India ('in response to a legal demand'); reported as MeitY order under IT Act s.69A",
+   "summary": "Users saw a 'withheld in response to a legal demand' notice. Wikipedia, citing Indian Express/HT, attributes it to a MeitY s.69A order citing national security. The government has not been quoted publicly on the order in the sources read.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.businesstoday.in/india/story/swatting-the-roaches-now-cockroach-janata-party-website-blocked-after-action-on-x-insta-handles-532996-2026-05-23",
+     "outlet": "Business Today",
+     "accessed": "2026-09-28",
+     "title": "Now Cockroach Janta Party website blocked, after X & Insta handles ban"
+    },
+    {
+     "type": "web",
+     "url": "https://www.intellinews.com/india-blocks-parody-cockroach-janta-party-website-444568/",
+     "outlet": "bne IntelliNews",
+     "accessed": "2026-09-28",
+     "title": "India blocks parody 'Cockroach Janta Party' website"
+    },
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "links": [
+    {
+     "to": "c06",
+     "relation": "responded_to",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "meity",
+     "role": "ordered"
+    },
+    {
+     "id": "x-corp",
+     "role": "located_at"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c09",
+   "date": "2026-05-22",
+   "date_precision": "day",
+   "lane": "media",
+   "kind": "action",
+   "title": "CJP reappears on X with a new handle ('Cockroach is Back')",
+   "summary": "Reported (CNN, per Wikipedia) within minutes of the withholding.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "links": [
+    {
+     "to": "c08",
+     "relation": "responded_to",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "cjp",
+     "role": "located_at"
+    },
+    {
+     "id": "x-corp",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c10",
+   "date": "2026-05-23",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "action",
+   "title": "CJP website blocked; Dipke says the site was taken down and his and CJP's Instagram accounts were 'hacked'",
+   "summary": "The site displayed a legal-demand block notice. The 'hacked' claim is Dipke's own; Al Jazeera notes no government confirmation. Business Today's headline says the website block came after 'X & Insta handles ban'.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/5/23/cockroach-janta-partys-founder-says-indian-government-took-website-down",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party's founder says Indian government took website down"
+    },
+    {
+     "type": "web",
+     "url": "https://www.businesstoday.in/india/story/swatting-the-roaches-now-cockroach-janata-party-website-blocked-after-action-on-x-insta-handles-532996-2026-05-23",
+     "outlet": "Business Today",
+     "accessed": "2026-09-28",
+     "title": "Now Cockroach Janta Party website blocked, after X & Insta handles ban"
+    },
+    {
+     "type": "web",
+     "url": "https://www.intellinews.com/india-blocks-parody-cockroach-janta-party-website-444568/",
+     "outlet": "bne IntelliNews",
+     "accessed": "2026-09-28",
+     "title": "India blocks parody 'Cockroach Janta Party' website"
+    },
+    {
+     "type": "web",
+     "url": "https://scroll.in/latest/1093036/cockroach-janata-party-founder-says-instagram-account-hacked-backup-handle-taken-down",
+     "outlet": "Scroll.in",
+     "accessed": "2026-09-28",
+     "title": "CJP founder says website taken down, Instagram account hacked"
+    }
+   ],
+   "links": [
+    {
+     "to": "c08",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "meity",
+     "role": "ordered"
+    },
+    {
+     "id": "dipke",
+     "role": "spoke"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    },
+    {
+     "id": "meta",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c11",
+   "date": "2026-05-24",
+   "date_precision": "approx",
+   "lane": "party",
+   "kind": "statement",
+   "title": "Opposition and public figures back CJP (Tharoor, Mamata Banerjee/Abhishek Banerjee, Anna Hazare)",
+   "summary": "Per Wikipedia summarising Indian Express, The Telegraph and Times of India (22-25 May). Original outlets not fetched.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "entities": [
+    {
+     "id": "tmc",
+     "role": "spoke"
+    },
+    {
+     "id": "inc",
+     "role": "spoke"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c12",
+   "date": "2026-05-26",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Dipke moves Delhi High Court against the X account block",
+   "summary": "Reported via Wikipedia (Hindustan Times). Outcome on 7 July below.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "links": [
+    {
+     "to": "c08",
+     "relation": "responded_to",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "dipke",
+     "role": "filed"
+    },
+    {
+     "id": "delhi-hc",
+     "role": "located_at"
+    },
+    {
+     "id": "meity",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c13",
+   "date": "2026-06-06",
+   "date_precision": "approx",
+   "lane": "protest",
+   "kind": "protest",
+   "title": "CJP nationwide protests over exams; demand Pradhan's resignation (NEET leak, CBSE marking row)",
+   "summary": "Wikipedia (citing Indian Express 12 Jun, ETV Bharat, AP) places protests around 6-12 June. AAP had also demanded Pradhan's sacking (Careers360).",
+   "evidence": "reported",
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    },
+    {
+     "type": "web",
+     "url": "https://news.careers360.com/neet-controversy-aap-demands-sacking-of-moe-education-minister-dharmendra-pradhan-paper-leak-corruption",
+     "outlet": "Careers360",
+     "accessed": "2026-09-28",
+     "title": "NEET controversy: AAP demands sacking of Education Minister"
+    }
+   ],
+   "entities": [
+    {
+     "id": "cjp",
+     "role": "protested"
+    },
+    {
+     "id": "pradhan",
+     "role": "mentioned"
+    },
+    {
+     "id": "aap",
+     "role": "spoke"
+    }
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c14",
+   "date": "2026-06-11",
+   "date_precision": "day",
+   "lane": "protest",
+   "kind": "statement",
+   "title": "Dipke releases an Education/Exam manifesto (leak prevention, faster results)",
+   "summary": "Per Wikipedia citing The Hindu (11 June).",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "entities": [
+    {
+     "id": "dipke",
+     "role": "spoke"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c15",
+   "date": "2026-06-20",
+   "date_precision": "day",
+   "lane": "protest",
+   "kind": "protest",
+   "title": "CJP sit-in at Jantar Mantar begins with three demands including Pradhan's resignation",
+   "summary": "ETV Bharat: protesting at Jantar Mantar 'since June 20'. Wikipedia describes the Jantar Mantar site hosting Wangchuk's fast from 28 June.",
+   "evidence": "reported",
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/bharat/cjp-founder-abhijeet-dipke-reacts-on-union-education-minister-dharmendra-pradhan-resignation-enn26072503354",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "CJP's Abhijeet Dipke's first reaction after Dharmendra Pradhan resigns"
+    }
+   ],
+   "entities": [
+    {
+     "id": "cjp",
+     "role": "protested"
+    },
+    {
+     "id": "jantar-mantar",
+     "role": "located_at"
+    },
+    {
+     "id": "pradhan",
+     "role": "mentioned"
+    }
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c16",
+   "date": "2026-06-21",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "action",
+   "title": "NEET-UG re-examination conducted",
+   "summary": "Per Outlook timeline.",
+   "evidence": "reported",
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.outlookindia.com/national/dharmendra-pradhan-and-neet-paper-leaks-a-timeline",
+     "outlet": "Outlook India",
+     "accessed": "2026-09-28",
+     "title": "Dharmendra Pradhan And NEET Paper Leaks: A Timeline"
+    }
+   ],
+   "links": [
+    {
+     "to": "c01",
+     "relation": "followed",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "nta",
+     "role": "ordered"
+    }
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c17",
+   "date": "2026-06-23",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "statement",
+   "title": "Pradhan accuses CJP/opposition of undermining democratic process, vows to crack down on 'paper mafia'",
+   "summary": "Per Wikipedia citing NDTV and India Today (23 June); Outlook likewise notes he accused the opposition of exploiting students.",
+   "evidence": "reported",
+   "mentions": [
+    "c13"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    },
+    {
+     "type": "web",
+     "url": "https://www.outlookindia.com/national/dharmendra-pradhan-and-neet-paper-leaks-a-timeline",
+     "outlet": "Outlook India",
+     "accessed": "2026-09-28",
+     "title": "Dharmendra Pradhan And NEET Paper Leaks: A Timeline"
+    }
+   ],
+   "entities": [
+    {
+     "id": "pradhan",
+     "role": "spoke"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": []
+  },
+  {
+   "id": "c18",
+   "date": "2026-06-28",
+   "date_precision": "day",
+   "lane": "protest",
+   "kind": "protest",
+   "title": "Sonam Wangchuk begins indefinite hunger strike at Jantar Mantar in support of the students",
+   "summary": "Business Today: began 28 June; lasted 26 days. Demands: exam accountability, Pradhan's resignation.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.businesstoday.in/india/story/sonam-wangchuk-ends-26-day-hunger-strike-after-meeting-jp-nadda-and-jitendra-singh-at-medanta-544925-2026-07-24",
+     "outlet": "Business Today",
+     "accessed": "2026-09-28",
+     "title": "Sonam Wangchuk ends 26-day hunger strike after meeting JP Nadda and Jitendra Singh at Medanta"
+    },
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/bharat/sonam-wangchuk-ends-fast-after-26-days-in-presence-of-jp-nadda-jitendra-singh-enn26072400271",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "Wangchuk ends fast after 26 days"
+    },
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "entities": [
+    {
+     "id": "wangchuk",
+     "role": "protested"
+    },
+    {
+     "id": "jantar-mantar",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c19",
+   "date": "2026-07-07",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Delhi High Court orders CJP's X account unblocked, finding the national-security ground 'no longer valid'",
+   "summary": "Per Wikipedia citing Hindustan Times (7 July). Not independently fetched.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "links": [
+    {
+     "to": "c12",
+     "relation": "followed",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "delhi-hc",
+     "role": "ordered"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    },
+    {
+     "id": "meity",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c20",
+   "date": "2026-07-18",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "action",
+   "title": "Wangchuk removed from the protest site to Safdarjung, then Medanta Hospital; Dipke and others start their own fasts",
+   "summary": "Hospitalisation on 18 July is confirmed indirectly (a court later refused a plea about it, per ThePrint). Wikipedia says police acted 'on Delhi High Court orders'; that attribution was not corroborated.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://theprint.in/judiciary/delhi-hc-orders-preservation-of-cctv-videos-cited-in-pleas-on-police-brutality-during-cjp-protest/2993520/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "Delhi HC orders preservation of CCTV, videos cited in pleas on police 'brutality' during CJP protest"
+    },
+    {
+     "type": "web",
+     "url": "https://www.businesstoday.in/india/story/sonam-wangchuk-ends-26-day-hunger-strike-after-meeting-jp-nadda-and-jitendra-singh-at-medanta-544925-2026-07-24",
+     "outlet": "Business Today",
+     "accessed": "2026-09-28",
+     "title": "Sonam Wangchuk ends 26-day hunger strike after meeting JP Nadda and Jitendra Singh at Medanta"
+    },
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "entities": [
+    {
+     "id": "wangchuk",
+     "role": "detained"
+    },
+    {
+     "id": "delhi-police",
+     "role": "ordered"
+    },
+    {
+     "id": "medanta",
+     "role": "located_at"
+    },
+    {
+     "id": "jantar-mantar",
+     "role": "located_at"
+    },
+    {
+     "id": "dipke",
+     "role": "protested"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c21",
+   "date": "2026-07-20",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "protest",
+   "title": "'Sansad Chalo' march toward Parliament: baton charge and tear gas; scale and provocation contested",
+   "summary": "Police: 'mild lathi-charge', stones and slippers thrown, security personnel hurt (Wikipedia gives 178 injured incl. 118 personnel; 70 detained). Petitioners/CJP: excessive force, videos allegedly showing pellets, electric shocks, lathis. Al Jazeera: over 100 protesters wounded. CJP denies stone-throwing.",
+   "evidence": "disputed",
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "would_confirm": "Delhi HC review of the preserved CCTV/videos or a judicial inquiry finding.",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/features/2026/7/25/we-have-done-it-joy-as-cockroach-protests-push-india-minister-out",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "'We have done it': Joy as 'Cockroach' protests push India minister out"
+    },
+    {
+     "type": "web",
+     "url": "https://www.thestatesman.com/india/cjp-parliament-march-delhi-police-invoke-attempt-to-murder-charge-over-july-20-violence-near-rail-bhavan-1503620676.html",
+     "outlet": "The Statesman",
+     "accessed": "2026-09-28",
+     "title": "CJP Parliament march: Delhi Police invoke attempt-to-murder charge"
+    },
+    {
+     "type": "web",
+     "url": "https://theprint.in/judiciary/delhi-hc-orders-preservation-of-cctv-videos-cited-in-pleas-on-police-brutality-during-cjp-protest/2993520/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "Delhi HC orders preservation of CCTV, videos cited in pleas on police 'brutality' during CJP protest"
+    },
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "links": [
+    {
+     "to": "c18",
+     "relation": "followed",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "cjp",
+     "role": "protested"
+    },
+    {
+     "id": "delhi-police",
+     "role": "attacked"
+    },
+    {
+     "id": "dipke",
+     "role": "protested"
+    },
+    {
+     "id": "rail-bhavan",
+     "role": "located_at"
+    },
+    {
+     "id": "new-delhi",
+     "role": "located_at"
+    }
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c22",
+   "date": "2026-07-21",
+   "date_precision": "approx",
+   "lane": "security",
+   "kind": "arrest",
+   "title": "Delhi Police register FIRs over 20 July (13-14 BNS provisions incl. s.109(1) attempt to murder; 9 FIRs on attack on an RAF jawan)",
+   "summary": "FIRs registered 21-26 July (India TV). Case at Kartavya Path police station; charges include rioting and property damage. ETV: 13 provisions; Business Standard: 14 charges.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/bharat/july-20-cjp-rally-delhi-police-fir-invokes-13-charges-including-attempt-to-murder-enn26072503519",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "July 20 CJP Rally: Delhi Police FIR invokes 13 charges incl. attempt to murder"
+    },
+    {
+     "type": "web",
+     "url": "https://www.business-standard.com/india-news/delhi-police-files-attempt-to-murder-among-14-charges-for-july-20-cjp-rally-126072500581_1.html",
+     "outlet": "Business Standard",
+     "accessed": "2026-09-28",
+     "title": "Delhi Police files attempt to murder among 14 charges for July 20 CJP rally",
+     "note": "ETV says 13 provisions, Business Standard says 14 charges"
+    },
+    {
+     "type": "web",
+     "url": "https://theprint.in/india/delhi-police-file-9-firs-over-attack-on-raf-jawan-during-cjps-parliament-march-on-20-july/2993201/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "Delhi police file 9 FIRs over attack on RAF jawan during CJP's Parliament march"
+    },
+    {
+     "type": "web",
+     "url": "https://www.thestatesman.com/india/cjp-parliament-march-delhi-police-invoke-attempt-to-murder-charge-over-july-20-violence-near-rail-bhavan-1503620676.html",
+     "outlet": "The Statesman",
+     "accessed": "2026-09-28",
+     "title": "CJP Parliament march: Delhi Police invoke attempt-to-murder charge"
+    }
+   ],
+   "links": [
+    {
+     "to": "c21",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "delhi-police",
+     "role": "filed"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    },
+    {
+     "id": "rail-bhavan",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c23",
+   "date": "2026-07-22",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Delhi HC issues notice on 3 petitions seeking judicial inquiry into police force on 20 July; orders CCTV/video preservation",
+   "summary": "Bench of CJ D.K. Upadhyaya and J. Tejas Karia gave the Centre and Delhi Police four weeks to reply; next hearing 11 Sept (outcome not found). Petitioners: Vikas Singh (SCBA), Gopal Sankaranarayanan, N. Hariharan.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://theprint.in/judiciary/delhi-hc-orders-preservation-of-cctv-videos-cited-in-pleas-on-police-brutality-during-cjp-protest/2993520/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "Delhi HC orders preservation of CCTV, videos cited in pleas on police 'brutality' during CJP protest"
+    },
+    {
+     "type": "web",
+     "url": "https://www.newsdrum.in/national/delhi-hc-seeks-police-reply-over-alleged-force-at-cjp-march-orders-cctv-preservation-12188015",
+     "outlet": "NewsDrum (PTI)",
+     "accessed": "2026-09-28",
+     "title": "Delhi HC seeks police reply over alleged force at CJP march, orders CCTV preservation"
+    }
+   ],
+   "links": [
+    {
+     "to": "c21",
+     "relation": "responded_to",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "delhi-hc",
+     "role": "ordered"
+    },
+    {
+     "id": "delhi-police",
+     "role": "mentioned"
+    },
+    {
+     "id": "govt-india",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c24",
+   "date": "2026-07-22",
+   "date_precision": "day",
+   "lane": "media",
+   "kind": "action",
+   "title": "CJP's Instagram account shown 'not available in India ... we complied with a legal request'",
+   "summary": "Business Today (22 July) reports the restriction 'shortly after' the violent march. Neither the government nor Meta was quoted on the rationale.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.businesstoday.in/india/story/cockroach-janta-partys-instagram-account-banned-in-india-heres-why-544552-2026-07-22",
+     "outlet": "Business Today",
+     "accessed": "2026-09-28",
+     "title": "CJP's Instagram account banned in India"
+    }
+   ],
+   "links": [
+    {
+     "to": "c21",
+     "relation": "followed",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "meta",
+     "role": "ordered"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    },
+    {
+     "id": "meity",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c26",
+   "date": "2026-07-24",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "action",
+   "title": "Wangchuk ends 26-day fast at Medanta with Nadda and Jitendra Singh present; govt assurances on compensation, no cases vs peaceful protesters, Parliament discussion",
+   "summary": "Ministers J.P. Nadda and Jitendra Singh met CJP/Wangchuk. Assurances: adequate compensation for families of students who died by suicide after the leak; no cases against peaceful protesters; accountability of the exam system to be discussed in Parliament.",
+   "evidence": "confirmed",
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.businesstoday.in/india/story/sonam-wangchuk-ends-26-day-hunger-strike-after-meeting-jp-nadda-and-jitendra-singh-at-medanta-544925-2026-07-24",
+     "outlet": "Business Today",
+     "accessed": "2026-09-28",
+     "title": "Sonam Wangchuk ends 26-day hunger strike after meeting JP Nadda and Jitendra Singh at Medanta"
+    },
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/bharat/sonam-wangchuk-ends-fast-after-26-days-in-presence-of-jp-nadda-jitendra-singh-enn26072400271",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "Wangchuk ends fast after 26 days"
+    },
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "entities": [
+    {
+     "id": "wangchuk",
+     "role": "spoke"
+    },
+    {
+     "id": "nadda",
+     "role": "spoke"
+    },
+    {
+     "id": "jitendra-singh",
+     "role": "spoke"
+    },
+    {
+     "id": "medanta",
+     "role": "located_at"
+    },
+    {
+     "id": "govt-india",
+     "role": "ordered"
+    }
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c27",
+   "date": "2026-07-25",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "resignation",
+   "title": "Dharmendra Pradhan resigns as Union Education Minister; President accepts; Pralhad Joshi given additional charge",
+   "summary": "ETV Bharat live blog: resignation at 2:07 pm, acceptance 3:14 pm on the PM's advice. First ministerial resignation of Modi's tenure per Al Jazeera. Circumstances contested (next event).",
+   "evidence": "confirmed",
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/bharat/live-blog--delhi-cjp-protest-july-25-live-updates-cockroach-janta-party-jantar-mantar-rahul-gandhi-sonam-wangchuk-dharmendra-pradhan-resignation-neet-paper-leak-abhijeet-dipke-congress-bjp-enn26072501131",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "Delhi Protest LIVE, July 25"
+    },
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/features/2026/7/25/we-have-done-it-joy-as-cockroach-protests-push-india-minister-out",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "'We have done it': Joy as 'Cockroach' protests push India minister out"
+    },
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/bharat/cjp-founder-abhijeet-dipke-reacts-on-union-education-minister-dharmendra-pradhan-resignation-enn26072503354",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "CJP's Abhijeet Dipke's first reaction after Dharmendra Pradhan resigns"
+    },
+    {
+     "type": "web",
+     "url": "https://www.outlookindia.com/national/dharmendra-pradhan-and-neet-paper-leaks-a-timeline",
+     "outlet": "Outlook India",
+     "accessed": "2026-09-28",
+     "title": "Dharmendra Pradhan And NEET Paper Leaks: A Timeline"
+    },
+    {
+     "type": "sansad_db",
+     "table": "media_items",
+     "row_id": 1568,
+     "title": "CJP Press Conference LIVE: Abhijeet Dipke Celebration Amid Dharmendra Pradhan's Resignation",
+     "accessed": "2026-09-28",
+     "note": "YouTube title only; transcript not yet fetched"
+    }
+   ],
+   "links": [
+    {
+     "to": "c26",
+     "relation": "followed",
+     "evidence": "confirmed"
+    },
+    {
+     "to": "c18",
+     "relation": "responded_to",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "pradhan",
+     "role": "resigned"
+    },
+    {
+     "id": "pralhad-joshi",
+     "role": "appointed"
+    },
+    {
+     "id": "modi",
+     "role": "ordered"
+    },
+    {
+     "id": "govt-india",
+     "role": "ordered"
+    }
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c28",
+   "date": "2026-07-25",
+   "date_precision": "day",
+   "lane": "party",
+   "kind": "statement",
+   "title": "Why he went: 'moral grounds / anti-national forces' (BJP) vs 'forced out by the streets' (CJP, INC, CPI(M))",
+   "summary": "BJP: Karnataka chief Vijayendra says Pradhan resigned on moral grounds and 'not a victory for Congress or CJP'; BJP president Nitin Nabin cites 'highest standards of integrity'; per ETV live blog Pradhan cited the need to stop anti-national forces exploiting the controversy. INC/CPI(M)/CJP: the student movement compelled it; Rahul Gandhi said merely stepping down is not enough and Pradhan 'must be sacked'.",
+   "evidence": "disputed",
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "would_confirm": "Text of the resignation letter, PMO statement, or credible reporting of internal BJP decision-making.",
+   "mentions": [
+    "c27"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/bharat/live-blog--delhi-cjp-protest-july-25-live-updates-cockroach-janta-party-jantar-mantar-rahul-gandhi-sonam-wangchuk-dharmendra-pradhan-resignation-neet-paper-leak-abhijeet-dipke-congress-bjp-enn26072501131",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "Delhi Protest LIVE, July 25"
+    },
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/bharat/live-blog--delhi-cjp-protest-july-25-live-updates-cockroach-janta-party-jantar-mantar-rahul-gandhi-sonam-wangchuk-dharmendra-pradhan-resignation-neet-paper-leak-abhijeet-dipke-congress-bjp-enn26072501131",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "Live blog: party reactions (Congress, CPI(M), BJP)"
+    },
+    {
+     "type": "sansad_db",
+     "table": "media_items",
+     "row_id": 790,
+     "title": "धर्मेंद्र प्रधान पर संसद में Rahul Gandhi के खुलासे से मचा हड़कंप! | Parliament | Dharmendra Pradhan",
+     "accessed": "2026-09-28",
+     "note": "INC channel YouTube title only; undated and unread"
+    }
+   ],
+   "links": [
+    {
+     "to": "c27",
+     "relation": "responded_to",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "bjp",
+     "role": "spoke"
+    },
+    {
+     "id": "vijayendra",
+     "role": "spoke"
+    },
+    {
+     "id": "nitin-nabin",
+     "role": "spoke"
+    },
+    {
+     "id": "inc",
+     "role": "spoke"
+    },
+    {
+     "id": "cpim",
+     "role": "spoke"
+    },
+    {
+     "id": "rahul",
+     "role": "spoke"
+    },
+    {
+     "id": "dipke",
+     "role": "spoke"
+    },
+    {
+     "id": "pradhan",
+     "role": "mentioned"
+    }
+   ]
+  },
+  {
+   "id": "c30",
+   "date": "2026-07-25",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "action",
+   "title": "Nadda: FIR copies to be shared and no action against peaceful protesters; CJP withdraws protests; no police apology promised",
+   "summary": "Al Jazeera: government accepted compensation and protection from punitive action but made no commitment to apologise for 20 July. CJP still demands Rs 1 crore per family and action against police officers.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/bharat/live-blog--delhi-cjp-protest-july-25-live-updates-cockroach-janta-party-jantar-mantar-rahul-gandhi-sonam-wangchuk-dharmendra-pradhan-resignation-neet-paper-leak-abhijeet-dipke-congress-bjp-enn26072501131",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "Delhi Protest LIVE, July 25"
+    },
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/7/26/what-next-for-indias-cockroach-movement-after-education-minister-sacked",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "What next for India's 'Cockroach' movement after education minister ..."
+    },
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/bharat/cjp-founder-abhijeet-dipke-reacts-on-union-education-minister-dharmendra-pradhan-resignation-enn26072503354",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "CJP's Abhijeet Dipke's first reaction after Dharmendra Pradhan resigns"
+    }
+   ],
+   "links": [
+    {
+     "to": "c22",
+     "relation": "responded_to",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "nadda",
+     "role": "spoke"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    },
+    {
+     "id": "govt-india",
+     "role": "ordered"
+    },
+    {
+     "id": "dipke",
+     "role": "spoke"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c31",
+   "date": "2026-07-26",
+   "date_precision": "approx",
+   "lane": "security",
+   "kind": "arrest",
+   "title": "Arrests continue in West Bengal (11) and Assam (6); Bihar police firing injures 3, despite assurance of no cases",
+   "summary": "Single-source (Al Jazeera 26 July): the assurance covered BJP-ruled states, yet arrests continued in West Bengal, Assam and Bihar. Circumstances of each incident not verified.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/7/26/what-next-for-indias-cockroach-movement-after-education-minister-sacked",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "What next for India's 'Cockroach' movement after education minister ..."
+    }
+   ],
+   "links": [
+    {
+     "to": "c30",
+     "relation": "contradicts",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "west-bengal",
+     "role": "located_at"
+    },
+    {
+     "id": "assam",
+     "role": "located_at"
+    },
+    {
+     "id": "bihar",
+     "role": "located_at"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c32",
+   "date": "2026-07-26",
+   "date_precision": "day",
+   "lane": "party",
+   "kind": "statement",
+   "title": "Rahul Gandhi demands accountability for police violence and Amit Shah's resignation",
+   "summary": "Al Jazeera (26 July) reports the demand; exact date/venue of the statement not given.",
+   "evidence": "reported",
+   "mentions": [
+    "c21"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/7/26/what-next-for-indias-cockroach-movement-after-education-minister-sacked",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "What next for India's 'Cockroach' movement after education minister ..."
+    },
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/bharat/live-blog--delhi-cjp-protest-july-25-live-updates-cockroach-janta-party-jantar-mantar-rahul-gandhi-sonam-wangchuk-dharmendra-pradhan-resignation-neet-paper-leak-abhijeet-dipke-congress-bjp-enn26072501131",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "Delhi Protest LIVE, July 25"
+    },
+    {
+     "type": "sansad_db",
+     "table": "media_items",
+     "row_id": 764,
+     "title": "NEET Paper Leak के पीड़ित परिवारों से मिले राहुल गांधी",
+     "accessed": "2026-09-28",
+     "note": "INC channel YouTube title only"
+    }
+   ],
+   "links": [
+    {
+     "to": "c21",
+     "relation": "responded_to",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "rahul",
+     "role": "spoke"
+    },
+    {
+     "id": "shah",
+     "role": "mentioned"
+    },
+    {
+     "id": "mha",
+     "role": "mentioned"
+    },
+    {
+     "id": "delhi-police",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ]
+  },
+  {
+   "id": "c33",
+   "date": "2026-07-26",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "action",
+   "title": "Modi announces Nandan Nilekani-led task force to make public exams leak-proof",
+   "summary": "Six-member panel reportedly includes S. Somanath, Tapan Deka, V. Kamakoti, Anita Karwal, Amrit Lal Meena.",
+   "evidence": "confirmed",
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.dtnext.in/news/national/pm-modi-announces-nandan-nilekani-led-task-force-on-exam-reforms",
+     "outlet": "DT Next",
+     "accessed": "2026-09-28",
+     "title": "PM Modi announces Nandan Nilekani-led task force on exam reforms"
+    },
+    {
+     "type": "web",
+     "url": "https://www.drishtiias.com/daily-updates/daily-news-analysis/public-examinations-amendment-bill-2026-and-nandan-nilekani-led-task-force-on-exam-reforms",
+     "outlet": "Drishti IAS",
+     "accessed": "2026-09-28",
+     "title": "Public Examinations Amendment Bill, 2026 and Nilekani-led Task Force"
+    },
+    {
+     "type": "web",
+     "url": "https://www.medianama.com/2026/07/223-pm-modi-nandan-nilekani-task-force-exam-reforms/",
+     "outlet": "MediaNama",
+     "accessed": "2026-09-28",
+     "title": "PM Modi picks Nandan Nilekani to lead exam reform task force"
+    },
+    {
+     "type": "web",
+     "url": "https://www.outlookindia.com/national/dharmendra-pradhan-and-neet-paper-leaks-a-timeline",
+     "outlet": "Outlook India",
+     "accessed": "2026-09-28",
+     "title": "Dharmendra Pradhan And NEET Paper Leaks: A Timeline"
+    }
+   ],
+   "links": [
+    {
+     "to": "c27",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "modi",
+     "role": "ordered"
+    },
+    {
+     "id": "nilekani",
+     "role": "appointed"
+    },
+    {
+     "id": "govt-india",
+     "role": "ordered"
+    }
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c34",
+   "date": "2026-07-27",
+   "date_precision": "day",
+   "lane": "parliament",
+   "kind": "legislation",
+   "title": "Public Examinations (Prevention of Unfair Means) Amendment Bill, 2026 introduced in Lok Sabha by Jitendra Singh",
+   "summary": "Per Drishti IAS: fast-track courts in every state, probes in 2 months, min. jail for leaking raised 3 to 5 years (max 10), organised fraud min. 5 to 7 years. A Wikipedia summary states different penalty figures, so specifics are unsettled.",
+   "evidence": "confirmed",
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.drishtiias.com/daily-updates/daily-news-analysis/public-examinations-amendment-bill-2026-and-nandan-nilekani-led-task-force-on-exam-reforms",
+     "outlet": "Drishti IAS",
+     "accessed": "2026-09-28",
+     "title": "Public Examinations Amendment Bill, 2026 and Nilekani-led Task Force"
+    },
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "links": [
+    {
+     "to": "c33",
+     "relation": "followed",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "jitendra-singh",
+     "role": "spoke"
+    },
+    {
+     "id": "lok-sabha",
+     "role": "located_at"
+    },
+    {
+     "id": "pub-exams-bill",
+     "role": "mentioned"
+    },
+    {
+     "id": "pub-exams-act",
+     "role": "mentioned"
+    }
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c35",
+   "date": "2026-08-14",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "action",
+   "title": "Tamil Nadu order bars students from joining Left and CJP protests; withdrawn 19 Aug after criticism",
+   "summary": "Wikipedia citing India Today, Mint, Daily Pioneer; primary outlets not fetched.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "entities": [
+    {
+     "id": "tn-govt",
+     "role": "ordered"
+    },
+    {
+     "id": "vijay-tn",
+     "role": "mentioned"
+    },
+    {
+     "id": "tamil-nadu",
+     "role": "located_at"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c36",
+   "date": "2026-08-31",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Delhi Police ask Supreme Court (Art. 142) to quash 13 FIRs against student protesters and to register a new FIR on 2,873 people with criminal records",
+   "summary": "India TV: FIRs registered 21-26 July; police say they no longer wish to pursue them after the 25 July government decision; the 2,873 have 'serious criminal antecedents' per NCRB data. SC response not found.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.indiatvnews.com/news/india/delhi-police-moves-supreme-court-to-quash-13-firs-linked-to-cjp-protests-seeks-probe-into-2873-individuals-latest-updates-2026-08-31-1052890",
+     "outlet": "India TV",
+     "accessed": "2026-09-28",
+     "title": "Delhi Police moves Supreme Court to quash 13 FIRs linked to CJP protests, seeks probe into 2,873 individuals"
+    }
+   ],
+   "links": [
+    {
+     "to": "c22",
+     "relation": "responded_to",
+     "evidence": "reported"
+    },
+    {
+     "to": "c30",
+     "relation": "followed",
+     "evidence": "reported"
+    },
+    {
+     "to": "manipur:m44",
+     "relation": "related",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "delhi-police",
+     "role": "filed"
+    },
+    {
+     "id": "supreme-court",
+     "role": "located_at"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c37",
+   "date": "2026-09-03",
+   "date_precision": "day",
+   "lane": "party",
+   "kind": "action",
+   "title": "Manish Brahmbhatt launches breakaway CJP-D, accusing Dipke of AAP alignment and sidelining volunteers",
+   "summary": "Allegations (his): 8 of 12 national-committee members have AAP ties; Kejriwal funds travel/hotels; no protester consulted. CJP's rebuttal not found in sources read.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.thestatesman.com/india/cjp-splits-as-rebels-float-democratic-faction-accuse-dipke-of-politicising-student-movement-1503634339.html",
+     "outlet": "The Statesman",
+     "accessed": "2026-09-28",
+     "title": "CJP splits as rebels float 'Democratic' faction"
+    },
+    {
+     "type": "web",
+     "url": "https://www.onmanorama.com/news/india/2026/09/03/cockroach-janta-party-faction-cjp-d-dipke-brahmbhatt.html",
+     "outlet": "Onmanorama",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party faces first rebel as former volunteer launches breakaway platform CJP-D"
+    },
+    {
+     "type": "web",
+     "url": "https://thefederal.com/category/politics/manish-brahmbhatt-launches-cjp-democratic-255631",
+     "outlet": "The Federal",
+     "accessed": "2026-09-28",
+     "title": "CJP splits already! Manish Brahmbhatt unveils CJP-D, accuses Dipke of AAP bias"
+    }
+   ],
+   "entities": [
+    {
+     "id": "brahmbhatt",
+     "role": "spoke"
+    },
+    {
+     "id": "cjp-d",
+     "role": "located_at"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    },
+    {
+     "id": "dipke",
+     "role": "mentioned"
+    },
+    {
+     "id": "aap",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c38",
+   "date": "2026-09-12",
+   "date_precision": "day",
+   "lane": "party",
+   "kind": "statement",
+   "title": "Sachin Pilot (INC) challenges CJP to scrutinise AAP-ruled Punjab schools as it did others",
+   "summary": "Per Wikipedia citing Hindustan Times (12 Sep) and Indian Express (11 Sep); not independently fetched.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Cockroach_Janta_Party",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party",
+     "note": "secondary compilation; individual claims cite outlets named in the event summary; not independent corroboration"
+    }
+   ],
+   "entities": [
+    {
+     "id": "sachin-pilot",
+     "role": "spoke"
+    },
+    {
+     "id": "inc",
+     "role": "spoke"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    },
+    {
+     "id": "aap",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c40",
+   "date": "2025-02-19",
+   "date_precision": "month",
+   "lane": "executive",
+   "kind": "appointment",
+   "title": "Gyanesh Kumar takes charge as Chief Election Commissioner (Feb 2025); Vivek Joshi becomes EC",
+   "summary": "Background event. Exact day not confirmed in sources read (headline: 'assumes charge'); placed on 19 Feb from month-level sourcing only.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.tribuneindia.com/news/india/gyanesh-kumar-assumes-charge-as-cec-vivek-joshi-as-ec",
+     "outlet": "The Tribune",
+     "accessed": "2026-09-28",
+     "title": "Gyanesh Kumar assumes charge as CEC, Vivek Joshi as EC"
+    },
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/9/25/indias-cockroach-movement-demands-election-chiefs-resignation",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "India's 'cockroach' movement demands election chief's resignation"
+    }
+   ],
+   "entities": [
+    {
+     "id": "gyanesh",
+     "role": "appointed"
+    },
+    {
+     "id": "vivek-joshi",
+     "role": "appointed"
+    },
+    {
+     "id": "eci",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c41",
+   "date": "2026-09-23",
+   "date_precision": "day",
+   "lane": "media",
+   "kind": "report",
+   "title": "Indian Express: two Election Commissioners objected on record 14 times in 10 months to CEC's steps (SIR)",
+   "summary": "Report by Ritika Chopra: EC Vivek Joshi's 16 May objection to altering statutory Form 6 through the SIR order is one example. ECI replied that 'differing views ... are a normal part of deliberation' and all actions were lawful.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://countercurrents.org/2026/09/indian-express-report-raises-questions-about-the-ecis-role-in-sir-and-election-fairness/",
+     "outlet": "Countercurrents",
+     "accessed": "2026-09-28",
+     "title": "Indian Express report raises questions about the ECI's role in SIR",
+     "note": "secondary summary of the Indian Express report of 23 Sep 2026 (Ritika Chopra)"
+    },
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/9/25/indias-cockroach-movement-demands-election-chiefs-resignation",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "India's 'cockroach' movement demands election chief's resignation"
+    },
+    {
+     "type": "web",
+     "url": "https://www.cnbc.com/2026/09/25/india-cockroach-party-election-protest-democracy.html",
+     "outlet": "CNBC",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party demands Gyanesh Kumar resign",
+     "note": "page returned 403 to fetch; headline/snippet from search only"
+    }
+   ],
+   "entities": [
+    {
+     "id": "indian-express",
+     "role": "located_at"
+    },
+    {
+     "id": "sandhu",
+     "role": "mentioned"
+    },
+    {
+     "id": "vivek-joshi",
+     "role": "mentioned"
+    },
+    {
+     "id": "gyanesh",
+     "role": "mentioned"
+    },
+    {
+     "id": "eci",
+     "role": "mentioned"
+    },
+    {
+     "id": "sir",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c42",
+   "date": "2026-09-24",
+   "date_precision": "day",
+   "lane": "protest",
+   "kind": "press_conference",
+   "title": "CJP gives CEC Gyanesh Kumar a 48-hour ultimatum to resign; threatens nationwide protests from Mumbai on 2 Oct",
+   "summary": "Dipke's press conference in New Delhi, the day after the Indian Express report; SIR voter-roll deletions are the stated grievance.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/9/25/indias-cockroach-movement-demands-election-chiefs-resignation",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "India's 'cockroach' movement demands election chief's resignation"
+    },
+    {
+     "type": "web",
+     "url": "https://www.bloomberg.com/news/articles/2026-09-24/india-s-cjp-gives-chief-election-commissioner-48-hours-to-resign",
+     "outlet": "Bloomberg",
+     "accessed": "2026-09-28",
+     "title": "India's 'Cockroach' Protesters Target Election Chief Next",
+     "note": "headline/snippet from search only"
+    },
+    {
+     "type": "web",
+     "url": "https://www.cnbc.com/2026/09/25/india-cockroach-party-election-protest-democracy.html",
+     "outlet": "CNBC",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party demands Gyanesh Kumar resign",
+     "note": "page returned 403 to fetch; headline/snippet from search only"
+    },
+    {
+     "type": "web",
+     "url": "https://www.dailysabah.com/world/asia-pacific/cockroach-movement-gives-india-election-chief-48-hour-ultimatum",
+     "outlet": "Daily Sabah",
+     "accessed": "2026-09-28",
+     "title": "'Cockroach' movement gives India election chief 48-hour ultimatum"
+    },
+    {
+     "type": "web",
+     "url": "https://english.lokshahi.com/politics/cockroach-janata-party-announces-nationwide-protest-against-chief-election-commissioner-gyanesh-kumar-12573897",
+     "outlet": "Lokshahi",
+     "accessed": "2026-09-28",
+     "title": "CJP announces nationwide protest against CEC Gyanesh Kumar"
+    }
+   ],
+   "links": [
+    {
+     "to": "c41",
+     "relation": "responded_to",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "dipke",
+     "role": "spoke"
+    },
+    {
+     "id": "cjp",
+     "role": "protested"
+    },
+    {
+     "id": "gyanesh",
+     "role": "mentioned"
+    },
+    {
+     "id": "eci",
+     "role": "mentioned"
+    },
+    {
+     "id": "sir",
+     "role": "mentioned"
+    },
+    {
+     "id": "mumbai",
+     "role": "located_at"
+    },
+    {
+     "id": "new-delhi",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c43",
+   "date": "2026-09-25",
+   "date_precision": "day",
+   "lane": "party",
+   "kind": "protest",
+   "title": "Congress marches on state election offices demanding CEC's removal; opposition parties mull impeachment",
+   "summary": "Al Jazeera: marches scheduled for Friday (25 Sep) demanding an independent review and CEC's arrest/removal. Tribune headline: opposition mulling impeachment (body not read).",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/9/25/indias-cockroach-movement-demands-election-chiefs-resignation",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "India's 'cockroach' movement demands election chief's resignation"
+    },
+    {
+     "type": "web",
+     "url": "https://www.tribuneindia.com/news/india/opposition-parties-mull-impeachment-of-cec-accuse-him-of-acting-like-bjp-spokesperson/amp",
+     "outlet": "The Tribune",
+     "accessed": "2026-09-28",
+     "title": "Opposition parties mull impeachment of CEC ...",
+     "note": "headline only; body not read"
+    }
+   ],
+   "links": [
+    {
+     "to": "c41",
+     "relation": "responded_to",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "inc",
+     "role": "protested"
+    },
+    {
+     "id": "gyanesh",
+     "role": "mentioned"
+    },
+    {
+     "id": "eci",
+     "role": "mentioned"
+    },
+    {
+     "id": "sir",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c45",
+   "date": "2026-10-02",
+   "date_precision": "day",
+   "lane": "protest",
+   "kind": "protest",
+   "title": "PLANNED: CJP nationwide protest starting in Mumbai (Gandhi Jayanti) if CEC has not resigned",
+   "summary": "Not yet occurred as of 28 Sep. The ultimatum expired on 26 Sep with Kumar still in office per reports.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/9/25/indias-cockroach-movement-demands-election-chiefs-resignation",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "India's 'cockroach' movement demands election chief's resignation"
+    },
+    {
+     "type": "web",
+     "url": "https://www.dailysabah.com/world/asia-pacific/cockroach-movement-gives-india-election-chief-48-hour-ultimatum",
+     "outlet": "Daily Sabah",
+     "accessed": "2026-09-28",
+     "title": "'Cockroach' movement gives India election chief 48-hour ultimatum"
+    }
+   ],
+   "links": [
+    {
+     "to": "c42",
+     "relation": "followed",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "cjp",
+     "role": "protested"
+    },
+    {
+     "id": "mumbai",
+     "role": "located_at"
+    },
+    {
+     "id": "gyanesh",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "c46",
+   "date": "2026-09-15",
+   "date_precision": "approx",
+   "lane": "media",
+   "kind": "statement",
+   "title": "CJP leaders in interviews/press meets (YouTube listings): funding sources, 'restart protests over NEET?', Gen Z conclave",
+   "summary": "Project DB holds these as listed media items only (no transcripts yet). Useful as future sources for statements by Dipke, Ashutosh Ranka, Saurav Das.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "sansad_db",
+     "table": "media_items",
+     "row_id": 1513,
+     "title": "CJP to start protests again over NEET issue? Abhijeet Dipke's bold remarks | FULL Interview",
+     "accessed": "2026-09-28"
+    },
+    {
+     "type": "sansad_db",
+     "table": "media_items",
+     "row_id": 1529,
+     "title": "Cockroach Janta Party's Funding Sources Revealed | CJP Founder Abhijeet Dipke Interview",
+     "accessed": "2026-09-28"
+    },
+    {
+     "type": "sansad_db",
+     "table": "media_items",
+     "row_id": 1512,
+     "title": "Abhijeet Dipke, Ashutosh Ranka, Saurav Das Exclusive | CJP | Gen Z Conclave",
+     "accessed": "2026-09-28"
+    }
+   ],
+   "entities": [
+    {
+     "id": "dipke",
+     "role": "spoke"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "c47",
+   "date": "2026-07-25",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "claim",
+   "title": "Pradhan's resignation statement: he stepped down so 'anti-national forces' cannot exploit the NEET controversy",
+   "summary": "Per the ETV Bharat live blog (single outlet; wording paraphrased). No evidence of who the 'anti-national forces' are was given in the reporting read.",
+   "evidence": "reported",
+   "claimant": "pradhan",
+   "claim_text": "Resigned to stop anti-national forces from exploiting the NEET controversy and to protect students' futures (paraphrase, ETV Bharat live blog, 25 Jul 2026).",
+   "content_evidence": "unverified",
+   "about": [
+    "c27",
+    "neet-paper-leak"
+   ],
+   "issues": [
+    "cjp-education-minister",
+    "neet-paper-leak"
+   ],
+   "mentions": [
+    "c27"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/bharat/live-blog--delhi-cjp-protest-july-25-live-updates-cockroach-janta-party-jantar-mantar-rahul-gandhi-sonam-wangchuk-dharmendra-pradhan-resignation-neet-paper-leak-abhijeet-dipke-congress-bjp-enn26072501131",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "Delhi Protest LIVE, July 25"
+    }
+   ],
+   "links": [
+    {
+     "to": "c27",
+     "relation": "related",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "pradhan",
+     "role": "spoke"
+    },
+    {
+     "id": "govt-india",
+     "role": "mentioned"
+    }
+   ]
+  },
+  {
+   "id": "c48",
+   "date": "2026-05-23",
+   "date_precision": "day",
+   "lane": "media",
+   "kind": "claim",
+   "title": "Dipke: the government took the CJP website down and his personal and the CJP Instagram accounts were 'hacked'",
+   "summary": "Made on X. The website did show a legal-demand block notice (supported), but the 'hacked' claim and the identity of any hacker are unverified; no government response quoted.",
+   "evidence": "confirmed",
+   "claimant": "dipke",
+   "claim_text": "Government removed the CJP website; his and CJP's Instagram accounts were hacked (Al Jazeera, 23 May 2026).",
+   "content_evidence": "unverified",
+   "about": [
+    "c10"
+   ],
+   "mentions": [
+    "c10"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/5/23/cockroach-janta-partys-founder-says-indian-government-took-website-down",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party's founder says Indian government took website down"
+    },
+    {
+     "type": "web",
+     "url": "https://scroll.in/latest/1093036/cockroach-janata-party-founder-says-instagram-account-hacked-backup-handle-taken-down",
+     "outlet": "Scroll.in",
+     "accessed": "2026-09-28",
+     "title": "CJP founder says website taken down, Instagram account hacked"
+    }
+   ],
+   "links": [
+    {
+     "to": "c10",
+     "relation": "related",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "dipke",
+     "role": "spoke"
+    },
+    {
+     "id": "meity",
+     "role": "mentioned"
+    },
+    {
+     "id": "meta",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ]
+  },
+  {
+   "id": "c49",
+   "date": "2026-09-03",
+   "date_precision": "day",
+   "lane": "party",
+   "kind": "claim",
+   "title": "Brahmbhatt: 8 of CJP's 12 national-committee members have AAP links, Kejriwal funds travel and hotels, no protester was consulted",
+   "summary": "Allegations by the breakaway leader; CJP's response was not found in the sources read.",
+   "evidence": "confirmed",
+   "claimant": "brahmbhatt",
+   "claim_text": "Eight of twelve national-committee picks have AAP ties; hotel and flight costs are sponsored by Kejriwal; not a single volunteer or Jantar Mantar protester was consulted (Federal/Statesman/Onmanorama, 3 Sep 2026).",
+   "content_evidence": "unverified",
+   "about": [
+    "c37",
+    "aap"
+   ],
+   "mentions": [
+    "c37"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://thefederal.com/category/politics/manish-brahmbhatt-launches-cjp-democratic-255631",
+     "outlet": "The Federal",
+     "accessed": "2026-09-28",
+     "title": "CJP splits already! Manish Brahmbhatt unveils CJP-D, accuses Dipke of AAP bias"
+    },
+    {
+     "type": "web",
+     "url": "https://www.thestatesman.com/india/cjp-splits-as-rebels-float-democratic-faction-accuse-dipke-of-politicising-student-movement-1503634339.html",
+     "outlet": "The Statesman",
+     "accessed": "2026-09-28",
+     "title": "CJP splits as rebels float 'Democratic' faction"
+    },
+    {
+     "type": "web",
+     "url": "https://www.onmanorama.com/news/india/2026/09/03/cockroach-janta-party-faction-cjp-d-dipke-brahmbhatt.html",
+     "outlet": "Onmanorama",
+     "accessed": "2026-09-28",
+     "title": "Cockroach Janta Party faces first rebel as former volunteer launches breakaway platform CJP-D"
+    }
+   ],
+   "links": [
+    {
+     "to": "c37",
+     "relation": "related",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "brahmbhatt",
+     "role": "spoke"
+    },
+    {
+     "id": "aap",
+     "role": "mentioned"
+    },
+    {
+     "id": "cjp",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ]
+  },
+  {
+   "id": "c50",
+   "date": "2026-08-31",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "claim",
+   "title": "Delhi Police tell the Supreme Court that 2,873 people at the protest have 'serious criminal antecedents' (NCRB database)",
+   "summary": "Filed with the plea to quash 13 FIRs; the list, matching method and any link to violence are not public in the reporting read.",
+   "evidence": "reported",
+   "claimant": "delhi-police",
+   "claim_text": "2,873 individuals with serious criminal antecedents per NCRB data were present; their role in bodily harm/property destruction needs investigation (India TV, 31 Aug 2026).",
+   "content_evidence": "unverified",
+   "about": [
+    "c36"
+   ],
+   "mentions": [
+    "c36"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.indiatvnews.com/news/india/delhi-police-moves-supreme-court-to-quash-13-firs-linked-to-cjp-protests-seeks-probe-into-2873-individuals-latest-updates-2026-08-31-1052890",
+     "outlet": "India TV",
+     "accessed": "2026-09-28",
+     "title": "Delhi Police moves Supreme Court to quash 13 FIRs linked to CJP protests, seeks probe into 2,873 individuals"
+    }
+   ],
+   "links": [
+    {
+     "to": "c36",
+     "relation": "related",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "delhi-police",
+     "role": "spoke"
+    },
+    {
+     "id": "supreme-court",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "cjp-education-minister"
+   ]
+  }
+ ],
+ "hypotheses": []
+}

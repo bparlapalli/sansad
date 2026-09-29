@@ -25,7 +25,11 @@ sansad/
 │   └── pib/                 # pib.gov.in press releases (second data source)
 │       ├── pib_scraper.py       # ✅ list (ASP.NET postback per day) + fetch release pages → pib_releases
 │       └── explore_pib.py       # Original Playwright probe — superseded, kept for reference
+│   └── youtube/             # Party + leader YouTube channels (third data source)
+│       ├── youtube_scraper.py   # ✅ list channel tabs → fetch metadata + captions → media_items/media_chunks
+│       └── explore_transcripts.py # Original feasibility probe — superseded, kept for reference
 │
+├── core/party_registry.py   # WHO we track off-floor: parties, people, dated affiliations, accounts (edit + --seed)
 ├── core/sources.py          # Source registry — feeds /feed and /t/<topic> (see Known issues § Multi-source)
 ├── parser/
 │   ├── pdf_parser.py        # Text extraction + speaker attribution + language detection
@@ -66,6 +70,12 @@ sansad/
 ├── seed_parties.py          # One-time seed: party affiliations into members table
 ├── ai_content.sql           # AI-generated digests + profiles (run in DB Browser)
 ├── render.yaml               # Render web service config (build/start command, env vars)
+├── docs/
+│   ├── ISSUE_TIMELINES.md   # Timeline concept: fact/claim/hypothesis layers, evidence, linking, open decisions
+│   ├── PRODUCT_STRATEGY.md  # Marketing + investor reviews (2026-09-28), recommended path, go/no-go gates
+│   └── timelines/           # PUBLIC edition of issue-timeline data (facts + claims) + rejected UI prototype
+│       └── build_public_edition.py  # regenerates it from data/timelines/ with leak checks
+├── data/                    # LOCAL ONLY (gitignored): data/timelines/ = research edition incl. hypotheses
 ├── pdfs/                    # Downloaded PDF files
 ├── sansad.db                # SQLite database — full local archive (do not commit)
 ├── public.db                # Trimmed export for deployment (do not commit — regenerate anytime)
@@ -116,6 +126,15 @@ python scrapers/pib/pib_scraper.py --from 2026-09-01 --to 2026-09-28
 python scrapers/pib/pib_scraper.py --list-only --days 30   # index only
 python scrapers/pib/pib_scraper.py --fetch-only --limit 200
 python scrapers/pib/pib_scraper.py --status
+
+# ── Party & leader YouTube (yt-dlp, no API key; needs `truststore`) ──────────
+python scrapers/youtube/youtube_scraper.py --seed               # load core/party_registry.py
+python scrapers/youtube/youtube_scraper.py --days 30            # list + fetch captions, all accounts
+python scrapers/youtube/youtube_scraper.py --days 30 --party inc
+python scrapers/youtube/youtube_scraper.py --account @RahulGandhi --days 7
+python scrapers/youtube/youtube_scraper.py --list-only --days 30
+python scrapers/youtube/youtube_scraper.py --fetch-only --limit 50 [--english]
+python scrapers/youtube/youtube_scraper.py --status
 
 # ── Parse downloaded PDFs ──────────────────────────────────────────────────────
 python main.py --parse-only                  # parse all pending PDFs
@@ -209,6 +228,12 @@ python push_public_db.py                     # push public.db to LIVE_SITE_URL (
 | `chunks_fts` | FTS5 virtual table over statement_chunks |
 | `pib_releases` | PIB press releases — keyed by PIB's `prid`; `fetch_status` listed → fetched/error; `translations` = JSON {language: prid} |
 | `pib_releases_fts` | FTS5 over pib_releases (title, ministry, body_text) — insert/update/delete triggers keep it in sync |
+| `parties` | Parties/movements tracked off-floor (inc, bjp, cjp) — seeded from `core/party_registry.py` |
+| `people` | One row per leader *for life* — no party column; `aliases` (JSON) match video titles; `member_id` links to their Parliament record |
+| `affiliations` | person × party × [start_date, end_date] — the ONLY place party membership lives; handles party switches |
+| `source_accounts` | platform (youtube/x/website) + handle, owned by a party or a person; `verified`, `active`; `kind='search'` for people with no official channel |
+| `media_items` | One video/post — `person_id` (speaker if known), `party_id` = speaker's party **on published_date** (via `party_on()`), `attribution` owner/title_match/search/none |
+| `media_chunks` / `media_chunks_fts` | ~60-word timed transcript slices ("quotes") with `start_sec` for `&t=` deep links; `text_en` for translations |
 
 **name_normalized** in `members` strips honorifics (SHRI, SHRIMATI, DR., PROF., etc.) and lowercases.
 Always pass `member["name_normalized"]` (not `member["name"]`) to `search_by_speaker()`.
@@ -267,7 +292,9 @@ no password gate, not linked from anywhere public. Public "how to use" page at `
 **Hard rule: the full `sansad.db` never leaves the local machine, and never goes to GitHub in any form** —
 not committed, not as a Release asset, public or private. This was an explicit decision (protects the
 scraped/parsed dataset as the project's actual asset — a one-click full bulk download would defeat that even
-if gated). GitHub holds code only.
+if gated). GitHub holds code and docs only — the one data exception is the *public edition* of the
+issue-timeline research (`docs/timelines/`: facts + attributed claims, no hypotheses), chosen by the
+founder on 2026-09-28.
 
 **How data reaches the live site:**
 1. Locally: `main.py --all-sessions` / `playwright_scraper.py` scrapes new PDFs → `main.py --parse-only`
@@ -320,12 +347,46 @@ because `*.db` is gitignored — the intent was wrong regardless, now that data 
 - **PIB in production** — `export_public_db.py` copies fetched `pib_releases` for the last N days
   (window measured from the newest PIB release, not the debate lag); `daily_update.py` scrapes the last 3
   days of PIB each run. Historical backfill stays local until we decide what the live site should hold.
+- **YouTube source (party & leader channels)** — `scrapers/youtube/youtube_scraper.py`, registry in
+  `core/party_registry.py`. Design points:
+  - *Party-switching*: a person's party is never stored on the person — only in dated `affiliations`
+    rows. Each `media_items` row is stamped with `party_on(person, published_date)`, so old quotes stay
+    under the old party. Scindia (INC → BJP 2020-03-11) is seeded as the worked example.
+  - *Attribution*: a leader's own channel → the owner. Party channel → the tracked person named
+    earliest in the title (aliases incl. Hindi), else unattributed; party-channel videos are only kept
+    if they name a tracked leader or look like a press conference/briefing. Party pressers have several
+    speakers, so title attribution is "primary speaker", not per-sentence.
+  - *Press conferences are livestreams* → on the channel's `/streams` tab, not `/videos`. Both are walked.
+  - *Impostor handles*: YouTube `@INCIndia` and `@priyankagandhivadra` are NOT official. Only handles
+    resolved and checked (name + subscriber count) are `verified=1`; X/website accounts are recorded
+    but `active=0` (unverified, from memory) until someone checks them.
+  - *CJP (Cockroach Janta Party)*: a movement, not a registered party (founded 2026-05-16 by Abhijeet
+    Dipke). No verified official YouTube channel; `@CockroachRevolution2029` looks fan-run. Dipke is
+    tracked via a `kind='search'` account (news channels' uploads) — lower confidence.
+  - *Rate limit*: YouTube 429s caption downloads per IP after a burst (hit on 2026-09-28 after ~15
+    probes; still blocked 25+ min later). Scraper is sequential, 4–8s between videos, backs off
+    2/5/15 min, then stops leaving rows `listed`. Don't parallelise on one IP. `youtube-transcript-api`
+    hits the same endpoint, so switching libraries doesn't help.
+  - *Volume*: INC's `/videos` tab alone has 500+ uploads in 30 days (short clips) — `MAX_WALK` caps a tab.
+  - *English*: captions are mostly Hindi ASR. `--english` also stores YouTube's machine translation
+    (the `en` auto track) in `media_chunks.text_en`, at 2× caption requests.
 - **Hindi PDF parser** — pdf_parser.py extracts 0 statements from Devanagari PDFs. Needs Hindi-aware extraction (pdfminer or tesseract OCR). Hindi statements parsed but not translated yet.
 - **Large PDFs time out in Cowork sandbox** — Files >5MB must be parsed on local Windows machine.
 - **Session 7 dates** — Jan 28–29 2026 PDFs exist but dates not yet in sessions_data.py. Add them.
 - **Legacy db.py at root** — `sansad/db.py` is a legacy file used by `main.py`. Flask uses `core/db.py`. Both point to the same `sansad.db`. Do not delete the root `db.py` until `main.py` imports are updated to `from core.db import ...`.
 - **virtiofs (Cowork sandbox)** — `core/db.py` detects virtiofs on Linux/macOS and uses a temp copy. On Windows it always reads sansad.db directly. The Cowork sandbox cannot read the Windows-format WAL-mode DB directly.
 - **`/topic` page not yet chunked** — `search.html` (the `/search` route) shows matching `statement_chunks`, but `topic.html` (`/topic/<topic>`) still does its own FTS match against whole statements and CSS-clamps the display. Same underlying "wall of text" issue, just not fixed there yet — wasn't in scope for the search fix, flagged as a follow-up.
+- **The GitHub repo (bparlapalli/sansad) is PUBLIC.** Anything committed is published. Issue-timeline
+  research containing inferred links / hypotheses about named people stays in `data/` (gitignored);
+  only the public edition (`docs/timelines/`, built by `build_public_edition.py`) is committed.
+  `create_github_issues.py` must never be committed (it held a hardcoded PAT — found invalid/401 on
+  2026-09-28; the same token was also embedded in the `origin` remote URL).
+- **Issue timelines** — concept + decisions in `docs/ISSUE_TIMELINES.md`. Three layers (fact / attributed
+  claim / internal hypothesis), evidence computed from independent sources, everything-is-a-node linking.
+  The single-file UI prototype was **rejected as unusable** by the founder (2026-09-28); keep the JSON
+  schema, redesign the UI. Not yet in the DB or Flask app.
+- **Strategy** — `docs/PRODUCT_STRATEGY.md`: both reviews say the product is sourced, party-dated quotes
+  (+ alerts), not the hidden-links map; hypotheses stay internal; prove a paid pilot by day 90.
 - **`sansad.db` is not gitignored by accident** — it (and `public.db`) must stay gitignored. If either ever shows up in `git status` as trackable, something is wrong; do not commit them (see Deployment § hard rule above).
 
 ---
@@ -339,7 +400,19 @@ because `*.db` is gitignored — the intent was wrong regardless, now that data 
 - [x] `/admin` gated out of production; `robots.txt` disallow-all
 - [x] Public "how to use this site" page (`/how-to-use`, mirrored in `docs/HOW_TO_USE.md`)
 
+### Done (2026-09-28, later session)
+- [x] YouTube party/leader source + party registry with dated affiliations (see Known issues § YouTube)
+- [x] Issue-timeline concept, research data for 3 issues, public/local editions (docs/ISSUE_TIMELINES.md)
+- [x] Marketing + investor review → docs/PRODUCT_STRATEGY.md
+
 ### In progress / next
+- [ ] YouTube caption backfill — 1,245 videos listed, 0 fetched (IP rate-limited 2026-09-28); rerun
+      `youtube_scraper.py --fetch-only`, consider `--cookies-from-browser firefox`
+- [ ] Alerts + daily brief product (person/topic watch, email/WhatsApp) — strategy's first paid product
+- [ ] Quote cards (permalink + source + party-on-date) and dossier export
+- [ ] Methodology + corrections page
+- [ ] Issue-timeline UI redesign (prototype rejected) → then DB tables + `/issues/<slug>` blueprint
+- [ ] Topic registry + miner + candidate review queue (`/admin/candidates`)
 - [ ] **Set up Windows Task Scheduler** to run `daily_update.py` automatically — currently run by hand
 - [ ] Apply chunking to `/topic` page too (currently only `/search` shows chunks — see Known issues)
 - [ ] Fix Hindi PDF parser — extract text from Devanagari PDFs (pdfminer/tesseract path)
@@ -351,6 +424,10 @@ because `*.db` is gitignored — the intent was wrong regardless, now that data 
 ### Scrapers
 - [x] PIB press release scraper (`scrapers/pib/pib_scraper.py`) → `pib_releases` in local sansad.db
 - [ ] PIB: backfill history, add to `daily_update.py`, surface in web UI + public export
+- [x] YouTube: party + leader channels (INC, BJP, CJP) → `media_items` + timed quote chunks; in /feed, /t/<topic>, export, daily_update
+- [ ] YouTube: person/party pages (`/person/<slug>`) joining Parliament statements + off-floor quotes
+- [ ] X/Twitter: API is paid ($) — decide; handles already in the registry (`active=0`)
+- [ ] Party websites: inc.in / bjp.org press releases — plain HTML scrapers, same pattern as PIB
 - [ ] Run --catalog to build full item index (6,458+ debates)
 - [ ] --resolve + --download for all 18th LS PDFs
 - [ ] Add Rajya Sabha debates

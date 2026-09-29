@@ -25,7 +25,7 @@ playwright>=1.40        # Real browser scraper for eparlib.sansad.in
 #   Used by: scrapers/parliament/playwright_scraper.py, scrapers/pib/explore_pib.py
 #   (PIB itself needs no browser — scrapers/pib/pib_scraper.py uses plain requests)
 
-# ── YouTube transcript sourcing (exploratory) ─────────────────────────────────
-yt-dlp>=2024.1                # Lists a channel's recent uploads without downloading video
-youtube-transcript-api>=0.6   # Pulls existing captions for a video id (no API key needed)
-#   Used by: scrapers/youtube/explore_transcripts.py
+# ── YouTube (party & leader channels) ─────────────────────────────────────────
+yt-dlp>=2024.1                # Channel listing, video metadata AND caption tracks — no API key
+#   Used by: scrapers/youtube/youtube_scraper.py (needs truststore on this machine, like PIB)
+youtube-transcript-api>=1.0   # Only the old feasibility probe (explore_transcripts.py) uses this

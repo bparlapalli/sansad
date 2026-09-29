@@ -1,0 +1,2840 @@
+{
+ "issue": {
+  "slug": "manipur",
+  "title": "Manipur",
+  "summary": "Ethnic conflict between Meitei and Kuki-Zo communities since 3 May 2023, the central/state response (Biren Singh's exit, President's Rule 13 Feb 2025 to 4 Feb 2026), Supreme Court oversight, thin Parliament debate, and 2026 developments: a new Naga-Kuki front, the Tronglaobi bombing and the March 2026 arrests of an American and six Ukrainians that some commentators tie to Manipur (unverified).",
+  "as_of": "2026-09-28",
+  "lanes": [
+   "executive",
+   "parliament",
+   "courts",
+   "protest",
+   "security",
+   "party",
+   "international",
+   "media"
+  ],
+  "edition": "public: confirmed, reported and disputed facts plus attributed claims. Inferred events, inferred links and hypotheses are kept in the local research edition only."
+ },
+ "entities": [
+  {
+   "id": "akoijam",
+   "type": "person",
+   "name": "Dr. Angomcha Bimol Akoijam (INC, Inner Manipur)"
+  },
+  {
+   "id": "art356",
+   "type": "document",
+   "name": "Proclamation under Art. 356 (13 Feb 2025)"
+  },
+  {
+   "id": "atsum",
+   "type": "org",
+   "name": "All Tribal Students' Union Manipur (ATSUM)"
+  },
+  {
+   "id": "bhalla",
+   "type": "person",
+   "name": "Governor Ajay Kumar Bhalla"
+  },
+  {
+   "id": "biren",
+   "type": "person",
+   "name": "N. Biren Singh"
+  },
+  {
+   "id": "bishnupur",
+   "type": "place",
+   "name": "Bishnupur district",
+   "parent": "manipur"
+  },
+  {
+   "id": "bjp",
+   "type": "party",
+   "name": "Bharatiya Janata Party (BJP)",
+   "hub": true
+  },
+  {
+   "id": "chauhan",
+   "type": "person",
+   "name": "Justice Balbir Singh Chauhan (retd)"
+  },
+  {
+   "id": "chongtham-vikram",
+   "type": "person",
+   "name": "Chongtham Vikram Singh"
+  },
+  {
+   "id": "churachandpur",
+   "type": "place",
+   "name": "Churachandpur",
+   "parent": "manipur"
+  },
+  {
+   "id": "cji",
+   "type": "person",
+   "name": "CJI Surya Kant"
+  },
+  {
+   "id": "commentators",
+   "type": "org",
+   "name": "Commentators / opinion outlets"
+  },
+  {
+   "id": "crpf",
+   "type": "org",
+   "name": "CRPF"
+  },
+  {
+   "id": "delhi-police",
+   "type": "org",
+   "name": "Delhi Police"
+  },
+  {
+   "id": "gita-mittal",
+   "type": "person",
+   "name": "Justice Gita Mittal (retd)"
+  },
+  {
+   "id": "gogoi",
+   "type": "person",
+   "name": "Gaurav Gogoi"
+  },
+  {
+   "id": "govt-india",
+   "type": "org",
+   "name": "Government of India (Union govt)",
+   "hub": true
+  },
+  {
+   "id": "hrw",
+   "type": "org",
+   "name": "Human Rights Watch"
+  },
+  {
+   "id": "imphal",
+   "type": "place",
+   "name": "Imphal",
+   "parent": "manipur"
+  },
+  {
+   "id": "inc",
+   "type": "party",
+   "name": "Indian National Congress (INC)",
+   "hub": true
+  },
+  {
+   "id": "india",
+   "type": "place",
+   "name": "India",
+   "hub": true
+  },
+  {
+   "id": "inquiry-commission",
+   "type": "document",
+   "name": "Commission of Inquiry into 2023 Manipur violence"
+  },
+  {
+   "id": "jiribam",
+   "type": "place",
+   "name": "Jiribam",
+   "parent": "manipur"
+  },
+  {
+   "id": "kangpokpi",
+   "type": "place",
+   "name": "Kangpokpi",
+   "parent": "manipur"
+  },
+  {
+   "id": "khemchand",
+   "type": "person",
+   "name": "Yumnam Khemchand Singh"
+  },
+  {
+   "id": "kolkata",
+   "type": "place",
+   "name": "Kolkata",
+   "parent": "india"
+  },
+  {
+   "id": "koutruk",
+   "type": "place",
+   "name": "Koutruk",
+   "parent": "bishnupur"
+  },
+  {
+   "id": "kuki-zo",
+   "type": "org",
+   "name": "Kuki-Zo communities & bodies"
+  },
+  {
+   "id": "lamba",
+   "type": "person",
+   "name": "Justice Ajai Lamba (retd)"
+  },
+  {
+   "id": "litan",
+   "type": "place",
+   "name": "Litan",
+   "parent": "ukhrul"
+  },
+  {
+   "id": "lok-sabha",
+   "type": "org",
+   "name": "Lok Sabha",
+   "hub": true
+  },
+  {
+   "id": "manipur",
+   "type": "place",
+   "name": "Manipur",
+   "parent": "india"
+  },
+  {
+   "id": "manipur-govt",
+   "type": "org",
+   "name": "Government of Manipur"
+  },
+  {
+   "id": "manipur-gst-bill",
+   "type": "document",
+   "name": "Manipur GST (Second Amendment) Bill/Ordinance, 2025"
+  },
+  {
+   "id": "manipur-hc",
+   "type": "org",
+   "name": "Manipur High Court"
+  },
+  {
+   "id": "manipur-police",
+   "type": "org",
+   "name": "Manipur Police"
+  },
+  {
+   "id": "meitei",
+   "type": "org",
+   "name": "Meitei communities & bodies"
+  },
+  {
+   "id": "mha",
+   "type": "org",
+   "name": "Union Home Ministry (MHA)"
+  },
+  {
+   "id": "mizoram",
+   "type": "place",
+   "name": "Mizoram",
+   "parent": "india"
+  },
+  {
+   "id": "modi",
+   "type": "person",
+   "name": "Narendra Modi"
+  },
+  {
+   "id": "myanmar",
+   "type": "place",
+   "name": "Myanmar"
+  },
+  {
+   "id": "nadda",
+   "type": "person",
+   "name": "J.P. Nadda"
+  },
+  {
+   "id": "naga",
+   "type": "org",
+   "name": "Naga communities & bodies (incl. UNC)"
+  },
+  {
+   "id": "new-delhi",
+   "type": "place",
+   "name": "New Delhi",
+   "parent": "india",
+   "hub": true
+  },
+  {
+   "id": "nia",
+   "type": "org",
+   "name": "National Investigation Agency (NIA)"
+  },
+  {
+   "id": "nityanand-rai",
+   "type": "person",
+   "name": "Nityanand Rai"
+  },
+  {
+   "id": "npf",
+   "type": "party",
+   "name": "Naga People's Front (NPF)"
+  },
+  {
+   "id": "npp",
+   "type": "party",
+   "name": "National People's Party (NPP)"
+  },
+  {
+   "id": "rahul",
+   "type": "person",
+   "name": "Rahul Gandhi"
+  },
+  {
+   "id": "rajya-sabha",
+   "type": "org",
+   "name": "Rajya Sabha",
+   "hub": true
+  },
+  {
+   "id": "senapati",
+   "type": "place",
+   "name": "Senapati",
+   "parent": "manipur"
+  },
+  {
+   "id": "shah",
+   "type": "person",
+   "name": "Amit Shah"
+  },
+  {
+   "id": "sons-of-liberty",
+   "type": "org",
+   "name": "Sons of Liberty International (SOLI)"
+  },
+  {
+   "id": "soo",
+   "type": "document",
+   "name": "Suspension of Operations (SoO) agreement"
+  },
+  {
+   "id": "supreme-court",
+   "type": "org",
+   "name": "Supreme Court of India",
+   "hub": true
+  },
+  {
+   "id": "tronglaobi",
+   "type": "place",
+   "name": "Tronglaobi (Moirang)",
+   "parent": "bishnupur"
+  },
+  {
+   "id": "ukhrul",
+   "type": "place",
+   "name": "Ukhrul",
+   "parent": "manipur"
+  },
+  {
+   "id": "ukraine-govt",
+   "type": "org",
+   "name": "Ukraine Foreign Ministry"
+  },
+  {
+   "id": "us-govt",
+   "type": "org",
+   "name": "US Government (State Dept / Embassy)"
+  },
+  {
+   "id": "vandyke",
+   "type": "person",
+   "name": "Matthew VanDyke"
+  },
+  {
+   "id": "water-act-res",
+   "type": "document",
+   "name": "Resolution: Water Act 2024 amendment for Manipur"
+  }
+ ],
+ "events": [
+  {
+   "id": "m01",
+   "date": "2023-04-20",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Manipur High Court single judge directs state to consider Meitei ST status (report due 19 May)",
+   "summary": "Widely cited trigger of tension. Al Jazeera (May 2026) notes the Supreme Court later called the HC's remarks 'factually incorrect'.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.outlookindia.com/national/how-violence-in-manipur-unfolded-a-timeline",
+     "outlet": "Outlook India",
+     "accessed": "2026-09-28",
+     "title": "How Violence In Manipur Unfolded: A Timeline"
+    },
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/5/6/manipurs-unknown-killers-three-years-of-indias-bloody-ethnic-conflict",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "Manipur's 'unknown' killers: three years of India's ethnic conflict"
+    },
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/2023%E2%80%932026_Manipur_conflict",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "2023-2026 Manipur conflict",
+     "note": "secondary compilation; one date in the fetched summary was internally inconsistent (PR revocation), so only cross-checked facts are used"
+    }
+   ],
+   "entities": [
+    {
+     "id": "manipur-hc",
+     "role": "ordered"
+    },
+    {
+     "id": "meitei",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur-govt",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m02",
+   "date": "2023-05-03",
+   "date_precision": "day",
+   "lane": "protest",
+   "kind": "violence",
+   "title": "ATSUM 'Tribal Solidarity March' against Meitei ST demand; clashes between Kuki and Meitei groups begin near Churachandpur-Bishnupur border",
+   "summary": "Rally reportedly peaceful; a counter-mobilisation and the burning of an Anglo-Kuki War centenary gate preceded clashes and house-burning. Start of the conflict (day 0).",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.outlookindia.com/national/how-violence-in-manipur-unfolded-a-timeline",
+     "outlet": "Outlook India",
+     "accessed": "2026-09-28",
+     "title": "How Violence In Manipur Unfolded: A Timeline"
+    },
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/2023%E2%80%932026_Manipur_conflict",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "2023-2026 Manipur conflict",
+     "note": "secondary compilation; one date in the fetched summary was internally inconsistent (PR revocation), so only cross-checked facts are used"
+    },
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/5/6/manipurs-unknown-killers-three-years-of-indias-bloody-ethnic-conflict",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "Manipur's 'unknown' killers: three years of India's ethnic conflict"
+    }
+   ],
+   "links": [
+    {
+     "to": "m01",
+     "relation": "followed",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "atsum",
+     "role": "protested"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "mentioned"
+    },
+    {
+     "id": "meitei",
+     "role": "mentioned"
+    },
+    {
+     "id": "churachandpur",
+     "role": "located_at"
+    },
+    {
+     "id": "bishnupur",
+     "role": "located_at"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m03",
+   "date": "2023-05-04",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "deployment",
+   "title": "Shoot-at-sight order, curfew in 8 districts, army columns deployed; 9,000+ moved to safety by day's end",
+   "summary": "Per Wikipedia's summary; not independently confirmed by an outlet fetched.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/2023%E2%80%932026_Manipur_conflict",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "2023-2026 Manipur conflict",
+     "note": "secondary compilation; one date in the fetched summary was internally inconsistent (PR revocation), so only cross-checked facts are used"
+    }
+   ],
+   "links": [
+    {
+     "to": "m02",
+     "relation": "responded_to",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "manipur-govt",
+     "role": "ordered"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m04",
+   "date": "2023-05-04",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "violence",
+   "title": "Two Kuki women stripped, paraded and allegedly gang-raped by a mob at B. Phainom, Kangpokpi (surfaced in video on 19 July)",
+   "summary": "The incident occurred on 4 May per NBC/Christian Today reporting; FIR and arrests only after the video went viral.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.nbcnews.com/news/world/indias-modi-breaks-silence-ethnic-violence-manipur-video-shows-women-p-rcna95467",
+     "outlet": "NBC News",
+     "accessed": "2026-09-28",
+     "title": "India's Modi breaks silence on ethnic violence in Manipur"
+    },
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/amp/news/2023/7/20/outrage-in-india-over-video-of-manipur-women-paraded-naked-raped",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "Outrage in India over video of Manipur women paraded naked, raped"
+    },
+    {
+     "type": "web",
+     "url": "https://www.tribuneindia.com/news/nation/women-paraded-naked-manipur-shocker-sparks-nationwide-outrage-140-cr-indians-shamed-modi-house-stalled-527508",
+     "outlet": "The Tribune",
+     "accessed": "2026-09-28",
+     "title": "Women paraded naked: Manipur shocker sparks nationwide outrage"
+    }
+   ],
+   "entities": [
+    {
+     "id": "kangpokpi",
+     "role": "located_at"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "victim"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m05",
+   "date": "2023-07-19",
+   "date_precision": "day",
+   "lane": "media",
+   "kind": "report",
+   "title": "Video of the 4 May assault surfaces after internet curbs; arrests follow next day",
+   "summary": "Four arrests on 20 July per Tribune/Al Jazeera coverage; Wikipedia summary says seven arrests overall.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.tribuneindia.com/news/nation/women-paraded-naked-manipur-shocker-sparks-nationwide-outrage-140-cr-indians-shamed-modi-house-stalled-527508",
+     "outlet": "The Tribune",
+     "accessed": "2026-09-28",
+     "title": "Women paraded naked: Manipur shocker sparks nationwide outrage"
+    },
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/amp/news/2023/7/20/outrage-in-india-over-video-of-manipur-women-paraded-naked-raped",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "Outrage in India over video of Manipur women paraded naked, raped"
+    },
+    {
+     "type": "web",
+     "url": "https://www.nbcnews.com/news/world/indias-modi-breaks-silence-ethnic-violence-manipur-video-shows-women-p-rcna95467",
+     "outlet": "NBC News",
+     "accessed": "2026-09-28",
+     "title": "India's Modi breaks silence on ethnic violence in Manipur"
+    }
+   ],
+   "links": [
+    {
+     "to": "m04",
+     "relation": "related",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "manipur",
+     "role": "located_at"
+    },
+    {
+     "id": "kangpokpi",
+     "role": "located_at"
+    },
+    {
+     "id": "manipur-police",
+     "role": "ordered"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m06",
+   "date": "2023-07-20",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "statement",
+   "title": "Modi breaks silence: the incident is 'shameful for any civilized nation' and 'the entire country has been shamed'",
+   "summary": "First substantial public remark by the PM about Manipur, per NBC/Tribune.",
+   "evidence": "confirmed",
+   "mentions": [
+    "m04"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.nbcnews.com/news/world/indias-modi-breaks-silence-ethnic-violence-manipur-video-shows-women-p-rcna95467",
+     "outlet": "NBC News",
+     "accessed": "2026-09-28",
+     "title": "India's Modi breaks silence on ethnic violence in Manipur"
+    },
+    {
+     "type": "web",
+     "url": "https://www.tribuneindia.com/news/nation/women-paraded-naked-manipur-shocker-sparks-nationwide-outrage-140-cr-indians-shamed-modi-house-stalled-527508",
+     "outlet": "The Tribune",
+     "accessed": "2026-09-28",
+     "title": "Women paraded naked: Manipur shocker sparks nationwide outrage"
+    },
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/amp/news/2023/7/20/outrage-in-india-over-video-of-manipur-women-paraded-naked-raped",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "Outrage in India over video of Manipur women paraded naked, raped"
+    }
+   ],
+   "links": [
+    {
+     "to": "m05",
+     "relation": "responded_to",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "modi",
+     "role": "spoke"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ]
+  },
+  {
+   "id": "m07",
+   "date": "2023-07-20",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Supreme Court (CJI-led bench) takes suo motu cognizance: 'time that the Government really steps in'",
+   "summary": "Bench directed Union and State to act.",
+   "evidence": "confirmed",
+   "mentions": [
+    "m04"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://cjp.org.in/how-and-when-the-supreme-court-moved-on-manipur-2023/",
+     "outlet": "Citizens for Justice and Peace (cjp.org.in; unrelated to the Cockroach Janta Party)",
+     "accessed": "2026-09-28",
+     "title": "How and when the Supreme Court moved on Manipur: 2023"
+    },
+    {
+     "type": "web",
+     "url": "https://www.tribuneindia.com/news/nation/women-paraded-naked-manipur-shocker-sparks-nationwide-outrage-140-cr-indians-shamed-modi-house-stalled-527508",
+     "outlet": "The Tribune",
+     "accessed": "2026-09-28",
+     "title": "Women paraded naked: Manipur shocker sparks nationwide outrage"
+    }
+   ],
+   "links": [
+    {
+     "to": "m05",
+     "relation": "responded_to",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "supreme-court",
+     "role": "ordered"
+    },
+    {
+     "id": "govt-india",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ]
+  },
+  {
+   "id": "m08",
+   "date": "2023-08-07",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Supreme Court appoints Justice Gita Mittal-led committee (with Justices Phansalkar Joshi, Asha Menon) for relief/rehabilitation and probes oversight",
+   "summary": "Also named a senior ex-police officer to supervise CBI/state investigations (per SCC Online/Wikipedia).",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.scconline.com/blog/post/2023/08/08/women-sexual-violence-manipur-supreme-court-constitutes-all-women-committee/",
+     "outlet": "SCC Online",
+     "accessed": "2026-09-28",
+     "title": "Supreme Court constitutes all-women committee to oversee probe"
+    },
+    {
+     "type": "web",
+     "url": "https://cjp.org.in/how-and-when-the-supreme-court-moved-on-manipur-2023/",
+     "outlet": "Citizens for Justice and Peace (cjp.org.in; unrelated to the Cockroach Janta Party)",
+     "accessed": "2026-09-28",
+     "title": "How and when the Supreme Court moved on Manipur: 2023"
+    },
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/2023%E2%80%932026_Manipur_conflict",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "2023-2026 Manipur conflict",
+     "note": "secondary compilation; one date in the fetched summary was internally inconsistent (PR revocation), so only cross-checked facts are used"
+    }
+   ],
+   "links": [
+    {
+     "to": "m07",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "supreme-court",
+     "role": "ordered"
+    },
+    {
+     "id": "gita-mittal",
+     "role": "appointed"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m09",
+   "date": "2023-08-10",
+   "date_precision": "day",
+   "lane": "parliament",
+   "kind": "debate",
+   "title": "No-confidence motion (moved by INDIA bloc to force a Manipur debate) defeated; Modi replies; opposition walks out",
+   "summary": "Debate ran from 8 Aug; Gaurav Gogoi opened. Modi assured the state that the country stood with it; Amit Shah accused the opposition of creating confusion.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.pmindia.gov.in/en/news_updates/pms-reply-to-the-no-confidence-motion-in-lok-sabha-on-10th-august-2023/",
+     "outlet": "PMO (pmindia.gov.in)",
+     "accessed": "2026-09-28",
+     "title": "PM's reply to the No Confidence Motion in Lok Sabha, 10 Aug 2023"
+    },
+    {
+     "type": "web",
+     "url": "https://www.newsonair.gov.in/no-confidence-motion-brought-by-opposition-against-govt-defeated-in-lok-sabha",
+     "outlet": "All India Radio (newsonair)",
+     "accessed": "2026-09-28",
+     "title": "No-confidence motion defeated in Lok Sabha"
+    }
+   ],
+   "entities": [
+    {
+     "id": "inc",
+     "role": "spoke"
+    },
+    {
+     "id": "gogoi",
+     "role": "spoke"
+    },
+    {
+     "id": "modi",
+     "role": "spoke"
+    },
+    {
+     "id": "shah",
+     "role": "spoke"
+    },
+    {
+     "id": "lok-sabha",
+     "role": "located_at"
+    },
+    {
+     "id": "manipur",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m10",
+   "date": "2024-04-01",
+   "date_precision": "month",
+   "lane": "party",
+   "kind": "election",
+   "title": "2024 Lok Sabha polls: BJP loses both Manipur seats to Congress",
+   "summary": "Wikipedia's summary frames it as a verdict on Biren Singh's handling. Project DB confirms Dr. A. Bimol Akoijam sits as INC member for Inner Manipur.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/2023%E2%80%932026_Manipur_conflict",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "2023-2026 Manipur conflict",
+     "note": "secondary compilation; one date in the fetched summary was internally inconsistent (PR revocation), so only cross-checked facts are used"
+    },
+    {
+     "type": "sansad_db",
+     "table": "members",
+     "row_id": 164,
+     "title": "Dr. Angomcha Bimol Akoijam, INC, INNER MANIPUR",
+     "accessed": "2026-09-28"
+    }
+   ],
+   "entities": [
+    {
+     "id": "bjp",
+     "role": "mentioned"
+    },
+    {
+     "id": "inc",
+     "role": "mentioned"
+    },
+    {
+     "id": "biren",
+     "role": "mentioned"
+    },
+    {
+     "id": "akoijam",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m11",
+   "date": "2024-09-01",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "violence",
+   "title": "Drone/explosive attacks on Koutruk and Senjam Chirang villages; NIA takes over the case on 20 Sept",
+   "summary": "Attributed to suspected Kuki militants in the case as reported; Manipur police/army accounts differ (The Frontier Manipur runs a piece on conflicting NIA vs Army-chief narratives, not read in full).",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.indiatodayne.in/opinion/story/the-foreign-nationals-arrests-that-expose-a-proxy-threat-to-indias-northeast-specially-manipur-1362097-2026-03-19",
+     "outlet": "India Today NE (opinion)",
+     "accessed": "2026-09-28",
+     "title": "The foreign nationals arrests that expose a proxy threat to India's northeast, specially Manipur",
+     "note": "OPINION piece; author concedes NIA framing is not about direct execution of the 2024 bombings"
+    },
+    {
+     "type": "web",
+     "url": "https://www.northeasttoday.in/2025/02/24/delhi-haryana-based-suppliers-linked-to-koutruk-and-kadangband-drone-attacks-nia/",
+     "outlet": "Northeast Today",
+     "accessed": "2026-09-28",
+     "title": "Delhi, Haryana-based suppliers linked to Koutruk and Kadangband drone attacks: NIA"
+    },
+    {
+     "type": "web",
+     "url": "https://northeastlivetv.com/topnews/nia-reveals-names-of-key-suppliers-behind-september-2024-manipur-drone-bombing/",
+     "outlet": "Northeast Live",
+     "accessed": "2026-09-28",
+     "title": "NIA reveals names of key suppliers behind September 2024 Manipur drone bombing"
+    }
+   ],
+   "entities": [
+    {
+     "id": "koutruk",
+     "role": "located_at"
+    },
+    {
+     "id": "bishnupur",
+     "role": "located_at"
+    },
+    {
+     "id": "nia",
+     "role": "ordered"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m12",
+   "date": "2024-11-11",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "violence",
+   "title": "Jiribam: CRPF encounter kills 10 suspected militants; six Meitei women and children abducted and later reported killed",
+   "summary": "Manipur police: attackers were armed militants who assaulted a CRPF post and police station. Kuki-Zo bodies: they were village volunteers. CM Biren Singh said hostages were killed by Kuki militants. Preceded by killing of a Hmar woman on 7 Nov.",
+   "evidence": "disputed",
+   "would_confirm": "Judicial or NIA findings on identities and circumstances; forensic report.",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.theweek.in/theweek/current/2024/11/23/the-jiribam-killings-manipur-mark-a-disturbing-escalation-in-the-ethnic-conflict.html",
+     "outlet": "The Week",
+     "accessed": "2026-09-28",
+     "title": "Jiribam killings mark a dangerous escalation"
+    },
+    {
+     "type": "web",
+     "url": "https://www.newsonair.gov.in/manipur-10-suspected-militants-killed-in-jiribam-encounter-1-crpf-jawan-injured",
+     "outlet": "All India Radio (newsonair)",
+     "accessed": "2026-09-28",
+     "title": "Manipur: 10 suspected militants killed in Jiribam encounter"
+    },
+    {
+     "type": "web",
+     "url": "https://www.deccanherald.com/amp/story/india%2Fmanipur%2Fmanipur-10-suspected-hmar-insurgents-killed-in-jiribam-district-one-crpf-jawan-hurt-3271343",
+     "outlet": "Deccan Herald",
+     "accessed": "2026-09-28",
+     "title": "10 suspected Hmar insurgents killed in Jiribam"
+    }
+   ],
+   "entities": [
+    {
+     "id": "jiribam",
+     "role": "located_at"
+    },
+    {
+     "id": "crpf",
+     "role": "attacked"
+    },
+    {
+     "id": "manipur-police",
+     "role": "spoke"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "spoke"
+    },
+    {
+     "id": "biren",
+     "role": "spoke"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m13",
+   "date": "2024-11-15",
+   "date_precision": "approx",
+   "lane": "party",
+   "kind": "action",
+   "title": "NPP withdraws support to the Biren Singh government",
+   "summary": "Per Wikipedia summary (November 2024); primary outlet not fetched.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/2023%E2%80%932026_Manipur_conflict",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "2023-2026 Manipur conflict",
+     "note": "secondary compilation; one date in the fetched summary was internally inconsistent (PR revocation), so only cross-checked facts are used"
+    }
+   ],
+   "links": [
+    {
+     "to": "m12",
+     "relation": "followed",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "npp",
+     "role": "ordered"
+    },
+    {
+     "id": "biren",
+     "role": "mentioned"
+    },
+    {
+     "id": "bjp",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m14",
+   "date": "2025-02-09",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "resignation",
+   "title": "Chief Minister N. Biren Singh resigns, a day before the Assembly session, after meeting Amit Shah and J.P. Nadda",
+   "summary": "Letter submitted to Governor Ajay Kumar Bhalla; ThePrint says he was asked to continue until an alternative was arranged.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.newsonair.gov.in/manipur-cm-n-biren-singh-resigns-submits-letter-to-governor",
+     "outlet": "All India Radio (newsonair)",
+     "accessed": "2026-09-28",
+     "title": "Manipur CM N. Biren Singh resigns, submits letter to Governor"
+    },
+    {
+     "type": "web",
+     "url": "https://theprint.in/politics/manipur-cm-biren-singh-resigns-after-2-hr-meeting-with-amit-shah-governor-centre-to-decide-next-steps/2486701/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "Biren Singh resigns after 2-hr meeting with Amit Shah"
+    },
+    {
+     "type": "web",
+     "url": "https://thediplomat.com/2025/02/presidents-rule-imposed-in-disturbed-manipur-in-indias-northeast/",
+     "outlet": "The Diplomat",
+     "accessed": "2026-09-28",
+     "title": "President's Rule Imposed in Disturbed Manipur"
+    }
+   ],
+   "entities": [
+    {
+     "id": "biren",
+     "role": "resigned"
+    },
+    {
+     "id": "bhalla",
+     "role": "mentioned"
+    },
+    {
+     "id": "shah",
+     "role": "mentioned"
+    },
+    {
+     "id": "nadda",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    },
+    {
+     "id": "imphal",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m16",
+   "date": "2025-02-13",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "action",
+   "title": "President's Rule proclaimed in Manipur; Assembly kept in suspended animation",
+   "summary": "Home Ministry notification: President of the opinion that governance cannot be carried on per the Constitution.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://ddnews.gov.in/en/presidents-rule-imposed-in-manipur/",
+     "outlet": "DD News",
+     "accessed": "2026-09-28",
+     "title": "President's Rule imposed in Manipur"
+    },
+    {
+     "type": "web",
+     "url": "https://thediplomat.com/2025/02/presidents-rule-imposed-in-disturbed-manipur-in-indias-northeast/",
+     "outlet": "The Diplomat",
+     "accessed": "2026-09-28",
+     "title": "President's Rule Imposed in Disturbed Manipur"
+    },
+    {
+     "type": "web",
+     "url": "https://www.newsonair.gov.in/presidents-rule-revoked-in-manipur",
+     "outlet": "All India Radio (newsonair)",
+     "accessed": "2026-09-28",
+     "title": "President's rule revoked in Manipur"
+    }
+   ],
+   "links": [
+    {
+     "to": "m14",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "govt-india",
+     "role": "ordered"
+    },
+    {
+     "id": "mha",
+     "role": "ordered"
+    },
+    {
+     "id": "art356",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    },
+    {
+     "id": "bhalla",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m17",
+   "date": "2025-02-24",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "report",
+   "title": "NIA names Delhi/Haryana-based suppliers of drones used in the Sept 2024 Koutruk/Kadangband attacks",
+   "summary": "NIA identifies a Manipur-based procurer (Khaigoulen Kipgen alias David) and suppliers in Delhi and Rohtak. A domestic supply chain; no foreign national named.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.northeasttoday.in/2025/02/24/delhi-haryana-based-suppliers-linked-to-koutruk-and-kadangband-drone-attacks-nia/",
+     "outlet": "Northeast Today",
+     "accessed": "2026-09-28",
+     "title": "Delhi, Haryana-based suppliers linked to Koutruk and Kadangband drone attacks: NIA"
+    },
+    {
+     "type": "web",
+     "url": "https://northeastlivetv.com/topnews/nia-reveals-names-of-key-suppliers-behind-september-2024-manipur-drone-bombing/",
+     "outlet": "Northeast Live",
+     "accessed": "2026-09-28",
+     "title": "NIA reveals names of key suppliers behind September 2024 Manipur drone bombing"
+    },
+    {
+     "type": "web",
+     "url": "https://ukhrultimes.com/manipur-bomb-attack-drone-supplier-named/",
+     "outlet": "Ukhrul Times",
+     "accessed": "2026-09-28",
+     "title": "Koutruk and Kadangband bomb attack drone supplier named"
+    }
+   ],
+   "links": [
+    {
+     "to": "m11",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "nia",
+     "role": "filed"
+    },
+    {
+     "id": "koutruk",
+     "role": "located_at"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    },
+    {
+     "id": "new-delhi",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m18",
+   "date": "2025-03-25",
+   "date_precision": "approx",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Supreme Court sends six judges to visit relief camps and meet displaced persons",
+   "summary": "Wikipedia summary date; primary outlet not fetched.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/2023%E2%80%932026_Manipur_conflict",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "2023-2026 Manipur conflict",
+     "note": "secondary compilation; one date in the fetched summary was internally inconsistent (PR revocation), so only cross-checked facts are used"
+    }
+   ],
+   "entities": [
+    {
+     "id": "supreme-court",
+     "role": "ordered"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m19",
+   "date": "2025-08-05",
+   "date_precision": "day",
+   "lane": "parliament",
+   "kind": "legislation",
+   "title": "Parliament approves six-month extension of President's Rule (from 13 Aug 2025) to Feb 2026",
+   "summary": "Rajya Sabha adopted by voice vote after Lok Sabha; MoS Home Nityanand Rai said one violence death since PR and none in the last four months (a government claim).",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.newsonair.gov.in/parliament-approves-extension-of-presidents-rule-in-manipur-till-february-2026",
+     "outlet": "All India Radio (newsonair)",
+     "accessed": "2026-09-28",
+     "title": "Parliament approves extension of President's Rule in Manipur till February 2026"
+    }
+   ],
+   "links": [
+    {
+     "to": "m16",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "rajya-sabha",
+     "role": "located_at"
+    },
+    {
+     "id": "lok-sabha",
+     "role": "mentioned"
+    },
+    {
+     "id": "nityanand-rai",
+     "role": "spoke"
+    },
+    {
+     "id": "mha",
+     "role": "ordered"
+    },
+    {
+     "id": "art356",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m20",
+   "date": "2025-09-04",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "legislation",
+   "title": "Tripartite Suspension of Operations (SoO) agreement with Kuki armed groups formally extended",
+   "summary": "Pact commits to negotiations for a political settlement, which Kuki groups read as recognition of their separate-administration demand (per The Wire). Naga bodies later demand it be scrapped.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://m.thewire.in/article/government/modi-manipur-visit-864-days-since-ethnic-violence",
+     "outlet": "The Wire",
+     "accessed": "2026-09-28",
+     "title": "864 days since ethnic violence first broke out, Modi to visit Manipur on Sept 13"
+    }
+   ],
+   "entities": [
+    {
+     "id": "govt-india",
+     "role": "ordered"
+    },
+    {
+     "id": "manipur-govt",
+     "role": "mentioned"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "mentioned"
+    },
+    {
+     "id": "soo",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m21",
+   "date": "2025-09-13",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "visit",
+   "title": "Modi visits Manipur for the first time since the violence: Churachandpur and Imphal",
+   "summary": "Projects worth about Rs 7,300 crore (Churachandpur) and Rs 1,200 crore (Imphal) launched; met displaced persons. United Naga Council trade embargo and Meitei shutdown call around the visit.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://m.thewire.in/article/government/modi-manipur-visit-864-days-since-ethnic-violence",
+     "outlet": "The Wire",
+     "accessed": "2026-09-28",
+     "title": "864 days since ethnic violence first broke out, Modi to visit Manipur on Sept 13"
+    },
+    {
+     "type": "web",
+     "url": "https://www.deccanherald.com/india/manipur/modi-in-manipur-updates-pm-to-mark-his-first-visit-since-2023-violence-3726092",
+     "outlet": "Deccan Herald",
+     "accessed": "2026-09-28",
+     "title": "Modi in Manipur updates: first visit since 2023 violence"
+    }
+   ],
+   "links": [
+    {
+     "to": "m20",
+     "relation": "followed",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "modi",
+     "role": "located_at"
+    },
+    {
+     "id": "churachandpur",
+     "role": "located_at"
+    },
+    {
+     "id": "imphal",
+     "role": "located_at"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "mentioned"
+    },
+    {
+     "id": "meitei",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m22",
+   "date": "2025-12-01",
+   "date_precision": "day",
+   "lane": "parliament",
+   "kind": "legislation",
+   "title": "Lok Sabha takes up Manipur GST (Second Amendment) Bill; Congress moves disapproval of the 7 Oct 2025 Ordinance",
+   "summary": "Ordinance No. 2 of 2025 was promulgated by the President under President's Rule. Sitharaman moved the Bill; N.K. Premachandran (RSP) moved the disapproval resolution amid interruptions.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "sansad_db",
+     "table": "statements",
+     "row_id": 1872,
+     "title": "Lok Sabha 2025-12-01, Shri N.K. Premachandran: disapproval of Manipur GST (Second Amendment) Ordinance, 2025",
+     "accessed": "2026-09-28",
+     "note": "speech id 1872"
+    }
+   ],
+   "entities": [
+    {
+     "id": "lok-sabha",
+     "role": "located_at"
+    },
+    {
+     "id": "manipur-gst-bill",
+     "role": "mentioned"
+    },
+    {
+     "id": "govt-india",
+     "role": "ordered"
+    },
+    {
+     "id": "manipur",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m23",
+   "date": "2025-12-05",
+   "date_precision": "day",
+   "lane": "parliament",
+   "kind": "speech",
+   "title": "MP Bimol Akoijam: displaced people being teargassed as they try to return home; asks a concrete plan before the 3rd anniversary",
+   "summary": "Translation of a Manipuri-language speech; he says the crisis began 3 May 2023, Kuki groups oppose return of the displaced, and thousands remain in relief camps. These are his claims, recorded in the Lok Sabha record.",
+   "evidence": "confirmed",
+   "mentions": [
+    "m02"
+   ],
+   "sources": [
+    {
+     "type": "sansad_db",
+     "table": "statements",
+     "row_id": 757,
+     "title": "Lok Sabha 2025-12-05, Dr. Angomcha Bimol Akoijam (zero hour on Manipur relief camps)",
+     "accessed": "2026-09-28",
+     "note": "speech id 757; chunk 13798"
+    },
+    {
+     "type": "sansad_db",
+     "table": "statement_chunks",
+     "row_id": 13798,
+     "title": "chunk of statement 757",
+     "accessed": "2026-09-28"
+    }
+   ],
+   "entities": [
+    {
+     "id": "akoijam",
+     "role": "spoke"
+    },
+    {
+     "id": "inc",
+     "role": "spoke"
+    },
+    {
+     "id": "lok-sabha",
+     "role": "located_at"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": []
+  },
+  {
+   "id": "m24",
+   "date": "2025-12-05",
+   "date_precision": "day",
+   "lane": "parliament",
+   "kind": "legislation",
+   "title": "Lok Sabha business lists a resolution adopting the Water (Prevention and Control of Pollution) Amendment Act 2024 for the State of Manipur",
+   "summary": "Shows Parliament legislating for Manipur while under President's Rule; announced in Anurag Thakur's business statement.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "sansad_db",
+     "table": "statements",
+     "row_id": 723,
+     "title": "Lok Sabha 2025-12-05, Shri Anurag Singh Thakur, business statement item 5",
+     "accessed": "2026-09-28",
+     "note": "speech id 723"
+    }
+   ],
+   "entities": [
+    {
+     "id": "lok-sabha",
+     "role": "located_at"
+    },
+    {
+     "id": "water-act-res",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m25",
+   "date": "2025-12-08",
+   "date_precision": "day",
+   "lane": "parliament",
+   "kind": "speech",
+   "title": "Akoijam: opposition sought a 3-5 hour Manipur discussion but 'nobody cares'; says 65,000 people remain homeless",
+   "summary": "Made in a debate on another subject (Vande Mataram). The 65,000 figure is his; HRW and others cite 58,000-60,000+ displaced.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "sansad_db",
+     "table": "statements",
+     "row_id": 628,
+     "title": "Lok Sabha 2025-12-08, Dr. Angomcha Bimol Akoijam",
+     "accessed": "2026-09-28",
+     "note": "speech id 628"
+    }
+   ],
+   "entities": [
+    {
+     "id": "akoijam",
+     "role": "spoke"
+    },
+    {
+     "id": "inc",
+     "role": "spoke"
+    },
+    {
+     "id": "lok-sabha",
+     "role": "located_at"
+    },
+    {
+     "id": "manipur",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m27",
+   "date": "2026-02-04",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "action",
+   "title": "President's Rule revoked after a year; Y. Khemchand Singh (BJP) sworn in as CM with two Deputy CMs",
+   "summary": "Sworn in at Lok Bhavan by Governor Bhalla; deputies Nemcha Kipgen (BJP) and Losii Dikho (NPF). Assembly convened days later.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.newsonair.gov.in/presidents-rule-revoked-in-manipur",
+     "outlet": "All India Radio (newsonair)",
+     "accessed": "2026-09-28",
+     "title": "President's rule revoked in Manipur"
+    },
+    {
+     "type": "web",
+     "url": "https://theprint.in/politics/presidents-rule-revoked-in-manipur-after-a-year-new-cm-to-be-sworn-in-today/2845550/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "President's rule revoked in Manipur after a year, new CM to be sworn in today"
+    }
+   ],
+   "links": [
+    {
+     "to": "m16",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "govt-india",
+     "role": "ordered"
+    },
+    {
+     "id": "mha",
+     "role": "ordered"
+    },
+    {
+     "id": "khemchand",
+     "role": "appointed"
+    },
+    {
+     "id": "bhalla",
+     "role": "mentioned"
+    },
+    {
+     "id": "bjp",
+     "role": "mentioned"
+    },
+    {
+     "id": "npf",
+     "role": "mentioned"
+    },
+    {
+     "id": "imphal",
+     "role": "located_at"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m28",
+   "date": "2026-02-07",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "violence",
+   "title": "Kuki-Tangkhul Naga youth brawl at Litan (Ukhrul), curfew imposed; start of the Naga-Kuki front",
+   "summary": "Initially described by police as a drunken brawl; by late August 34 dead in Naga-Kuki violence since February (HRW).",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.hrw.org/news/2026/09/03/india-renewed-ethnic-violence-in-manipur",
+     "outlet": "Human Rights Watch",
+     "accessed": "2026-09-28",
+     "title": "India: Renewed Ethnic Violence in Manipur"
+    },
+    {
+     "type": "web",
+     "url": "https://www.newslaundry.com/2026/04/24/manipur-crisis-3-dead-4-injured-in-ukhrul-as-conflict-between-kuki-zos-and-nagas-escalate",
+     "outlet": "Newslaundry",
+     "accessed": "2026-09-28",
+     "title": "Manipur crisis: 3 dead, 4 injured in Ukhrul as Kuki-Zo/Naga conflict escalates"
+    }
+   ],
+   "entities": [
+    {
+     "id": "litan",
+     "role": "located_at"
+    },
+    {
+     "id": "ukhrul",
+     "role": "located_at"
+    },
+    {
+     "id": "naga",
+     "role": "mentioned"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m30",
+   "date": "2026-02-26",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "resignation",
+   "title": "Justice Ajai Lamba quits as head of the Commission of Inquiry into the 2023 violence; ex-SC judge Balbir Singh Chauhan appointed",
+   "summary": "Lamba cited personal reasons; report deadline reset to 20 May 2026. India Today NE (3 May 2026) later summarised it as 'three years, four deadlines, zero convictions'.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://theprint.in/india/justice-lamba-resigns-as-chairman-of-three-member-panel-looking-into-manipur-violence/2864766/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "Justice Lamba resigns as chairman of panel looking into Manipur violence"
+    },
+    {
+     "type": "web",
+     "url": "https://scroll.in/latest/1091039/former-gauhati-hc-justice-resigns-as-chairperson-of-panel-probing-manipur-violence",
+     "outlet": "Scroll.in",
+     "accessed": "2026-09-28",
+     "title": "Former Gauhati HC justice resigns as chairperson of panel probing Manipur violence"
+    },
+    {
+     "type": "web",
+     "url": "https://www.newsonair.gov.in/centre-appoints-justice-balbir-singh-chauhan-as-new-chairperson-of-commission-of-inquiry-investigating-violence-in-manipur",
+     "outlet": "All India Radio (newsonair)",
+     "accessed": "2026-09-28",
+     "title": "Centre appoints Justice Balbir Singh Chauhan as new chairperson"
+    }
+   ],
+   "entities": [
+    {
+     "id": "lamba",
+     "role": "resigned"
+    },
+    {
+     "id": "chauhan",
+     "role": "appointed"
+    },
+    {
+     "id": "inquiry-commission",
+     "role": "mentioned"
+    },
+    {
+     "id": "govt-india",
+     "role": "ordered"
+    },
+    {
+     "id": "manipur",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m31",
+   "date": "2026-03-13",
+   "date_precision": "day",
+   "lane": "international",
+   "kind": "arrest",
+   "title": "NIA arrests US national Matthew VanDyke and six Ukrainians at airports (Kolkata, Lucknow, Delhi) under UAPA for alleged drone training of Myanmar armed groups",
+   "summary": "NIA alleges illegal entry via Mizoram, crossing into Myanmar and drone-warfare training of ethnic armed groups, plus drone imports from Europe. Ukraine's Foreign Ministry rejected any terrorism insinuation; the US Embassy declined comment. ThePrint dates the arrests 16 March; Al Jazeera and others say 13 March.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/3/24/why-has-india-arrested-us-ukrainian-nationals-under-anti-terror-laws",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "Why has India arrested US, Ukrainian nationals under 'anti-terror' laws?"
+    },
+    {
+     "type": "web",
+     "url": "https://theprint.in/india/7-foreigners-in-nia-custody-under-uapa-for-meeting-ethnic-groups-in-myanmar-drone-delivery-from-europe/2880686/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "7 foreigners in NIA custody under UAPA for 'meeting ethnic groups in Myanmar, drone delivery from Europe'",
+     "note": "article says 16 March and does not mention Manipur; Al Jazeera and others say 13 March"
+    },
+    {
+     "type": "web",
+     "url": "https://www.tribuneindia.com/news/india/delhi-court-grants-default-bail-to-us-national-in-myanmar-drone-training-camp-case/",
+     "outlet": "The Tribune",
+     "accessed": "2026-09-28",
+     "title": "Delhi court grants default bail to US national in Myanmar drone training camp case"
+    }
+   ],
+   "entities": [
+    {
+     "id": "nia",
+     "role": "arrested"
+    },
+    {
+     "id": "vandyke",
+     "role": "detained"
+    },
+    {
+     "id": "sons-of-liberty",
+     "role": "mentioned"
+    },
+    {
+     "id": "kolkata",
+     "role": "located_at"
+    },
+    {
+     "id": "mizoram",
+     "role": "mentioned"
+    },
+    {
+     "id": "myanmar",
+     "role": "mentioned"
+    },
+    {
+     "id": "us-govt",
+     "role": "mentioned"
+    },
+    {
+     "id": "ukraine-govt",
+     "role": "spoke"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m32",
+   "date": "2026-03-19",
+   "date_precision": "day",
+   "lane": "media",
+   "kind": "claim",
+   "title": "Commentary claims the arrests expose a proxy threat 'specially Manipur' and links them to the 2024 drone attacks",
+   "summary": "India Today NE (opinion, 19 Mar) and OpIndia (advocacy) make the link. The India Today NE author concedes NIA's framing 'isn't about direct execution' of the 2024 bombings. ThePrint's news report on the arrests does not mention Manipur.",
+   "evidence": "confirmed",
+   "claimant": "commentators",
+   "claim_text": "The arrested foreigners' presence in the Northeast shows a proxy threat 'specially Manipur'; Myanmar armed groups they trained support Indian insurgent groups that used drones in Manipur in 2024.",
+   "content_evidence": "unverified",
+   "about": [
+    "m31",
+    "m11"
+   ],
+   "mentions": [
+    "m31",
+    "m11"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.indiatodayne.in/opinion/story/the-foreign-nationals-arrests-that-expose-a-proxy-threat-to-indias-northeast-specially-manipur-1362097-2026-03-19",
+     "outlet": "India Today NE (opinion)",
+     "accessed": "2026-09-28",
+     "title": "The foreign nationals arrests that expose a proxy threat to India's northeast, specially Manipur",
+     "note": "OPINION piece; author concedes NIA framing is not about direct execution of the 2024 bombings"
+    },
+    {
+     "type": "web",
+     "url": "https://www.opindia.com/2026/03/nia-arrests-foreign-nationals-training-myanmar-militants-read-how-kuki-insurgents-used-weaponised-drones-to-bomb-manipur-villages-in-2024/",
+     "outlet": "OpIndia (partisan)",
+     "accessed": "2026-09-28",
+     "title": "Foreign nationals arrested by NIA, and the 2024 drone bombing on Manipur villages by Kukis",
+     "note": "advocacy outlet; links the two stories editorially"
+    },
+    {
+     "type": "web",
+     "url": "https://theprint.in/india/7-foreigners-in-nia-custody-under-uapa-for-meeting-ethnic-groups-in-myanmar-drone-delivery-from-europe/2880686/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "7 foreigners in NIA custody under UAPA for 'meeting ethnic groups in Myanmar, drone delivery from Europe'",
+     "note": "article says 16 March and does not mention Manipur; Al Jazeera and others say 13 March"
+    }
+   ],
+   "entities": [
+    {
+     "id": "commentators",
+     "role": "spoke"
+    },
+    {
+     "id": "vandyke",
+     "role": "mentioned"
+    },
+    {
+     "id": "nia",
+     "role": "mentioned"
+    },
+    {
+     "id": "koutruk",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": []
+  },
+  {
+   "id": "m48",
+   "date": "2024-11-11",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "claim",
+   "title": "CM Biren Singh: Kuki terrorists held six women and children hostage in Jiribam and killed them",
+   "summary": "Stated by the CM after the Jiribam events; Kuki-Zo bodies dispute the characterisation of the 10 men killed in the CRPF encounter as militants (see m12).",
+   "evidence": "confirmed",
+   "claimant": "biren",
+   "claim_text": "Kuki terrorists took six women and children hostage and subsequently killed them in Jiribam on 11 November (Deccan Herald/The Week reports).",
+   "content_evidence": "unverified",
+   "about": [
+    "m12"
+   ],
+   "mentions": [
+    "m12"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.theweek.in/theweek/current/2024/11/23/the-jiribam-killings-manipur-mark-a-disturbing-escalation-in-the-ethnic-conflict.html",
+     "outlet": "The Week",
+     "accessed": "2026-09-28",
+     "title": "Jiribam killings mark a dangerous escalation"
+    },
+    {
+     "type": "web",
+     "url": "https://www.deccanherald.com/amp/story/india%2Fmanipur%2Fmanipur-10-suspected-hmar-insurgents-killed-in-jiribam-district-one-crpf-jawan-hurt-3271343",
+     "outlet": "Deccan Herald",
+     "accessed": "2026-09-28",
+     "title": "10 suspected Hmar insurgents killed in Jiribam"
+    }
+   ],
+   "links": [
+    {
+     "to": "m12",
+     "relation": "related",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "biren",
+     "role": "spoke"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "mentioned"
+    },
+    {
+     "id": "jiribam",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ]
+  },
+  {
+   "id": "m49",
+   "date": "2025-08-05",
+   "date_precision": "day",
+   "lane": "parliament",
+   "kind": "claim",
+   "title": "MoS Home Nityanand Rai: only one violence death under President's Rule and none in the last four months",
+   "summary": "Government claim made in the Rajya Sabha debate on extending President's Rule; not independently checked against death counts.",
+   "evidence": "confirmed",
+   "claimant": "nityanand-rai",
+   "claim_text": "'Only one incident of violence took place in which one person lost his life' since President's Rule; none in the last four months (newsonair, 5 Aug 2025).",
+   "content_evidence": "unverified",
+   "about": [
+    "m19"
+   ],
+   "mentions": [
+    "m19"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.newsonair.gov.in/parliament-approves-extension-of-presidents-rule-in-manipur-till-february-2026",
+     "outlet": "All India Radio (newsonair)",
+     "accessed": "2026-09-28",
+     "title": "Parliament approves extension of President's Rule in Manipur till February 2026"
+    }
+   ],
+   "links": [
+    {
+     "to": "m19",
+     "relation": "related",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "nityanand-rai",
+     "role": "spoke"
+    },
+    {
+     "id": "rajya-sabha",
+     "role": "located_at"
+    },
+    {
+     "id": "mha",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ]
+  },
+  {
+   "id": "m34",
+   "date": "2026-04-07",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "violence",
+   "title": "Bomb hits a house in Tronglaobi (Moirang, Bishnupur) at ~1 am: two children (5 yrs, 6 months) killed, mother critically hurt; NIA takes over",
+   "summary": "Wikipedia dates it 7 April; EastMojo confirms burial on 2 May after 'nearly a month' of protest. Curfew in Bishnupur and mobile-data curbs in five valley districts.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/2026_Manipur_bombing",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "2026 Manipur bombing"
+    },
+    {
+     "type": "web",
+     "url": "https://eastmojo.com/manipur/2026/05/02/manipur-tronglaobi-blast-victims-laid-to-rest-after-nearly-a-month/",
+     "outlet": "EastMojo",
+     "accessed": "2026-09-28",
+     "title": "Tronglaobi blast victims laid to rest after nearly a month"
+    }
+   ],
+   "entities": [
+    {
+     "id": "tronglaobi",
+     "role": "located_at"
+    },
+    {
+     "id": "bishnupur",
+     "role": "located_at"
+    },
+    {
+     "id": "nia",
+     "role": "ordered"
+    },
+    {
+     "id": "khemchand",
+     "role": "spoke"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m35",
+   "date": "2026-04-07",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "violence",
+   "title": "Who threw the bomb: Meitei bodies blame Kuki militants; Kuki side points to Biren Singh's presence in Moirang that day; investigators cite 'local elements'",
+   "summary": "No official attribution found. Protest afterwards: about 500 people attacked the Gelmol CRPF camp; police firing killed two protesters that day and a third on 8 April, 31 hurt (Wikipedia only).",
+   "evidence": "disputed",
+   "would_confirm": "NIA chargesheet or arrests naming the perpetrators.",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/2026_Manipur_bombing",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "2026 Manipur bombing"
+    },
+    {
+     "type": "web",
+     "url": "https://eastmojo.com/manipur/2026/05/02/manipur-tronglaobi-blast-victims-laid-to-rest-after-nearly-a-month/",
+     "outlet": "EastMojo",
+     "accessed": "2026-09-28",
+     "title": "Tronglaobi blast victims laid to rest after nearly a month"
+    }
+   ],
+   "links": [
+    {
+     "to": "m34",
+     "relation": "related",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "meitei",
+     "role": "spoke"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "spoke"
+    },
+    {
+     "id": "biren",
+     "role": "mentioned"
+    },
+    {
+     "id": "nia",
+     "role": "mentioned"
+    },
+    {
+     "id": "crpf",
+     "role": "located_at"
+    },
+    {
+     "id": "tronglaobi",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m36",
+   "date": "2026-04-23",
+   "date_precision": "approx",
+   "lane": "security",
+   "kind": "violence",
+   "title": "Naga-Kuki gunfight in Ukhrul kills 3; 7 dead in 5 days by some counts",
+   "summary": "Newslaundry (24 Apr), Deccan Herald and Organiser (25 Apr) report the Ukhrul deaths; Zee News tallies 7 in five days.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.newslaundry.com/2026/04/24/manipur-crisis-3-dead-4-injured-in-ukhrul-as-conflict-between-kuki-zos-and-nagas-escalate",
+     "outlet": "Newslaundry",
+     "accessed": "2026-09-28",
+     "title": "Manipur crisis: 3 dead, 4 injured in Ukhrul as Kuki-Zo/Naga conflict escalates"
+    },
+    {
+     "type": "web",
+     "url": "https://www.deccanherald.com/india/manipur/as-central-leaders-huddle-in-elections-manipur-continues-to-burn-3-fresh-deaths-in-naga-kuki-gunfight-3979937",
+     "outlet": "Deccan Herald",
+     "accessed": "2026-09-28",
+     "title": "3 fresh deaths in Naga-Kuki gunfight"
+    }
+   ],
+   "links": [
+    {
+     "to": "m28",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "ukhrul",
+     "role": "located_at"
+    },
+    {
+     "id": "naga",
+     "role": "mentioned"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m37",
+   "date": "2026-05-13",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "violence",
+   "title": "Three Kuki church leaders killed in Kangpokpi ambush returning from a peace-oriented convention; retaliatory abductions of Naga civilians",
+   "summary": "Killers unidentified. CSW reports 18 Naga civilians abducted at Leilon Vaiphei the same day (12 women and a baby released 15 May); about 48 abducted overall per HRW.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.theweek.in/news/india/2026/05/13/three-kuki-church-leaders-killed-in-an-ambush-in-manipur-after-attending-peace-meeting-nagaland.html",
+     "outlet": "The Week",
+     "accessed": "2026-09-28",
+     "title": "Three Kuki church leaders killed in an ambush in Manipur"
+    },
+    {
+     "type": "web",
+     "url": "https://m.thewire.in/article/communalism/killing-of-three-tribal-church-leaders-manipur",
+     "outlet": "The Wire",
+     "accessed": "2026-09-28",
+     "title": "Killing of three tribal church leaders reopens Manipur's wounds"
+    },
+    {
+     "type": "web",
+     "url": "https://www.csw.org.uk/2026/05/22/press/6810/article.htm",
+     "outlet": "CSW",
+     "accessed": "2026-09-28",
+     "title": "India: killing of church leaders sparks retaliatory abductions in Manipur"
+    },
+    {
+     "type": "web",
+     "url": "https://www.hrw.org/news/2026/09/03/india-renewed-ethnic-violence-in-manipur",
+     "outlet": "Human Rights Watch",
+     "accessed": "2026-09-28",
+     "title": "India: Renewed Ethnic Violence in Manipur"
+    }
+   ],
+   "links": [
+    {
+     "to": "m36",
+     "relation": "followed",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "kangpokpi",
+     "role": "located_at"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "victim"
+    },
+    {
+     "id": "naga",
+     "role": "mentioned"
+    },
+    {
+     "id": "churachandpur",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m38",
+   "date": "2026-05-20",
+   "date_precision": "approx",
+   "lane": "protest",
+   "kind": "shutdown",
+   "title": "Naga groups blockade national highways to Kuki-majority Kangpokpi; Kuki counter-blockade in July lifted after CM's intervention",
+   "summary": "HRW (3 Sep): food, fuel and medical shortages; one report of a 3-month-old dying unable to reach a hospital on 18 Aug. Dates approximate ('in May', 'in July').",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.hrw.org/news/2026/09/03/india-renewed-ethnic-violence-in-manipur",
+     "outlet": "Human Rights Watch",
+     "accessed": "2026-09-28",
+     "title": "India: Renewed Ethnic Violence in Manipur"
+    }
+   ],
+   "entities": [
+    {
+     "id": "naga",
+     "role": "protested"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "protested"
+    },
+    {
+     "id": "kangpokpi",
+     "role": "located_at"
+    },
+    {
+     "id": "khemchand",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m39",
+   "date": "2026-06-09",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "action",
+   "title": "Naga groups release remaining 14 Kuki hostages after about a month; fate of six missing Nagas unclear (HRW later says six were found dead)",
+   "summary": "Release attributed to Amit Shah's assurance conveyed via the Nagaland CM (The Wire). UNC and nine Naga MLAs sought his intervention and scrapping of the SoO.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.etvbharat.com/en/state/several-kuki-hostages-released-after-month-of-abduction-in-manipurs-senapati-cm-hails-step-enn26060906623",
+     "outlet": "ETV Bharat",
+     "accessed": "2026-09-28",
+     "title": "14 Kuki hostages released after a month of abduction in Senapati"
+    },
+    {
+     "type": "web",
+     "url": "https://m.thewire.in/article/security/manipur-nagas-release-14-kuki-hostages-fate-of-six-missing-nagas-unclear",
+     "outlet": "The Wire",
+     "accessed": "2026-09-28",
+     "title": "Nagas release 14 Kuki hostages; fate of six missing Nagas unclear"
+    },
+    {
+     "type": "web",
+     "url": "https://www.hrw.org/news/2026/09/03/india-renewed-ethnic-violence-in-manipur",
+     "outlet": "Human Rights Watch",
+     "accessed": "2026-09-28",
+     "title": "India: Renewed Ethnic Violence in Manipur"
+    }
+   ],
+   "links": [
+    {
+     "to": "m37",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "naga",
+     "role": "ordered"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "victim"
+    },
+    {
+     "id": "shah",
+     "role": "mentioned"
+    },
+    {
+     "id": "senapati",
+     "role": "located_at"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    },
+    {
+     "id": "soo",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m40",
+   "date": "2026-05-06",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "report",
+   "title": "Three years on: 250+ deaths, 58,000+ displaced, 12,000+ FIRs, zero convictions; most FIRs name 'unknown miscreants'",
+   "summary": "Al Jazeera's anniversary analysis; former Home Secretary G.K. Pillai quoted: 'It is a mess they have created.'",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.aljazeera.com/news/2026/5/6/manipurs-unknown-killers-three-years-of-indias-bloody-ethnic-conflict",
+     "outlet": "Al Jazeera",
+     "accessed": "2026-09-28",
+     "title": "Manipur's 'unknown' killers: three years of India's ethnic conflict"
+    }
+   ],
+   "entities": [
+    {
+     "id": "manipur",
+     "role": "mentioned"
+    },
+    {
+     "id": "govt-india",
+     "role": "mentioned"
+    },
+    {
+     "id": "bjp",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m41",
+   "date": "2026-08-29",
+   "date_precision": "approx",
+   "lane": "media",
+   "kind": "statement",
+   "title": "Akoijam presents 'evidence' on Manipur / 'Manipur Census' (INC YouTube live)",
+   "summary": "Known only from the listing title and an uncertain 'published' date in the project DB; transcript not yet fetched.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "sansad_db",
+     "table": "media_items",
+     "row_id": 602,
+     "title": "LIVE | सबूतों के साथ मणिपुर पर क्या खुलासा कर गए Angomcha Bimol Akoijam | Manipur Census | Amit Shah",
+     "accessed": "2026-09-28",
+     "note": "date may be fetch date"
+    }
+   ],
+   "entities": [
+    {
+     "id": "akoijam",
+     "role": "spoke"
+    },
+    {
+     "id": "inc",
+     "role": "spoke"
+    },
+    {
+     "id": "shah",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m42",
+   "date": "2026-09-03",
+   "date_precision": "day",
+   "lane": "international",
+   "kind": "statement",
+   "title": "Human Rights Watch: Manipur government 'has failed to stop the escalating ethnic violence'; urges demobilising armed groups and accountability",
+   "summary": "Notes 34 dead in Naga-Kuki clashes since February, 260+ dead overall since 2023, 60,000+ displaced, and the incomplete 2023 inquiry after the judge resigned in February 2026.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.hrw.org/news/2026/09/03/india-renewed-ethnic-violence-in-manipur",
+     "outlet": "Human Rights Watch",
+     "accessed": "2026-09-28",
+     "title": "India: Renewed Ethnic Violence in Manipur"
+    }
+   ],
+   "entities": [
+    {
+     "id": "hrw",
+     "role": "spoke"
+    },
+    {
+     "id": "manipur-govt",
+     "role": "mentioned"
+    },
+    {
+     "id": "naga",
+     "role": "mentioned"
+    },
+    {
+     "id": "kuki-zo",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "m43",
+   "date": "2026-09-07",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "violence",
+   "title": "Manipuri musician Chongtham Vikram Singh (54) dies after alleged mob assault outside his home in Delhi; racial motive not established; Rahul Gandhi asks what 'Shah's MHA and Delhi Police' are doing",
+   "summary": "Assault on 6 Sept over a noise complaint; police arrested seven men and a juvenile. Rahul Gandhi attended the memorial on ~15 Sept (INC channel listings). Peripheral to the Manipur conflict; kept as a Northeast-people-in-Delhi link.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://m.thewire.in/article/rights/chongtham-vikram-singh-manipur-guitarist-beaten-to-death-complaint-over-noise",
+     "outlet": "The Wire",
+     "accessed": "2026-09-28",
+     "title": "Manipur musician lynched in Delhi after complaint over noise"
+    },
+    {
+     "type": "web",
+     "url": "https://www.brut.media/in/articles/india/society/manipuri-musician-chongtham-vikram-singh-dies-in-delhi-watch-what-happened-video-inside",
+     "outlet": "Brut India",
+     "accessed": "2026-09-28",
+     "title": "Manipuri musician Chongtham Vikram Singh dies after alleged assault in Delhi"
+    },
+    {
+     "type": "sansad_db",
+     "table": "media_items",
+     "row_id": 206,
+     "title": "राहुल गांधी Chongtham Vikram Singh की श्रद्धांजलि सभा में भावुक हो गए | Rahul Gandhi | Manipur",
+     "accessed": "2026-09-28"
+    },
+    {
+     "type": "sansad_db",
+     "table": "media_items",
+     "row_id": 214,
+     "title": "Manipuri Musician Lynched In Delhi: Amit Shah's Law & Order In Shambles",
+     "accessed": "2026-09-28"
+    }
+   ],
+   "links": [],
+   "entities": [
+    {
+     "id": "chongtham-vikram",
+     "role": "victim"
+    },
+    {
+     "id": "delhi-police",
+     "role": "mentioned"
+    },
+    {
+     "id": "rahul",
+     "role": "spoke"
+    },
+    {
+     "id": "shah",
+     "role": "mentioned"
+    },
+    {
+     "id": "mha",
+     "role": "mentioned"
+    },
+    {
+     "id": "new-delhi",
+     "role": "located_at"
+    },
+    {
+     "id": "manipur",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m44",
+   "date": "2026-09-17",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Supreme Court (CJI Surya Kant, Justices Bagchi and Mohana) seeks Chief Secretary report on 25 unnatural deaths in relief camps",
+   "summary": "Bench asked why post-mortems were done in only 20 of 34 death cases and questioned Rs 20,000-30,000 compensation; Manipur Legal Services Authority told to ensure FIRs. Same CJI as the 'cockroaches' remark.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.theweek.in/news/india/2026/09/17/manipur-supreme-court-expresses-shock-over-relief-camp-deaths.html",
+     "outlet": "The Week",
+     "accessed": "2026-09-28",
+     "title": "Manipur: Supreme Court expresses shock over relief camp deaths"
+    },
+    {
+     "type": "web",
+     "url": "https://www.deccanherald.com/india/manipur/supreme-court-expresses-shock-over-deaths-in-relief-camps-in-manipur-asks-chief-secretary-to-respond-4149275",
+     "outlet": "Deccan Herald",
+     "accessed": "2026-09-28",
+     "title": "Supreme Court expresses shock over deaths in relief camps in Manipur"
+    },
+    {
+     "type": "web",
+     "url": "https://www.business-standard.com/amp/india-news/supreme-court-asks-manipur-chief-secretary-to-explain-deaths-in-relief-camp-126091700513_1.html",
+     "outlet": "Business Standard",
+     "accessed": "2026-09-28",
+     "title": "Supreme Court asks Manipur chief secretary to explain deaths in relief camp"
+    },
+    {
+     "type": "web",
+     "url": "https://www.freepressjournal.in/india/supreme-court-seeks-report-on-25-unnatural-deaths-in-manipur-relief-camps-questions-20000-30000-compensation",
+     "outlet": "Free Press Journal",
+     "accessed": "2026-09-28",
+     "title": "SC seeks report on 25 unnatural deaths in Manipur relief camps"
+    }
+   ],
+   "links": [
+    {
+     "to": "cjp-education-minister:c05",
+     "relation": "related",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "supreme-court",
+     "role": "ordered"
+    },
+    {
+     "id": "cji",
+     "role": "ordered"
+    },
+    {
+     "id": "manipur-govt",
+     "role": "mentioned"
+    },
+    {
+     "id": "manipur",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m46",
+   "date": "2026-09-08",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "NIA first chargesheet against the seven invokes the Immigration and Foreigners Act (ss.21, 23), not UAPA; UAPA probe 'continuing'",
+   "summary": "NIA says it may file a supplementary chargesheet if a UAPA offence is established. Same allegations (drone-warfare training at a Myanmar camp, drones from Europe delivered in Mizoram); no reference to Manipur.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.tribuneindia.com/news/india/delhi-court-grants-default-bail-to-us-national-in-myanmar-drone-training-camp-case/",
+     "outlet": "The Tribune",
+     "accessed": "2026-09-28",
+     "title": "Delhi court grants default bail to US national in Myanmar drone training camp case"
+    },
+    {
+     "type": "web",
+     "url": "https://stratnewsglobal.com/india/vandyke-case-why-did-india-back-down/",
+     "outlet": "StratNews Global",
+     "accessed": "2026-09-28",
+     "title": "Vandyke case: why did India back down?"
+    },
+    {
+     "type": "web",
+     "url": "https://www.msn.com/en-in/news/other/myanmar-training-camp-case-week-after-dodging-uapa-in-nia-chargesheet-us-national-moves-court-for-bail/ar-AA2cqoq5",
+     "outlet": "MSN (syndicated)",
+     "accessed": "2026-09-28",
+     "title": "Week after dodging UAPA in NIA chargesheet, US national moves court for bail",
+     "note": "headline only"
+    }
+   ],
+   "links": [
+    {
+     "to": "m31",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "nia",
+     "role": "filed"
+    },
+    {
+     "id": "vandyke",
+     "role": "mentioned"
+    },
+    {
+     "id": "mizoram",
+     "role": "mentioned"
+    },
+    {
+     "id": "myanmar",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "m47",
+   "date": "2026-09-18",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Special NIA court grants VanDyke default bail (Rs 1 lakh bond; must stay in Delhi)",
+   "summary": "Ukrainian co-accused may apply separately. StratNews reports US State Department officials raised VanDyke's detention with Indian officials (single-source, not corroborated here).",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.tribuneindia.com/news/india/delhi-court-grants-default-bail-to-us-national-in-myanmar-drone-training-camp-case/",
+     "outlet": "The Tribune",
+     "accessed": "2026-09-28",
+     "title": "Delhi court grants default bail to US national in Myanmar drone training camp case"
+    },
+    {
+     "type": "web",
+     "url": "https://stratnewsglobal.com/india/vandyke-case-why-did-india-back-down/",
+     "outlet": "StratNews Global",
+     "accessed": "2026-09-28",
+     "title": "Vandyke case: why did India back down?"
+    },
+    {
+     "type": "web",
+     "url": "https://www.msn.com/en-in/news/other/myanmar-training-camp-case-week-after-dodging-uapa-in-nia-chargesheet-us-national-moves-court-for-bail/ar-AA2cqoq5",
+     "outlet": "MSN (syndicated)",
+     "accessed": "2026-09-28",
+     "title": "Week after dodging UAPA in NIA chargesheet, US national moves court for bail",
+     "note": "headline only"
+    }
+   ],
+   "links": [
+    {
+     "to": "m46",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "vandyke",
+     "role": "detained"
+    },
+    {
+     "id": "nia",
+     "role": "mentioned"
+    },
+    {
+     "id": "us-govt",
+     "role": "spoke"
+    }
+   ],
+   "issues": [
+    "manipur"
+   ],
+   "mentions": []
+  }
+ ],
+ "hypotheses": []
+}

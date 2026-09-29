@@ -19,6 +19,7 @@ The /feed page and /t/<topic> pages pick it up automatically.
 
 import html
 import re
+import sqlite3
 from dataclasses import dataclass
 from typing import Callable
 
@@ -146,8 +147,64 @@ def _pib_search(conn, query, limit=20):
     return [_pib_item(r, _highlight(r["snip"])) for r in rows]
 
 
+# ── Party & leader YouTube (scrapers/youtube/youtube_scraper.py) ──────────────
+# The unit is a timed transcript chunk — a quote — linking to that second of
+# the video. `party` is the speaker's party on the day, not today's.
+
+_MEDIA_COLS = """m.id, m.title, m.url, m.published_date, m.published_at, m.content_kind,
+                 pe.name AS person, pa.short_name AS party"""
+_MEDIA_JOINS = """LEFT JOIN people  pe ON m.person_id = pe.id
+                  LEFT JOIN parties pa ON m.party_id  = pa.id"""
+
+
+def _media_item(r, snippet_html, start_sec=None):
+    url = r["url"] + (f"&t={int(start_sec)}s" if start_sec else "")
+    return {
+        "source": "youtube", "source_label": "YouTube",
+        "id": r["id"],
+        "title": r["title"],
+        "date": r["published_date"], "sort_key": r["published_at"] or r["published_date"],
+        "subtitle": " · ".join(x for x in (r["person"], r["party"],
+                                           (r["content_kind"] or "").replace("_", " ")) if x),
+        "snippet": snippet_html,
+        "url": url,
+    }
+
+
+def _media_recent(conn, limit=30, party=None, person=None, **_):
+    sql = f"""SELECT {_MEDIA_COLS}, m.transcript_text AS text
+              FROM media_items m {_MEDIA_JOINS} WHERE m.fetch_status = 'fetched'"""
+    params = []
+    if party:
+        sql += " AND pa.slug = ?"
+        params.append(party)
+    if person:
+        sql += " AND pe.slug = ?"
+        params.append(person)
+    sql += " ORDER BY COALESCE(m.published_at, m.published_date) DESC LIMIT ?"
+    params.append(limit)
+    return [_media_item(r, _plain_snippet(r["text"])) for r in conn.execute(sql, params)]
+
+
+def _media_search(conn, query, limit=20):
+    q = fts_query(query)
+    if not q:
+        return []
+    rows = conn.execute(f"""
+        SELECT {_MEDIA_COLS}, ch.start_sec,
+               snippet(media_chunks_fts, -1, '{_HL_OPEN}', '{_HL_CLOSE}', '…', 40) AS snip
+        FROM media_chunks_fts
+        JOIN media_chunks ch ON media_chunks_fts.rowid = ch.id
+        JOIN media_items m   ON ch.item_id = m.id
+        {_MEDIA_JOINS}
+        WHERE media_chunks_fts MATCH ?
+        ORDER BY COALESCE(m.published_at, m.published_date) DESC LIMIT ?""", (q, limit)).fetchall()
+    return [_media_item(r, _highlight(r["snip"]), r["start_sec"]) for r in rows]
+
+
 register(Source("parliament", "Parliament", _parl_recent, _parl_search, "/search",  "#1a4a2e"))
 register(Source("pib",        "PIB",        _pib_recent,  _pib_search,  "/pib",     "#8a4b08"))
+register(Source("youtube",    "YouTube",    _media_recent, _media_search, "/feed?source=youtube", "#b3261e"))
 
 
 # ── Cross-source views ────────────────────────────────────────────────────────
@@ -156,11 +213,20 @@ def _selected(keys):
     return [SOURCES[k] for k in (keys or SOURCES) if k in SOURCES]
 
 
+def _safe(fn, *args, **kwargs):
+    """A source whose tables aren't in this DB yet (e.g. an older public.db
+    on the live site) contributes nothing instead of breaking the page."""
+    try:
+        return fn(*args, **kwargs)
+    except sqlite3.OperationalError:
+        return []
+
+
 def running_list(conn, limit=50, keys=None) -> list[dict]:
     """Newest items across the chosen sources, merged into one list."""
     items = []
     for src in _selected(keys):
-        items += src.recent(conn, limit=limit)
+        items += _safe(src.recent, conn, limit=limit)
     items.sort(key=lambda i: i["sort_key"] or "", reverse=True)
     return items[:limit]
 
@@ -169,7 +235,7 @@ def topic_view(conn, topic, per_source=20) -> dict:
     """Everything every source has on `topic`: per-source hits plus one merged timeline."""
     by_source = {}
     for src in SOURCES.values():
-        by_source[src.key] = src.search(conn, topic, limit=per_source)
+        by_source[src.key] = _safe(src.search, conn, topic, limit=per_source)
     timeline = sorted((i for hits in by_source.values() for i in hits),
                       key=lambda i: i["sort_key"] or "", reverse=True)
     return {"by_source": by_source, "timeline": timeline}

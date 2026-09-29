@@ -469,6 +469,132 @@ def _migrate_db():
         END
     """)
 
+    # ── Parties, people & their accounts — off-floor sources (YouTube, X, sites) ─
+    # Seeded from core/party_registry.py. A person's party is never stored on
+    # the person: it lives in time-bounded `affiliations` rows, so a leader who
+    # switches parties keeps one identity and every quote is tagged with the
+    # party they were in *on the day they said it* (media_items.party_id).
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS parties (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            slug        TEXT    NOT NULL UNIQUE,     -- 'inc', 'bjp', 'cjp'
+            name        TEXT    NOT NULL,
+            short_name  TEXT,
+            kind        TEXT    NOT NULL DEFAULT 'party',   -- party | movement
+            notes       TEXT
+        )
+    """)
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS people (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            slug        TEXT    NOT NULL UNIQUE,     -- 'rahul-gandhi'
+            name        TEXT    NOT NULL,
+            aliases     TEXT,                        -- JSON list, matched against video titles
+            member_id   INTEGER REFERENCES members(id),  -- link to Parliament record, if an MP
+            notes       TEXT
+        )
+    """)
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS affiliations (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            person_id   INTEGER NOT NULL REFERENCES people(id),
+            party_id    INTEGER NOT NULL REFERENCES parties(id),
+            role        TEXT,
+            start_date  TEXT,                        -- NULL = since before we track
+            end_date    TEXT,                        -- NULL = current
+            source      TEXT,
+            UNIQUE(person_id, party_id, start_date)
+        )
+    """)
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS source_accounts (
+            id              INTEGER PRIMARY KEY AUTOINCREMENT,
+            platform        TEXT    NOT NULL,        -- youtube | x | website
+            kind            TEXT    NOT NULL DEFAULT 'channel',  -- channel | search
+            handle          TEXT    NOT NULL,        -- '@bjp', or the query for kind=search
+            external_id     TEXT,                    -- YouTube channel id etc.
+            url             TEXT,
+            owner_party_id  INTEGER REFERENCES parties(id),
+            owner_person_id INTEGER REFERENCES people(id),
+            verified        INTEGER NOT NULL DEFAULT 0,  -- 1 = confirmed official
+            active          INTEGER NOT NULL DEFAULT 1,
+            notes           TEXT,
+            UNIQUE(platform, handle)
+        )
+    """)
+    # One row per video / post / release. Platform-agnostic so X and party
+    # websites can land in the same table later.
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS media_items (
+            id              INTEGER PRIMARY KEY AUTOINCREMENT,
+            platform        TEXT    NOT NULL,
+            external_id     TEXT    NOT NULL,        -- YouTube video id
+            account_id      INTEGER REFERENCES source_accounts(id),
+            title           TEXT    NOT NULL,
+            description     TEXT,
+            url             TEXT    NOT NULL,
+            published_at    TEXT,                    -- ISO YYYY-MM-DD HH:MM (UTC)
+            published_date  TEXT,                    -- ISO YYYY-MM-DD
+            duration_sec    INTEGER,
+            content_kind    TEXT,                    -- press_conference | speech | interview | other
+            person_id       INTEGER REFERENCES people(id),   -- who is speaking, if known
+            party_id        INTEGER REFERENCES parties(id),  -- speaker's party ON published_date
+            attribution     TEXT,                    -- owner | title_match | search | none
+            fetch_status    TEXT    NOT NULL DEFAULT 'listed',  -- listed | fetched | no_transcript | error
+            transcript_lang TEXT,
+            transcript_auto INTEGER,                 -- 1 = auto-generated captions
+            transcript_text TEXT,
+            word_count      INTEGER,
+            fetch_error     TEXT,
+            discovered_at   TEXT    DEFAULT (datetime('now')),
+            fetched_at      TEXT,
+            UNIQUE(platform, external_id)
+        )
+    """)
+    c.execute("CREATE INDEX IF NOT EXISTS idx_media_date   ON media_items(published_date)")
+    c.execute("CREATE INDEX IF NOT EXISTS idx_media_person ON media_items(person_id)")
+    c.execute("CREATE INDEX IF NOT EXISTS idx_media_party  ON media_items(party_id)")
+    c.execute("CREATE INDEX IF NOT EXISTS idx_media_status ON media_items(fetch_status)")
+
+    # ~60-word timed slices of a transcript — the "quote" unit, with the
+    # second offset so each one deep-links to that moment in the video.
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS media_chunks (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            item_id     INTEGER NOT NULL REFERENCES media_items(id),
+            chunk_index INTEGER NOT NULL,
+            start_sec   REAL,
+            text        TEXT    NOT NULL,
+            text_en     TEXT,                        -- filled by translation later
+            UNIQUE(item_id, chunk_index)
+        )
+    """)
+    c.execute("""
+        CREATE VIRTUAL TABLE IF NOT EXISTS media_chunks_fts
+        USING fts5(text, text_en, content='media_chunks', content_rowid='id')
+    """)
+    c.execute("""
+        CREATE TRIGGER IF NOT EXISTS media_chunks_ai
+        AFTER INSERT ON media_chunks BEGIN
+            INSERT INTO media_chunks_fts(rowid, text, text_en) VALUES (new.id, new.text, new.text_en);
+        END
+    """)
+    c.execute("""
+        CREATE TRIGGER IF NOT EXISTS media_chunks_ad
+        AFTER DELETE ON media_chunks BEGIN
+            INSERT INTO media_chunks_fts(media_chunks_fts, rowid, text, text_en)
+            VALUES ('delete', old.id, old.text, old.text_en);
+        END
+    """)
+    c.execute("""
+        CREATE TRIGGER IF NOT EXISTS media_chunks_au
+        AFTER UPDATE ON media_chunks BEGIN
+            INSERT INTO media_chunks_fts(media_chunks_fts, rowid, text, text_en)
+            VALUES ('delete', old.id, old.text, old.text_en);
+            INSERT INTO media_chunks_fts(rowid, text, text_en) VALUES (new.id, new.text, new.text_en);
+        END
+    """)
+
     conn.commit()
     conn.close()
 

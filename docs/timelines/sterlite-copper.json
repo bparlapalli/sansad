@@ -1,0 +1,1650 @@
+{
+ "issue": {
+  "slug": "sterlite-copper",
+  "title": "Sterlite Copper, Thoothukudi",
+  "summary": "The Thoothukudi copper smelter (Sterlite/Vedanta): decades of pollution and health complaints, the 2018 anti-expansion protests and police firing that killed 13, the state's closure order and court rulings up to the Supreme Court in 2024, what closure did to India's copper trade and local livelihoods, and later public claims that opposition to industrial projects is foreign-funded or sabotage. Facts, claims and hypotheses are kept apart.",
+  "as_of": "2026-09-28",
+  "lanes": [
+   "executive",
+   "courts",
+   "protest",
+   "security",
+   "party",
+   "media",
+   "economy",
+   "health"
+  ],
+  "edition": "public: confirmed, reported and disputed facts plus attributed claims. Inferred events, inferred links and hypotheses are kept in the local research edition only."
+ },
+ "entities": [
+  {
+   "id": "adani-kutch",
+   "type": "org",
+   "name": "Kutch Copper (Adani)"
+  },
+  {
+   "id": "apple",
+   "type": "org",
+   "name": "Apple"
+  },
+  {
+   "id": "aruna-jagadeesan",
+   "type": "person",
+   "name": "Justice Aruna Jagadeesan (retd)"
+  },
+  {
+   "id": "bjp",
+   "type": "party",
+   "name": "Bharatiya Janata Party (BJP)",
+   "hub": true
+  },
+  {
+   "id": "cbi",
+   "type": "org",
+   "name": "Central Bureau of Investigation (CBI)"
+  },
+  {
+   "id": "chennai",
+   "type": "place",
+   "name": "Chennai",
+   "parent": "tamil-nadu"
+  },
+  {
+   "id": "cji",
+   "type": "person",
+   "name": "CJI Surya Kant"
+  },
+  {
+   "id": "commerce-data",
+   "type": "document",
+   "name": "Ministry of Commerce trade data (refined copper)"
+  },
+  {
+   "id": "delhi-hc",
+   "type": "org",
+   "name": "Delhi High Court"
+  },
+  {
+   "id": "dmk",
+   "type": "party",
+   "name": "Dravida Munnetra Kazhagam (DMK)"
+  },
+  {
+   "id": "fcra",
+   "type": "document",
+   "name": "Foreign Contribution (Regulation) Act (FCRA)"
+  },
+  {
+   "id": "foxconn",
+   "type": "org",
+   "name": "Foxconn (Hon Hai)"
+  },
+  {
+   "id": "govt-india",
+   "type": "org",
+   "name": "Government of India (Union govt)",
+   "hub": true
+  },
+  {
+   "id": "hindalco",
+   "type": "org",
+   "name": "Hindalco"
+  },
+  {
+   "id": "inc",
+   "type": "party",
+   "name": "Indian National Congress (INC)",
+   "hub": true
+  },
+  {
+   "id": "india",
+   "type": "place",
+   "name": "India",
+   "hub": true
+  },
+  {
+   "id": "kanimozhi",
+   "type": "person",
+   "name": "Kanimozhi (DMK)"
+  },
+  {
+   "id": "madras-hc",
+   "type": "org",
+   "name": "Madras High Court"
+  },
+  {
+   "id": "meity",
+   "type": "org",
+   "name": "Ministry of Electronics & IT (MeitY)"
+  },
+  {
+   "id": "ndtv",
+   "type": "org",
+   "name": "NDTV"
+  },
+  {
+   "id": "ngt",
+   "type": "org",
+   "name": "National Green Tribunal"
+  },
+  {
+   "id": "palaniswami",
+   "type": "person",
+   "name": "Edappadi K. Palaniswami (CM 2018)"
+  },
+  {
+   "id": "rahul",
+   "type": "person",
+   "name": "Rahul Gandhi"
+  },
+  {
+   "id": "reuters",
+   "type": "org",
+   "name": "Reuters"
+  },
+  {
+   "id": "rn-ravi",
+   "type": "person",
+   "name": "R.N. Ravi (Tamil Nadu Governor)"
+  },
+  {
+   "id": "sriperumbudur",
+   "type": "place",
+   "name": "Sriperumbudur",
+   "parent": "tamil-nadu"
+  },
+  {
+   "id": "stalin",
+   "type": "person",
+   "name": "M.K. Stalin"
+  },
+  {
+   "id": "sterlite",
+   "type": "org",
+   "name": "Sterlite Copper (Vedanta) - Thoothukudi smelter"
+  },
+  {
+   "id": "supreme-court",
+   "type": "org",
+   "name": "Supreme Court of India",
+   "hub": true
+  },
+  {
+   "id": "tamil-nadu",
+   "type": "place",
+   "name": "Tamil Nadu",
+   "parent": "india"
+  },
+  {
+   "id": "thoothukudi",
+   "type": "place",
+   "name": "Thoothukudi (Tuticorin)",
+   "parent": "tamil-nadu"
+  },
+  {
+   "id": "tn-govt",
+   "type": "org",
+   "name": "Tamil Nadu government"
+  },
+  {
+   "id": "tn-police",
+   "type": "org",
+   "name": "Tamil Nadu Police"
+  },
+  {
+   "id": "tnpcb",
+   "type": "org",
+   "name": "Tamil Nadu Pollution Control Board"
+  },
+  {
+   "id": "vaishnaw",
+   "type": "person",
+   "name": "Ashwini Vaishnaw (IT Minister)"
+  },
+  {
+   "id": "vedanta",
+   "type": "org",
+   "name": "Vedanta Ltd"
+  }
+ ],
+ "events": [
+  {
+   "id": "s01",
+   "date": "1997-07-06",
+   "date_precision": "day",
+   "lane": "health",
+   "kind": "violence",
+   "title": "Sulphur dioxide leak at the Thoothukudi plant sends dozens to hospital",
+   "summary": "Wikipedia: 90+ hospitalised. Land Conflict Watch: 165 factory workers fainted. Counts differ by source and definition (public vs workers).",
+   "evidence": "disputed",
+   "would_confirm": "Contemporary 1997 press/TNPCB or court record of the incident.",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    },
+    {
+     "type": "web",
+     "url": "https://www.landconflictwatch.org/conflicts/supreme-court-refuses-to-allow-reopening-of-sterlite-copper-plant-in-thoothukudi",
+     "outlet": "Land Conflict Watch",
+     "accessed": "2026-09-28",
+     "title": "Regulatory gaps, public health, and economic fallout: the case of Sterlite Copper plant in Thoothukudi"
+    }
+   ],
+   "entities": [
+    {
+     "id": "sterlite",
+     "role": "mentioned"
+    },
+    {
+     "id": "thoothukudi",
+     "role": "located_at"
+    },
+    {
+     "id": "tnpcb",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "s02",
+   "date": "2007-01-01",
+   "date_precision": "approx",
+   "lane": "health",
+   "kind": "report",
+   "title": "Tirunelveli Medical College study (2006-07) finds higher respiratory disease prevalence near the plant",
+   "summary": "Per Wikipedia: respiratory disease prevalence 13.9%, asthmatic bronchitis 2.8% vs 1.29% state average. Study design and comparison group not reviewed.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    }
+   ],
+   "entities": [
+    {
+     "id": "thoothukudi",
+     "role": "located_at"
+    },
+    {
+     "id": "sterlite",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "s03",
+   "date": "2013-03-01",
+   "date_precision": "month",
+   "lane": "health",
+   "kind": "violence",
+   "title": "Suspected sulphur dioxide leak; CM Jayalalithaa orders closure; NGT later overturns the order",
+   "summary": "Land Conflict Watch notes emissions measured at about twice permissible levels in 2013. Wikipedia records the NGT reversal of the 2013 closure.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    },
+    {
+     "type": "web",
+     "url": "https://www.landconflictwatch.org/conflicts/supreme-court-refuses-to-allow-reopening-of-sterlite-copper-plant-in-thoothukudi",
+     "outlet": "Land Conflict Watch",
+     "accessed": "2026-09-28",
+     "title": "Regulatory gaps, public health, and economic fallout: the case of Sterlite Copper plant in Thoothukudi"
+    }
+   ],
+   "entities": [
+    {
+     "id": "sterlite",
+     "role": "mentioned"
+    },
+    {
+     "id": "ngt",
+     "role": "ordered"
+    },
+    {
+     "id": "tnpcb",
+     "role": "mentioned"
+    },
+    {
+     "id": "thoothukudi",
+     "role": "located_at"
+    },
+    {
+     "id": "tn-govt",
+     "role": "ordered"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "s04",
+   "date": "2018-02-12",
+   "date_precision": "day",
+   "lane": "protest",
+   "kind": "protest",
+   "title": "Sterlite announces capacity doubling (400,000 to 800,000 tpa); 250+ begin hunger strike; 500+ arrested at the gate on 14 Feb",
+   "summary": "The expansion announcement is the commonly cited trigger of the 2018 agitation. Per Wikipedia.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    }
+   ],
+   "entities": [
+    {
+     "id": "sterlite",
+     "role": "ordered"
+    },
+    {
+     "id": "thoothukudi",
+     "role": "located_at"
+    },
+    {
+     "id": "tn-police",
+     "role": "arrested"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "s05",
+   "date": "2018-03-24",
+   "date_precision": "day",
+   "lane": "protest",
+   "kind": "protest",
+   "title": "Thousands gather in Thoothukudi demanding closure; shops shut in solidarity; plant goes for 15-day maintenance from 29 March",
+   "summary": "Per Wikipedia. Protest peaked around the 100th day (22 May).",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    }
+   ],
+   "links": [
+    {
+     "to": "s04",
+     "relation": "followed",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "thoothukudi",
+     "role": "located_at"
+    },
+    {
+     "id": "sterlite",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "s06",
+   "date": "2018-05-22",
+   "date_precision": "day",
+   "lane": "security",
+   "kind": "violence",
+   "title": "Police open fire on marchers toward the Collector's office: 13 killed on 22-23 May, 102 injured (a 14th died in October)",
+   "summary": "Autopsies reportedly showed 12 of 13 killed were shot in head/chest, about half from behind (Wikipedia). Police: crowd pelted stones and torched vehicles after lathi-charge and tear gas. Crowd about 20,000.",
+   "evidence": "confirmed",
+   "issues": [
+    "sterlite-copper"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    },
+    {
+     "type": "web",
+     "url": "https://www.landconflictwatch.org/conflicts/supreme-court-refuses-to-allow-reopening-of-sterlite-copper-plant-in-thoothukudi",
+     "outlet": "Land Conflict Watch",
+     "accessed": "2026-09-28",
+     "title": "Regulatory gaps, public health, and economic fallout: the case of Sterlite Copper plant in Thoothukudi"
+    },
+    {
+     "type": "web",
+     "url": "https://thesouthfirst.com/news/seven-years-on-justice-eludes-thoothukudi-protesters-firing-victims/",
+     "outlet": "The South First",
+     "accessed": "2026-09-28",
+     "title": "Seven years on, justice eludes Thoothukudi protesters, firing victims",
+     "note": "page returned 403 to fetch; facts from the search snippet and cached summary only"
+    },
+    {
+     "type": "web",
+     "url": "https://www.deccanherald.com/india/tamil-nadu/supreme-court-dismisses-vedantas-appeal-to-reopen-sterlite-copper-plant-in-thoothukudi-2915932",
+     "outlet": "Deccan Herald",
+     "accessed": "2026-09-28",
+     "title": "Supreme Court dismisses Vedanta's appeal to reopen Sterlite copper plant",
+     "note": "fetch blocked; headline and search snippet only"
+    }
+   ],
+   "links": [
+    {
+     "to": "s05",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "tn-police",
+     "role": "attacked"
+    },
+    {
+     "id": "thoothukudi",
+     "role": "located_at"
+    },
+    {
+     "id": "sterlite",
+     "role": "mentioned"
+    },
+    {
+     "id": "tn-govt",
+     "role": "mentioned"
+    }
+   ],
+   "mentions": []
+  },
+  {
+   "id": "s07",
+   "date": "2018-05-24",
+   "date_precision": "day",
+   "lane": "party",
+   "kind": "claim",
+   "title": "CM Palaniswami blames 'anti-social elements' and says he learned of the firing from media",
+   "summary": "Per Wikipedia. The Aruna Jagadeesan Commission later found the firing was not in private defence (see s13); it did not, in the sources read, substantiate the 'anti-social elements' framing.",
+   "evidence": "reported",
+   "claimant": "palaniswami",
+   "claim_text": "Anti-social elements were behind the violence; the CM learned of the firing through media reports.",
+   "content_evidence": "unverified",
+   "about": [
+    "s06"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    }
+   ],
+   "mentions": [
+    "s06"
+   ],
+   "links": [
+    {
+     "to": "s06",
+     "relation": "responded_to",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "palaniswami",
+     "role": "spoke"
+    },
+    {
+     "id": "tn-govt",
+     "role": "mentioned"
+    },
+    {
+     "id": "tn-police",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ]
+  },
+  {
+   "id": "s08",
+   "date": "2018-05-25",
+   "date_precision": "day",
+   "lane": "party",
+   "kind": "protest",
+   "title": "DMK (Stalin) sit-in on 24 May and state-wide bandh on 25 May; Rahul Gandhi calls the firing 'state-sponsored terrorism'; UN experts call it excessive",
+   "summary": "Per Wikipedia. Opposition uses the firing against the AIADMK state government.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    }
+   ],
+   "entities": [
+    {
+     "id": "stalin",
+     "role": "protested"
+    },
+    {
+     "id": "dmk",
+     "role": "protested"
+    },
+    {
+     "id": "rahul",
+     "role": "spoke"
+    },
+    {
+     "id": "inc",
+     "role": "spoke"
+    },
+    {
+     "id": "tn-govt",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "s09",
+   "date": "2018-05-28",
+   "date_precision": "day",
+   "lane": "executive",
+   "kind": "action",
+   "title": "Tamil Nadu government orders the plant sealed and closed under Water Act s.18(1)(b); land allotted for expansion reclaimed",
+   "summary": "Internet was suspended in Thoothukudi, Tirunelveli and Kanyakumari 23-28 May. Sterlite's Thoothukudi smelter had about 40% of India's smelting capacity (400,000 tpa refining).",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    },
+    {
+     "type": "web",
+     "url": "https://www.landconflictwatch.org/conflicts/supreme-court-refuses-to-allow-reopening-of-sterlite-copper-plant-in-thoothukudi",
+     "outlet": "Land Conflict Watch",
+     "accessed": "2026-09-28",
+     "title": "Regulatory gaps, public health, and economic fallout: the case of Sterlite Copper plant in Thoothukudi"
+    },
+    {
+     "type": "web",
+     "url": "https://theprint.in/economy/how-shutting-down-of-1-plant-turned-india-from-copper-exporter-to-importer-in-under-2-years/322943/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "How shutting down of 1 plant turned India from copper exporter to importer in under 2 years (19 Nov 2019)",
+     "note": "commerce ministry data; cathode exports 378 kt (FY18) to 48 kt (FY19); imports 36 kt to 84 kt (different HS grouping from the 2021 article)"
+    }
+   ],
+   "links": [
+    {
+     "to": "s06",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "tn-govt",
+     "role": "ordered"
+    },
+    {
+     "id": "tnpcb",
+     "role": "ordered"
+    },
+    {
+     "id": "sterlite",
+     "role": "mentioned"
+    },
+    {
+     "id": "thoothukudi",
+     "role": "located_at"
+    },
+    {
+     "id": "vedanta",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "s10",
+   "date": "2018-12-15",
+   "date_precision": "month",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "NGT allows Vedanta to reopen the plant; Tamil Nadu appeals",
+   "summary": "Per Deccan Herald/Wikipedia summaries; exact day not confirmed.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    },
+    {
+     "type": "web",
+     "url": "https://www.deccanherald.com/india/tamil-nadu/supreme-court-dismisses-vedantas-appeal-to-reopen-sterlite-copper-plant-in-thoothukudi-2915932",
+     "outlet": "Deccan Herald",
+     "accessed": "2026-09-28",
+     "title": "Supreme Court dismisses Vedanta's appeal to reopen Sterlite copper plant",
+     "note": "fetch blocked; headline and search snippet only"
+    }
+   ],
+   "links": [
+    {
+     "to": "s09",
+     "relation": "responded_to",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "ngt",
+     "role": "ordered"
+    },
+    {
+     "id": "vedanta",
+     "role": "mentioned"
+    },
+    {
+     "id": "tn-govt",
+     "role": "filed"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "s11",
+   "date": "2019-02-18",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Supreme Court sets aside the NGT order; plant stays shut, and Vedanta may approach the Madras High Court",
+   "summary": "HT headline: 'Sterlite plant can't open, need probe: SC'.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.pressreader.com/india/hindustan-times-patiala/20190219/282067688208294",
+     "outlet": "Hindustan Times",
+     "accessed": "2026-09-28",
+     "title": "Sterlite plant can't open, need probe: SC (19 Feb 2019)"
+    },
+    {
+     "type": "web",
+     "url": "https://www.landconflictwatch.org/conflicts/supreme-court-refuses-to-allow-reopening-of-sterlite-copper-plant-in-thoothukudi",
+     "outlet": "Land Conflict Watch",
+     "accessed": "2026-09-28",
+     "title": "Regulatory gaps, public health, and economic fallout: the case of Sterlite Copper plant in Thoothukudi"
+    },
+    {
+     "type": "web",
+     "url": "https://www.deccanherald.com/india/tamil-nadu/supreme-court-dismisses-vedantas-appeal-to-reopen-sterlite-copper-plant-in-thoothukudi-2915932",
+     "outlet": "Deccan Herald",
+     "accessed": "2026-09-28",
+     "title": "Supreme Court dismisses Vedanta's appeal to reopen Sterlite copper plant",
+     "note": "fetch blocked; headline and search snippet only"
+    }
+   ],
+   "links": [
+    {
+     "to": "s10",
+     "relation": "responded_to",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "supreme-court",
+     "role": "ordered"
+    },
+    {
+     "id": "ngt",
+     "role": "mentioned"
+    },
+    {
+     "id": "vedanta",
+     "role": "filed"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "s12",
+   "date": "2018-11-15",
+   "date_precision": "month",
+   "lane": "security",
+   "kind": "action",
+   "title": "CBI registers cases against unidentified police and revenue officials; later chargesheet criticised",
+   "summary": "Per Wikipedia: CJM rejected the CBI chargesheet as incomplete (Dec 2023); Madras HC (Jul 2024) said the CBI 'appeared to have lost its independence'. South First (2025): 101 people charged by CBI, only one a police officer; hundreds of protesters remain under cases.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    },
+    {
+     "type": "web",
+     "url": "https://thesouthfirst.com/news/seven-years-on-justice-eludes-thoothukudi-protesters-firing-victims/",
+     "outlet": "The South First",
+     "accessed": "2026-09-28",
+     "title": "Seven years on, justice eludes Thoothukudi protesters, firing victims",
+     "note": "page returned 403 to fetch; facts from the search snippet and cached summary only"
+    }
+   ],
+   "entities": [
+    {
+     "id": "cbi",
+     "role": "filed"
+    },
+    {
+     "id": "tn-police",
+     "role": "mentioned"
+    },
+    {
+     "id": "madras-hc",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "s13",
+   "date": "2020-08-18",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Madras High Court upholds the closure and orders permanent sealing",
+   "summary": "Land Conflict Watch: the court found violations including the plant's categorisation and green-belt non-compliance. Vedanta appealed to the Supreme Court.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.landconflictwatch.org/conflicts/supreme-court-refuses-to-allow-reopening-of-sterlite-copper-plant-in-thoothukudi",
+     "outlet": "Land Conflict Watch",
+     "accessed": "2026-09-28",
+     "title": "Regulatory gaps, public health, and economic fallout: the case of Sterlite Copper plant in Thoothukudi"
+    },
+    {
+     "type": "web",
+     "url": "https://www.deccanherald.com/india/madras-high-court-to-pronounce-verdict-in-sterlite-case-on-august-18-874461.html",
+     "outlet": "Deccan Herald",
+     "accessed": "2026-09-28",
+     "title": "Madras High Court to pronounce verdict in Sterlite case on August 18"
+    },
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    }
+   ],
+   "links": [
+    {
+     "to": "s11",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "madras-hc",
+     "role": "ordered"
+    },
+    {
+     "id": "vedanta",
+     "role": "filed"
+    },
+    {
+     "id": "sterlite",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "s14",
+   "date": "2021-04-27",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Supreme Court lets Vedanta produce oxygen at the closed site during the COVID wave (to 31 July 2021)",
+   "summary": "Per Wikipedia. A narrow, time-limited exception; the smelter itself stayed shut.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://en.wikipedia.org/wiki/Thoothukudi_violence",
+     "outlet": "Wikipedia",
+     "accessed": "2026-09-28",
+     "title": "Thoothukudi violence",
+     "note": "secondary compilation; used for background where an outlet is not cited"
+    }
+   ],
+   "entities": [
+    {
+     "id": "supreme-court",
+     "role": "ordered"
+    },
+    {
+     "id": "vedanta",
+     "role": "mentioned"
+    },
+    {
+     "id": "sterlite",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "s15",
+   "date": "2022-10-18",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "report",
+   "title": "Justice Aruna Jagadeesan Commission report tabled: firing not private defence; 17 police personnel, the Collector and 3 tahsildars held responsible",
+   "summary": "Report found 'total inaction, lethargy, complacency and dereliction of duty' by the Collector and 'total lack of coordination' between administration and police. Wikipedia says it was submitted 19 Aug 2022. South First (2025): no official arrested; some named officers promoted; Rs 25 lakh paid to families vs Rs 50 lakh recommended.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.thenewsminute.com/tamil-nadu/aruna-jagadeesan-commission-holds-17-cops-responsible-thoothukudi-firing-169014",
+     "outlet": "The News Minute",
+     "accessed": "2026-09-28",
+     "title": "Aruna Jagadeesan Commission holds 17 cops responsible for Thoothukudi firing"
+    },
+    {
+     "type": "web",
+     "url": "https://www.thenewsminute.com/tamil-nadu/thoothukudi-firing-aruna-jagadeesan-report-calls-action-against-collector-169017",
+     "outlet": "The News Minute",
+     "accessed": "2026-09-28",
+     "title": "Aruna Jagadeesan report calls for action against Collector"
+    },
+    {
+     "type": "web",
+     "url": "https://www.kalaignarseithigal.com/tamilnadu/2022/10/18/aruna-jagadeesan-commission-report-filed-on-thoothukudi-firing-in-tn-assembly",
+     "outlet": "Kalaignar Seithigal",
+     "accessed": "2026-09-28",
+     "title": "Aruna Jagadeesan Commission report filed in TN Assembly"
+    },
+    {
+     "type": "web",
+     "url": "https://thesouthfirst.com/news/seven-years-on-justice-eludes-thoothukudi-protesters-firing-victims/",
+     "outlet": "The South First",
+     "accessed": "2026-09-28",
+     "title": "Seven years on, justice eludes Thoothukudi protesters, firing victims",
+     "note": "page returned 403 to fetch; facts from the search snippet and cached summary only"
+    }
+   ],
+   "links": [
+    {
+     "to": "s06",
+     "relation": "responded_to",
+     "evidence": "confirmed"
+    },
+    {
+     "to": "s07",
+     "relation": "contradicts",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "aruna-jagadeesan",
+     "role": "filed"
+    },
+    {
+     "id": "tn-police",
+     "role": "mentioned"
+    },
+    {
+     "id": "tn-govt",
+     "role": "ordered"
+    },
+    {
+     "id": "thoothukudi",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "s16",
+   "date": "2023-04-06",
+   "date_precision": "day",
+   "lane": "party",
+   "kind": "claim",
+   "title": "Governor R.N. Ravi: the Sterlite protest was 'purely foreign-funded'",
+   "summary": "Said at an interaction with civil-services aspirants in Chennai; cited FCRA-funded NGOs, produced no documents in the reporting read. DMK's Kanimozhi: 'I condemn the governor who is defaming the people's struggle.' The Governor also made similar claims about the Kudankulam protests.",
+   "evidence": "confirmed",
+   "claimant": "rn-ravi",
+   "claim_text": "'In Sterlite in Thuthukudi, it was a purely foreign-funded activity which led to the protest.' (ThePrint, 6 Apr 2023)",
+   "content_evidence": "unverified",
+   "about": [
+    "s06",
+    "fcra",
+    "foreign-funding"
+   ],
+   "mentions": [
+    "s06"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://theprint.in/india/sterlite-protest-was-foreign-funded-tamil-nadu-governor/1502956/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "Sterlite protest was 'foreign-funded': Tamil Nadu Governor"
+    },
+    {
+     "type": "web",
+     "url": "https://www.deccanherald.com/india/anti-sterlite-protests-funded-by-foreign-hands-tn-governor-1207374.html",
+     "outlet": "Deccan Herald",
+     "accessed": "2026-09-28",
+     "title": "Anti-Sterlite protests funded by foreign hands: TN Governor"
+    },
+    {
+     "type": "web",
+     "url": "http://adrindia.org/content/behind-tn-governors-thoothukudi-protest-claims-story-bjps-ties-vedanta",
+     "outlet": "Association for Democratic Reforms (advocacy)",
+     "accessed": "2026-09-28",
+     "title": "Behind TN Governor's Thoothukudi protest claims, the story of BJP's ties with Vedanta",
+     "note": "advocacy piece; dates the Delhi HC FCRA judgment to 2015 (unverified; judgment date to be checked against the primary record)"
+    }
+   ],
+   "entities": [
+    {
+     "id": "rn-ravi",
+     "role": "spoke"
+    },
+    {
+     "id": "kanimozhi",
+     "role": "spoke"
+    },
+    {
+     "id": "dmk",
+     "role": "spoke"
+    },
+    {
+     "id": "fcra",
+     "role": "mentioned"
+    },
+    {
+     "id": "chennai",
+     "role": "located_at"
+    },
+    {
+     "id": "tamil-nadu",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "links": []
+  },
+  {
+   "id": "s17",
+   "date": "2015-01-01",
+   "date_precision": "approx",
+   "lane": "party",
+   "kind": "court_order",
+   "title": "Delhi HC (ADR v. Union of India) finds BJP and Congress accepted foreign funds from Vedanta subsidiaries in breach of FCRA",
+   "summary": "ADR (advocacy) says: Rs 8+ crore each from Vedanta subsidiaries in 2004-12; both parties withdrew their SC appeals in Nov 2016 and a 2016 amendment redefined 'foreign source'. This is the reverse direction of the foreign-funding allegation and is single-sourced here; the judgment date is unverified.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "http://adrindia.org/content/behind-tn-governors-thoothukudi-protest-claims-story-bjps-ties-vedanta",
+     "outlet": "Association for Democratic Reforms (advocacy)",
+     "accessed": "2026-09-28",
+     "title": "Behind TN Governor's Thoothukudi protest claims, the story of BJP's ties with Vedanta",
+     "note": "advocacy piece; dates the Delhi HC FCRA judgment to 2015 (unverified; judgment date to be checked against the primary record)"
+    }
+   ],
+   "links": [
+    {
+     "to": "s16",
+     "relation": "related",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "bjp",
+     "role": "mentioned"
+    },
+    {
+     "id": "inc",
+     "role": "mentioned"
+    },
+    {
+     "id": "vedanta",
+     "role": "mentioned"
+    },
+    {
+     "id": "fcra",
+     "role": "mentioned"
+    },
+    {
+     "id": "delhi-hc",
+     "role": "ordered"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "s18",
+   "date": "2019-03-31",
+   "date_precision": "approx",
+   "lane": "economy",
+   "kind": "report",
+   "title": "Commerce data: refined copper exports fall 87% in FY2018-19 (378 kt to 48 kt); imports double (44 kt to 92 kt); India turns net importer",
+   "summary": "Net position swung from +334 kt (FY18) to -44 kt (FY19). Two ThePrint articles use slightly different cathode groupings (imports 36 kt/84 kt vs 44 kt/92 kt). Government/CARE data cited.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://theprint.in/economy/how-india-turned-copper-importer-from-exporter-in-3-yrs-pakistan-stepped-in-to-fill-the-gap/612544/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "How India turned copper importer from exporter in 3 yrs (1 Mar 2021)",
+     "note": "exports 378,000 t to 47,917 t; imports 44,245 t to 92,290 t; net +334,310 t to -44,373 t; CARE Ratings and government trade data"
+    },
+    {
+     "type": "web",
+     "url": "https://theprint.in/economy/how-shutting-down-of-1-plant-turned-india-from-copper-exporter-to-importer-in-under-2-years/322943/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "How shutting down of 1 plant turned India from copper exporter to importer in under 2 years (19 Nov 2019)",
+     "note": "commerce ministry data; cathode exports 378 kt (FY18) to 48 kt (FY19); imports 36 kt to 84 kt (different HS grouping from the 2021 article)"
+    },
+    {
+     "type": "web",
+     "url": "https://www.business-standard.com/article/pti-stories/refined-copper-imports-jump-2-folds-to-over-92-000-tn-in-fy19-120020701804_1.html",
+     "outlet": "Business Standard (PTI)",
+     "accessed": "2026-09-28",
+     "title": "Refined copper imports jump 2-fold to over 92,000 tn in FY19 (Feb 2020)",
+     "note": "headline/snippet only"
+    },
+    {
+     "type": "web",
+     "url": "https://csep.org/blog/decoding-copper-cathode-navigating-through-the-indian-copper-market/",
+     "outlet": "CSEP (think tank)",
+     "accessed": "2026-09-28",
+     "title": "Decoding Copper Cathode: navigating through the Indian copper market (21 Aug 2024)",
+     "note": "net importer since 2018-19; FY24 imports +107% y/y; drivers include Japan/ASEAN FTA duty cuts, demand growth, ore shortage, TC/RC pressure; Sterlite closure cost ~Rs 14,749 cr (0.72% of TN GDP)"
+    }
+   ],
+   "links": [
+    {
+     "to": "s09",
+     "relation": "followed",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "commerce-data",
+     "role": "mentioned"
+    },
+    {
+     "id": "sterlite",
+     "role": "mentioned"
+    },
+    {
+     "id": "govt-india",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "s19",
+   "date": "2021-12-15",
+   "date_precision": "day",
+   "lane": "health",
+   "kind": "violence",
+   "title": "Foxconn Sriperumbudur hostel food poisoning: 256 workers ill, 159 hospitalised; women workers block the Chennai-Bengaluru highway on 18 Dec",
+   "summary": "Food-safety inspectors found rats and poor drainage in the hostel kitchen and samples failed standards; Apple placed the plant 'on probation'. Death rumours were false. Police detained dozens of protesters (Reuters via Malay Mail headline).",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.business-standard.com/article/companies/foxconn-staff-protest-as-159-hospitalised-after-food-poisoning-121122000022_1.html",
+     "outlet": "Business Standard",
+     "accessed": "2026-09-28",
+     "title": "Foxconn staff protest as 159 hospitalised after food poisoning (Dec 2021)"
+    },
+    {
+     "type": "web",
+     "url": "https://www.thenewsminute.com/article/mass-protest-foxconn-workers-tn-allege-company-hushed-severe-food-poisoning-158886",
+     "outlet": "The News Minute",
+     "accessed": "2026-09-28",
+     "title": "Mass protest by Foxconn workers in TN, allege company hushed up severe food poisoning"
+    },
+    {
+     "type": "web",
+     "url": "https://www.business-humanrights.org/en/latest-news/india-workers-at-foxconn-iphone-factory-describe-horrific-hostel-conditions-following-food-poisoning-protests/",
+     "outlet": "Business & Human Rights Resource Centre",
+     "accessed": "2026-09-28",
+     "title": "Apple announces 'probation' for Foxconn iPhone factory after food poisoning affecting 250 workers"
+    },
+    {
+     "type": "web",
+     "url": "https://www.malaymail.com/news/world/2021/12/19/food-poisoning-at-foxconns-india-unit-triggers-protest-police-detain-dozens/2029627",
+     "outlet": "Malay Mail (Reuters)",
+     "accessed": "2026-09-28",
+     "title": "Food poisoning at Foxconn's India unit triggers protest, police detain dozens",
+     "note": "fetch blocked; headline only"
+    }
+   ],
+   "entities": [
+    {
+     "id": "foxconn",
+     "role": "mentioned"
+    },
+    {
+     "id": "apple",
+     "role": "mentioned"
+    },
+    {
+     "id": "sriperumbudur",
+     "role": "located_at"
+    },
+    {
+     "id": "tamil-nadu",
+     "role": "located_at"
+    },
+    {
+     "id": "tn-police",
+     "role": "detained"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "s20",
+   "date": "2024-02-29",
+   "date_precision": "day",
+   "lane": "courts",
+   "kind": "court_order",
+   "title": "Supreme Court (CJI Chandrachud, Pardiwala, Misra) dismisses Vedanta's appeal; review petition dismissed 22 Oct 2024",
+   "summary": "Bench: closure is not the first course of action, but persistent breaches left authorities no alternative. Business & Human Rights Centre summarises the ruling as citing environmental and community human-rights impacts.",
+   "evidence": "confirmed",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://api.sci.gov.in/supremecourt/2020/18030/18030_2020_1_1_50971_Judgement_29-Feb-2024.pdf",
+     "outlet": "Supreme Court of India (judgment PDF)",
+     "accessed": "2026-09-28",
+     "title": "Vedanta Ltd v. State of Tamil Nadu, 2024 INSC 175, 29 Feb 2024",
+     "note": "primary record; listed by search, not read in full"
+    },
+    {
+     "type": "web",
+     "url": "https://www.deccanherald.com/india/tamil-nadu/supreme-court-dismisses-vedantas-appeal-to-reopen-sterlite-copper-plant-in-thoothukudi-2915932",
+     "outlet": "Deccan Herald",
+     "accessed": "2026-09-28",
+     "title": "Supreme Court dismisses Vedanta's appeal to reopen Sterlite copper plant",
+     "note": "fetch blocked; headline and search snippet only"
+    },
+    {
+     "type": "web",
+     "url": "https://www.business-humanrights.org/en/latest-news/india-supreme-court-rejects-vedantas-plea-to-reopen-thoothukudi-copper-plant-citing-pollution-concerns/",
+     "outlet": "Business & Human Rights Resource Centre",
+     "accessed": "2026-09-28",
+     "title": "Supreme Court rejects Vedanta's plea to reopen Thoothukudi copper plant"
+    },
+    {
+     "type": "web",
+     "url": "https://www.business-standard.com/companies/news/sc-dismisses-vedanta-s-review-petition-to-reopen-copper-plant-in-tamil-nadu-124111600361_1.html",
+     "outlet": "Business Standard",
+     "accessed": "2026-09-28",
+     "title": "SC dismisses Vedanta's review petition to reopen copper plant in Tamil Nadu"
+    }
+   ],
+   "links": [
+    {
+     "to": "s13",
+     "relation": "followed",
+     "evidence": "confirmed"
+    }
+   ],
+   "entities": [
+    {
+     "id": "supreme-court",
+     "role": "ordered"
+    },
+    {
+     "id": "vedanta",
+     "role": "filed"
+    },
+    {
+     "id": "sterlite",
+     "role": "mentioned"
+    },
+    {
+     "id": "madras-hc",
+     "role": "mentioned"
+    },
+    {
+     "id": "cji",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "s21",
+   "date": "2018-06-01",
+   "date_precision": "approx",
+   "lane": "economy",
+   "kind": "report",
+   "title": "Livelihood cost of closure: about 20,000 direct/indirect jobs and roughly Rs 14,749 crore (0.72% of TN GDP) cited",
+   "summary": "Land Conflict Watch (jobs) and CSEP (GDP figure). Estimates, not audited; balances the health-side facts above.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.landconflictwatch.org/conflicts/supreme-court-refuses-to-allow-reopening-of-sterlite-copper-plant-in-thoothukudi",
+     "outlet": "Land Conflict Watch",
+     "accessed": "2026-09-28",
+     "title": "Regulatory gaps, public health, and economic fallout: the case of Sterlite Copper plant in Thoothukudi"
+    },
+    {
+     "type": "web",
+     "url": "https://csep.org/blog/decoding-copper-cathode-navigating-through-the-indian-copper-market/",
+     "outlet": "CSEP (think tank)",
+     "accessed": "2026-09-28",
+     "title": "Decoding Copper Cathode: navigating through the Indian copper market (21 Aug 2024)",
+     "note": "net importer since 2018-19; FY24 imports +107% y/y; drivers include Japan/ASEAN FTA duty cuts, demand growth, ore shortage, TC/RC pressure; Sterlite closure cost ~Rs 14,749 cr (0.72% of TN GDP)"
+    }
+   ],
+   "entities": [
+    {
+     "id": "sterlite",
+     "role": "mentioned"
+    },
+    {
+     "id": "tamil-nadu",
+     "role": "located_at"
+    },
+    {
+     "id": "thoothukudi",
+     "role": "located_at"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "s22",
+   "date": "2023-10-25",
+   "date_precision": "month",
+   "lane": "economy",
+   "kind": "action",
+   "title": "Adani's Kutch Copper begins operations (500 kt first phase); Hindalco is the other major refiner",
+   "summary": "Business Standard (Oct 2023) reports the new entrant; CSEP notes refined-copper output fell 8% in FY24 to 5.09 lakh t.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.business-standard.com/companies/news/india-s-copper-industry-has-a-new-entrant-incumbents-not-worried-123102500955_1.html",
+     "outlet": "Business Standard",
+     "accessed": "2026-09-28",
+     "title": "India's copper industry has a new entrant, incumbents not worried (Oct 2023)"
+    },
+    {
+     "type": "web",
+     "url": "https://csep.org/blog/decoding-copper-cathode-navigating-through-the-indian-copper-market/",
+     "outlet": "CSEP (think tank)",
+     "accessed": "2026-09-28",
+     "title": "Decoding Copper Cathode: navigating through the Indian copper market (21 Aug 2024)",
+     "note": "net importer since 2018-19; FY24 imports +107% y/y; drivers include Japan/ASEAN FTA duty cuts, demand growth, ore shortage, TC/RC pressure; Sterlite closure cost ~Rs 14,749 cr (0.72% of TN GDP)"
+    }
+   ],
+   "links": [
+    {
+     "to": "s18",
+     "relation": "related",
+     "evidence": "reported"
+    }
+   ],
+   "entities": [
+    {
+     "id": "adani-kutch",
+     "role": "mentioned"
+    },
+    {
+     "id": "hindalco",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "mentions": []
+  },
+  {
+   "id": "s23",
+   "date": "2024-03-31",
+   "date_precision": "approx",
+   "lane": "economy",
+   "kind": "report",
+   "title": "FY2023-24: refined copper imports about 363,000 t, up 107% on the year, roughly two-thirds from Japan",
+   "summary": "Per CSEP (Ministry of Commerce data). Imports kept rising after alternative capacity arrived, which complicates a simple 'closure caused import dependence' story.",
+   "evidence": "reported",
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://csep.org/blog/decoding-copper-cathode-navigating-through-the-indian-copper-market/",
+     "outlet": "CSEP (think tank)",
+     "accessed": "2026-09-28",
+     "title": "Decoding Copper Cathode: navigating through the Indian copper market (21 Aug 2024)",
+     "note": "net importer since 2018-19; FY24 imports +107% y/y; drivers include Japan/ASEAN FTA duty cuts, demand growth, ore shortage, TC/RC pressure; Sterlite closure cost ~Rs 14,749 cr (0.72% of TN GDP)"
+    }
+   ],
+   "entities": [
+    {
+     "id": "commerce-data",
+     "role": "mentioned"
+    },
+    {
+     "id": "hindalco",
+     "role": "mentioned"
+    },
+    {
+     "id": "adani-kutch",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "links": [],
+   "mentions": []
+  },
+  {
+   "id": "s24",
+   "date": "2026-09-21",
+   "date_precision": "day",
+   "lane": "party",
+   "kind": "claim",
+   "title": "IT Minister Vaishnaw (NDTV): Apple's Indian manufacturing faced 'food poisoning', cut electricity wires and 'fake news'; 'they tried all tricks'",
+   "summary": "Cited the 2021 Foxconn incident. He named no country, group or party. The 'hidden forces' wording attributed to him in some retellings was NOT found in the reports read; his terms were 'people' and 'those who oppose'. The public record on s19 (rats, drainage, failed samples; Apple probation) does not establish deliberate sabotage.",
+   "evidence": "confirmed",
+   "claimant": "vaishnaw",
+   "claim_text": "'Remember, when Apple's manufacturing started, some people did food poisoning.' 'Electricity wires were cut. There were many such incidents.' 'People didn't like India to come up as a manufacturer; they tried all tricks.' 'We will face cyber attacks... They will also try to do all kinds of physical attacks.' (Business Today, 21 Sep 2026, NDTV interview; wording as paraphrased in reports, not a transcript)",
+   "content_evidence": "unverified",
+   "about": [
+    "s19",
+    "reuters"
+   ],
+   "mentions": [
+    "s19"
+   ],
+   "sources": [
+    {
+     "type": "web",
+     "url": "https://www.businesstoday.in/india/story/cyber-hits-to-fake-news-vaishnaw-warns-of-foul-play-against-indias-semiconductor-push-556749-2026-09-21",
+     "outlet": "Business Today",
+     "accessed": "2026-09-28",
+     "title": "Cyber hits to fake news: Vaishnaw warns of foul play against India's semiconductor push (21 Sep 2026)"
+    },
+    {
+     "type": "web",
+     "url": "https://www.freepressjournal.in/tech/we-will-face-cyber-attacks-ashwini-vaishnaw-warns-of-sabotage-as-india-chases-semiconductor-ambitions",
+     "outlet": "Free Press Journal",
+     "accessed": "2026-09-28",
+     "title": "'We will face cyber attacks': Ashwini Vaishnaw warns of sabotage"
+    },
+    {
+     "type": "web",
+     "url": "https://organiser.org/2026/09/25/382574/bharat/they-will-try-every-kind-of-attack-ashwini-vaishnaw-warns-indias-semiconductor-industry-to-stay-vigilant/",
+     "outlet": "Organiser",
+     "accessed": "2026-09-28",
+     "title": "'They will try every kind of attack': Vaishnaw warns semiconductor industry",
+     "note": "fetch blocked; headline only"
+    }
+   ],
+   "entities": [
+    {
+     "id": "vaishnaw",
+     "role": "spoke"
+    },
+    {
+     "id": "ndtv",
+     "role": "located_at"
+    },
+    {
+     "id": "foxconn",
+     "role": "mentioned"
+    },
+    {
+     "id": "apple",
+     "role": "mentioned"
+    },
+    {
+     "id": "reuters",
+     "role": "mentioned"
+    },
+    {
+     "id": "meity",
+     "role": "mentioned"
+    },
+    {
+     "id": "govt-india",
+     "role": "mentioned"
+    }
+   ],
+   "issues": [
+    "sterlite-copper"
+   ],
+   "links": []
+  }
+ ],
+ "hypotheses": [],
+ "series": [
+  {
+   "id": "cu-exports",
+   "title": "Refined copper exports",
+   "unit": "thousand tonnes",
+   "color": "#2b6cb0",
+   "points": [
+    {
+     "date": "2017-04-01",
+     "value": 378,
+     "label": "FY2017-18"
+    },
+    {
+     "date": "2018-04-01",
+     "value": 47.9,
+     "label": "FY2018-19"
+    }
+   ],
+   "source": [
+    {
+     "type": "web",
+     "url": "https://theprint.in/economy/how-india-turned-copper-importer-from-exporter-in-3-yrs-pakistan-stepped-in-to-fill-the-gap/612544/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "How India turned copper importer from exporter in 3 yrs (1 Mar 2021)",
+     "note": "exports 378,000 t to 47,917 t; imports 44,245 t to 92,290 t; net +334,310 t to -44,373 t; CARE Ratings and government trade data"
+    },
+    {
+     "type": "web",
+     "url": "https://www.business-standard.com/article/pti-stories/refined-copper-imports-jump-2-folds-to-over-92-000-tn-in-fy19-120020701804_1.html",
+     "outlet": "Business Standard (PTI)",
+     "accessed": "2026-09-28",
+     "title": "Refined copper imports jump 2-fold to over 92,000 tn in FY19 (Feb 2020)",
+     "note": "headline/snippet only"
+    }
+   ],
+   "pin": [
+    "s09",
+    "s11",
+    "s13",
+    "s20"
+   ],
+   "note": "Only two fiscal years located in official-data reporting; later years (FY20-FY24 exports) not found. Add from DGCIS/Commerce trade database."
+  },
+  {
+   "id": "cu-imports",
+   "title": "Refined copper imports",
+   "unit": "thousand tonnes",
+   "color": "#c05621",
+   "points": [
+    {
+     "date": "2017-04-01",
+     "value": 44.2,
+     "label": "FY2017-18"
+    },
+    {
+     "date": "2018-04-01",
+     "value": 92.3,
+     "label": "FY2018-19"
+    },
+    {
+     "date": "2023-04-01",
+     "value": 363,
+     "label": "FY2023-24 (~363 kt per CSEP)"
+    }
+   ],
+   "source": [
+    {
+     "type": "web",
+     "url": "https://theprint.in/economy/how-india-turned-copper-importer-from-exporter-in-3-yrs-pakistan-stepped-in-to-fill-the-gap/612544/",
+     "outlet": "ThePrint",
+     "accessed": "2026-09-28",
+     "title": "How India turned copper importer from exporter in 3 yrs (1 Mar 2021)",
+     "note": "exports 378,000 t to 47,917 t; imports 44,245 t to 92,290 t; net +334,310 t to -44,373 t; CARE Ratings and government trade data"
+    },
+    {
+     "type": "web",
+     "url": "https://www.business-standard.com/article/pti-stories/refined-copper-imports-jump-2-folds-to-over-92-000-tn-in-fy19-120020701804_1.html",
+     "outlet": "Business Standard (PTI)",
+     "accessed": "2026-09-28",
+     "title": "Refined copper imports jump 2-fold to over 92,000 tn in FY19 (Feb 2020)",
+     "note": "headline/snippet only"
+    },
+    {
+     "type": "web",
+     "url": "https://csep.org/blog/decoding-copper-cathode-navigating-through-the-indian-copper-market/",
+     "outlet": "CSEP (think tank)",
+     "accessed": "2026-09-28",
+     "title": "Decoding Copper Cathode: navigating through the Indian copper market (21 Aug 2024)",
+     "note": "net importer since 2018-19; FY24 imports +107% y/y; drivers include Japan/ASEAN FTA duty cuts, demand growth, ore shortage, TC/RC pressure; Sterlite closure cost ~Rs 14,749 cr (0.72% of TN GDP)"
+    }
+   ],
+   "pin": [
+    "s22"
+   ],
+   "note": "FY18-FY19 from commerce data via ThePrint; FY24 from CSEP (different grouping possible). Gap FY20-FY23 unfilled."
+  }
+ ]
+}
