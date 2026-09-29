@@ -595,6 +595,11 @@ def _migrate_db():
         END
     """)
 
+    # ── The Record — sourced entities, dated attributes, story nodes, edges ──
+    # Schema + rules live in core/record_schema.py (see docs/STORY_ENGINE.md).
+    from core.record_schema import create_record_tables
+    create_record_tables(conn)
+
     conn.commit()
     conn.close()
 
