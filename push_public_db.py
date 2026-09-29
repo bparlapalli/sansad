@@ -15,6 +15,14 @@ import sys
 import argparse
 from pathlib import Path
 
+try:
+    # Use the OS certificate store — Python's bundled CAs fail on some Windows
+    # setups (antivirus / missing intermediates). Optional: skipped if not installed.
+    import truststore
+    truststore.inject_into_ssl()
+except ImportError:
+    pass
+
 import requests
 
 _ROOT = Path(__file__).resolve().parent
