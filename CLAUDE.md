@@ -65,6 +65,7 @@ sansad/
 ├── main.py                  # Full pipeline entry point (scrape + parse + AI)
 ├── daily_update.py           # Local daily job: scrape → parse+chunk → export_public_db → push_public_db
 ├── push_public_db.py         # Sends public.db to the live site's /ingest/db (never via GitHub)
+├── sync_github_issues.py     # Idempotent roadmap → GitHub issues sync (no token in file; uses GITHUB_PAT or git creds)
 ├── run_stats.py             # CLI stats dashboard (run from Windows cmd)
 ├── export_for_ai.py         # Export statements + top MPs to JSON for AI generation
 ├── seed_parties.py          # One-time seed: party affiliations into members table
