@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% import "_items.html" as ui %}
+{% block title %}{{ rel.title[:60] }}{% endblock %}
+{% block content %}
+{{ ui.item_css() }}
+<div class="page">
+  <p class="item-meta"><a href="/pib">← All PIB releases</a></p>
+  <div class="item-meta" style="margin-top:14px">
+    <span class="src-badge" style="background:#8a4b08">PIB</span>
+    {{ rel.posted_at or rel.release_date }}{% if rel.region %} · {{ rel.region }}{% endif %}
+    {% if rel.ministry %} · <a href="/pib?ministry={{ rel.ministry|urlencode }}">{{ rel.ministry }}</a>{% endif %}
+  </div>
+  <h1 style="margin:6px 0 18px">{{ rel.title }}</h1>
+  {% for p in rel.paragraphs %}<p style="margin-bottom:12px">{{ p }}</p>{% endfor %}
+  <p class="deck" style="margin-top:24px">
+    <a href="{{ rel.url }}" target="_blank" rel="noopener">Original on pib.gov.in</a>
+    {% if rel.translations %}
+    · Other languages:
+    {% for lang, prid in rel.translations.items() %}
+      <a href="https://pib.gov.in/PressReleasePage.aspx?PRID={{ prid }}" target="_blank" rel="noopener">{{ lang|title }}</a>{{ ', ' if not loop.last }}
+    {% endfor %}
+    {% endif %}
+  </p>
+</div>
+{% endblock %}

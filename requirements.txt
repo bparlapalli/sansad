@@ -2,6 +2,8 @@
 pdfplumber>=0.11        # PDF text extraction
 requests>=2.31          # HTTP downloads / Sarvam AI API calls
 urllib3>=2.0
+truststore>=0.9         # use the OS cert store — pib.gov.in omits its intermediate cert
+#   If pip itself fails TLS: python -m pip install --use-feature=truststore truststore
 
 # ── Web app ───────────────────────────────────────────────────────────────────
 flask>=3.0              # app/ news + admin site
@@ -18,9 +20,10 @@ anthropic>=0.25         # Claude API (digest.py) — needs ANTHROPIC_API_KEY
 # Until then, translator.py uses requests directly with SARVAM_API_KEY
 
 # ── Playwright scraper ────────────────────────────────────────────────────────
-playwright>=1.40        # Real browser scraper for eparlib.sansad.in and PIB
+playwright>=1.40        # Real browser scraper for eparlib.sansad.in
 #   Install: pip install playwright && playwright install chromium
 #   Used by: scrapers/parliament/playwright_scraper.py, scrapers/pib/explore_pib.py
+#   (PIB itself needs no browser — scrapers/pib/pib_scraper.py uses plain requests)
 
 # ── YouTube transcript sourcing (exploratory) ─────────────────────────────────
 yt-dlp>=2024.1                # Lists a channel's recent uploads without downloading video

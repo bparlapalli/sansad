@@ -405,6 +405,70 @@ def _migrate_db():
         )
     """)
 
+    # ── PIB press releases — second data source (scrapers/pib/pib_scraper.py) ─
+    # One row per release, keyed by PIB's own release ID (PRID). Rows are
+    # inserted as 'listed' from the daily listing page, then filled in
+    # (body_text etc.) and flipped to 'fetched' once the release page is read.
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS pib_releases (
+            id              INTEGER PRIMARY KEY AUTOINCREMENT,
+            prid            INTEGER NOT NULL UNIQUE,
+            title           TEXT    NOT NULL,
+            ministry        TEXT,
+            release_date    TEXT,               -- ISO YYYY-MM-DD
+            posted_at       TEXT,               -- ISO YYYY-MM-DD HH:MM
+            region          TEXT,               -- e.g. 'PIB Delhi'
+            language        TEXT    NOT NULL DEFAULT 'english',
+            body_text       TEXT,
+            word_count      INTEGER,
+            url             TEXT    NOT NULL,
+            translations    TEXT,               -- JSON {language: prid}
+            fetch_status    TEXT    NOT NULL DEFAULT 'listed',  -- listed | fetched | error
+            fetch_error     TEXT,
+            discovered_at   TEXT    DEFAULT (datetime('now')),
+            fetched_at      TEXT
+        )
+    """)
+    c.execute("CREATE INDEX IF NOT EXISTS idx_pib_date     ON pib_releases(release_date)")
+    c.execute("CREATE INDEX IF NOT EXISTS idx_pib_ministry ON pib_releases(ministry)")
+    c.execute("CREATE INDEX IF NOT EXISTS idx_pib_status   ON pib_releases(fetch_status)")
+
+    c.execute("""
+        CREATE VIRTUAL TABLE IF NOT EXISTS pib_releases_fts
+        USING fts5(
+            title,
+            ministry,
+            body_text,
+            content='pib_releases',
+            content_rowid='id'
+        )
+    """)
+    # Rows are updated after insert (listed → fetched), so the index needs
+    # insert, delete and update triggers to stay in sync.
+    c.execute("""
+        CREATE TRIGGER IF NOT EXISTS pib_releases_ai
+        AFTER INSERT ON pib_releases BEGIN
+            INSERT INTO pib_releases_fts(rowid, title, ministry, body_text)
+            VALUES (new.id, new.title, new.ministry, new.body_text);
+        END
+    """)
+    c.execute("""
+        CREATE TRIGGER IF NOT EXISTS pib_releases_ad
+        AFTER DELETE ON pib_releases BEGIN
+            INSERT INTO pib_releases_fts(pib_releases_fts, rowid, title, ministry, body_text)
+            VALUES ('delete', old.id, old.title, old.ministry, old.body_text);
+        END
+    """)
+    c.execute("""
+        CREATE TRIGGER IF NOT EXISTS pib_releases_au
+        AFTER UPDATE ON pib_releases BEGIN
+            INSERT INTO pib_releases_fts(pib_releases_fts, rowid, title, ministry, body_text)
+            VALUES ('delete', old.id, old.title, old.ministry, old.body_text);
+            INSERT INTO pib_releases_fts(rowid, title, ministry, body_text)
+            VALUES (new.id, new.title, new.ministry, new.body_text);
+        END
+    """)
+
     conn.commit()
     conn.close()
 

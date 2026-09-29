@@ -20,6 +20,7 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for
 from core.db import get_connection, init_db
 from app.search_bp import search_bp
 from app.ingest_bp import ingest_bp
+from app.feed_bp import feed_bp
 from app.query import (
     get_stats, get_speakers_list, get_latest_dates,
     get_statements_for_date, get_statements_for_topic,
@@ -42,6 +43,7 @@ if os.getenv("APP_ENV") != "production":
 
 app.register_blueprint(search_bp)
 app.register_blueprint(ingest_bp)
+app.register_blueprint(feed_bp)
 
 
 @app.context_processor

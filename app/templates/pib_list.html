@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% import "_items.html" as ui %}
+{% block title %}PIB Press Releases{% endblock %}
+{% block content %}
+{{ ui.item_css() }}
+<div class="page">
+  <h1>PIB press releases</h1>
+  <p class="deck">Official government announcements from the Press Information Bureau (PIB Delhi, English).</p>
+
+  <form class="filters" method="get" action="/pib">
+    <input type="search" name="q" value="{{ q }}" placeholder="Search releases…">
+    <select name="ministry" onchange="this.form.submit()">
+      <option value="">All ministries</option>
+      {% for m in ministries %}
+      <option value="{{ m.ministry }}" {{ 'selected' if m.ministry == ministry else '' }}>{{ m.ministry }} ({{ m.n }})</option>
+      {% endfor %}
+    </select>
+    <select name="date" onchange="this.form.submit()">
+      <option value="">Any date</option>
+      {% for d in days %}
+      <option value="{{ d.d }}" {{ 'selected' if d.d == day else '' }}>{{ d.d }} ({{ d.n }})</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Search</button>
+    {% if q or ministry or day %}<a href="/pib">Clear</a>{% endif %}
+  </form>
+
+  <ul class="item-list">
+    {% for r in releases %}
+    <li class="item">
+      <div class="item-meta"><span class="src-badge" style="background:#8a4b08">PIB</span>
+        <span>{{ r.posted_at or r.release_date }}</span>
+        {% if r.ministry %}<span class="item-sub">· {{ r.ministry }}</span>{% endif %}
+        {% if r.word_count %}<span class="item-sub">· {{ r.word_count }} words</span>{% endif %}</div>
+      <a class="item-title" href="/pib/{{ r.prid }}">{{ r.title }}</a>
+      <p class="item-snip">{{ r.snip|safe }}</p>
+    </li>
+    {% else %}
+    <li class="item empty">No releases match.{% if not q and not ministry and not day %} Run the PIB scraper and push the data.{% endif %}</li>
+    {% endfor %}
+  </ul>
+  {% if releases|length >= limit and limit < 300 %}
+  <a class="more" href="/pib?q={{ q|urlencode }}&ministry={{ ministry|urlencode }}&date={{ day }}&limit={{ limit + 50 }}">Show more →</a>
+  {% endif %}
+</div>
+{% endblock %}

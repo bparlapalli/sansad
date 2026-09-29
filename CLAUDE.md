@@ -22,7 +22,11 @@ sansad/
 │       ├── playwright_scraper.py # Playwright browser scraper — catalog + download
 │       ├── local_scan.py        # Register manually-dropped PDFs
 │       └── main.py              # CLI entry point for legacy scraper only
+│   └── pib/                 # pib.gov.in press releases (second data source)
+│       ├── pib_scraper.py       # ✅ list (ASP.NET postback per day) + fetch release pages → pib_releases
+│       └── explore_pib.py       # Original Playwright probe — superseded, kept for reference
 │
+├── core/sources.py          # Source registry — feeds /feed and /t/<topic> (see Known issues § Multi-source)
 ├── parser/
 │   ├── pdf_parser.py        # Text extraction + speaker attribution + language detection
 │   ├── chunker.py           # Splits a statement into ~60-word search chunks (chunks_fts)
@@ -37,6 +41,7 @@ sansad/
 │   ├── admin.py             # ✅ Admin blueprint — scraper, catalog, parser, AI generation
 │   │                         #    (never registered when APP_ENV=production — no auth of its own)
 │   ├── search_bp.py         # ✅ Search blueprint — date/politician/party/text modes
+│   ├── feed_bp.py           # ✅ /feed running list, /pib + /pib/<prid>, /t/<topic> topic hub
 │   ├── ingest_bp.py         # POST /ingest/db — token-gated endpoint that receives public.db
 │   ├── digest.py            # Claude API daily digest + politician profile generator
 │   ├── query.py             # Search functions (used by app + CLI)
@@ -103,6 +108,14 @@ python scrapers/parliament/playwright_scraper.py --status
 # ── Register manually dropped PDFs ────────────────────────────────────────────
 python scrapers/parliament/local_scan.py        # scan pdfs/ dir + register
 python scrapers/parliament/local_scan.py --list # list registered PDFs
+
+# ── PIB press releases (plain HTTP, no browser; needs `truststore`) ──────────
+python scrapers/pib/pib_scraper.py                 # today (list + fetch bodies)
+python scrapers/pib/pib_scraper.py --days 7        # last 7 days
+python scrapers/pib/pib_scraper.py --from 2026-09-01 --to 2026-09-28
+python scrapers/pib/pib_scraper.py --list-only --days 30   # index only
+python scrapers/pib/pib_scraper.py --fetch-only --limit 200
+python scrapers/pib/pib_scraper.py --status
 
 # ── Parse downloaded PDFs ──────────────────────────────────────────────────────
 python main.py --parse-only                  # parse all pending PDFs
@@ -194,6 +207,8 @@ python push_public_db.py                     # push public.db to LIVE_SITE_URL (
 | `statements_fts` | FTS5 virtual table over statements |
 | `statement_chunks` | ~60-word, sentence-safe slices of each statement — what search actually matches |
 | `chunks_fts` | FTS5 virtual table over statement_chunks |
+| `pib_releases` | PIB press releases — keyed by PIB's `prid`; `fetch_status` listed → fetched/error; `translations` = JSON {language: prid} |
+| `pib_releases_fts` | FTS5 over pib_releases (title, ministry, body_text) — insert/update/delete triggers keep it in sync |
 
 **name_normalized** in `members` strips honorifics (SHRI, SHRIMATI, DR., PROF., etc.) and lowercases.
 Always pass `member["name_normalized"]` (not `member["name"]`) to `search_by_speaker()`.
@@ -289,6 +304,22 @@ because `*.db` is gitignored — the intent was wrong regardless, now that data 
 ## Known issues / decisions
 
 - **eparlib blocks direct requests** — Use playwright_scraper.py (real Chromium browser).
+- **PIB works with plain HTTP, but TLS needs `truststore`** — pib.gov.in doesn't send its intermediate
+  cert, so Python's default bundle rejects it (curl on Windows works because it uses the OS store).
+  `pib_scraper.py` injects `truststore`; never "fix" this with `verify=False`. On this machine pip itself
+  also failed TLS to PyPI — `python -m pip install --use-feature=truststore <pkg>` works around it.
+- **PIB listing = ASP.NET WebForms postback** — GET `allRel.aspx?reg=3&lang=1`, then POST back the
+  `__VIEWSTATE` fields with day/month/year set. Region 3 = PIB Delhi (the national feed). Each language
+  version of a release has its own PRID; we store English and record the others in `translations`.
+- **Multi-source architecture** — `core/sources.py` is a registry: each source (Parliament, PIB, later
+  YouTube…) registers a `recent()` and a `search()` returning a common Item shape. `/feed` (running list)
+  and `/t/<topic>` (topic hub: per-source hits + merged timeline) are built on it, so a new source appears
+  in both automatically. Only a source-specific browse page (like `/pib`) needs its own route in
+  `app/feed_bp.py`. To add a source: scraper → table (+FTS with triggers) → register in `core/sources.py`
+  → add its rows to `export_public_db.py` → add a step to `daily_update.py`.
+- **PIB in production** — `export_public_db.py` copies fetched `pib_releases` for the last N days
+  (window measured from the newest PIB release, not the debate lag); `daily_update.py` scrapes the last 3
+  days of PIB each run. Historical backfill stays local until we decide what the live site should hold.
 - **Hindi PDF parser** — pdf_parser.py extracts 0 statements from Devanagari PDFs. Needs Hindi-aware extraction (pdfminer or tesseract OCR). Hindi statements parsed but not translated yet.
 - **Large PDFs time out in Cowork sandbox** — Files >5MB must be parsed on local Windows machine.
 - **Session 7 dates** — Jan 28–29 2026 PDFs exist but dates not yet in sessions_data.py. Add them.
@@ -318,6 +349,8 @@ because `*.db` is gitignored — the intent was wrong regardless, now that data 
 - [ ] **UI v2** — Wiki + News + Forum (see docs/UI_DESIGN.md for spec)
 
 ### Scrapers
+- [x] PIB press release scraper (`scrapers/pib/pib_scraper.py`) → `pib_releases` in local sansad.db
+- [ ] PIB: backfill history, add to `daily_update.py`, surface in web UI + public export
 - [ ] Run --catalog to build full item index (6,458+ debates)
 - [ ] --resolve + --download for all 18th LS PDFs
 - [ ] Add Rajya Sabha debates

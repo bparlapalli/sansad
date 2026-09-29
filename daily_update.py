@@ -55,6 +55,12 @@ def main():
         if not ok:
             print("Scrape step failed — continuing to parse whatever is already downloaded.")
 
+    if not args.skip_scrape:
+        # Last 3 days, not just today: PIB backdates and adds late, and the scraper
+        # skips anything already stored, so overlap is free.
+        if not run([py, "scrapers/pib/pib_scraper.py", "--days", "3"]):
+            print("PIB step failed — continuing without fresh PIB data.")
+
     if not run([py, "main.py", "--parse-only"]):
         print("Parse step failed — aborting (public.db would be stale/incomplete).")
         sys.exit(1)

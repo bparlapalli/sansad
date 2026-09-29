@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "_items.html" as ui %}
+{% block title %}{{ topic or 'Topics' }}{% endblock %}
+{% block content %}
+{{ ui.item_css() }}
+<div class="page">
+  <h1>{{ topic or 'Topics across sources' }}</h1>
+  <p class="deck">
+    {% if topic %}Everything ParamaSrota has on this topic, from every source, in one place.
+    {% else %}Search a subject once and see what Parliament and the government (PIB) each said about it.{% endif %}
+  </p>
+  <form class="filters" method="get" onsubmit="event.preventDefault(); var q=this.q.value.trim(); if(q) location.href='/t/'+encodeURIComponent(q);">
+    <input type="search" name="q" value="{{ topic or '' }}" placeholder="e.g. GST, Manipur, monsoon flood…" style="min-width:260px">
+    <button type="submit">Explore</button>
+  </form>
+
+  {% if view %}
+  <div class="filters">
+    {% for key, s in sources.items() %}
+    <a href="#src-{{ key }}">{{ s.label }} · {{ view.by_source[key]|length }}</a>
+    {% endfor %}
+  </div>
+
+  <h2 style="font-size:1.25rem; margin:18px 0 4px">Timeline</h2>
+  <p class="deck">All sources merged, newest first.</p>
+  {{ ui.item_list(view.timeline, sources) }}
+
+  {% for key, s in sources.items() %}
+  <h2 id="src-{{ key }}" style="font-size:1.25rem; margin:34px 0 4px">{{ s.label }}</h2>
+  <p class="deck"><a href="{{ s.home_url }}">Browse all {{ s.label }} →</a></p>
+  {{ ui.item_list(view.by_source[key], sources) }}
+  {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}

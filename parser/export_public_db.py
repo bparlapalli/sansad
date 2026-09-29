@@ -74,13 +74,24 @@ def export_public_db(source_path: Path, out_path: Path, days: int):
     n_profiles = _copy(conn, "politician_profiles",
         "member_id IN (SELECT member_id FROM main.statements WHERE sitting_date >= ?)", (cutoff,))
 
+    # PIB press releases: same rolling window, but measured from the newest PIB
+    # release (independent of the debate lag above). Only fully fetched rows —
+    # 'listed'/'error' rows have no body and aren't shown anywhere.
+    n_pib = 0
+    pib_latest = conn.execute(
+        "SELECT MAX(release_date) FROM pib_releases WHERE fetch_status = 'fetched'").fetchone()[0]
+    if pib_latest:
+        pib_cutoff = (date.fromisoformat(pib_latest) - timedelta(days=days)).isoformat()
+        n_pib = _copy(conn, "pib_releases",
+                      "fetch_status = 'fetched' AND release_date >= ?", (pib_cutoff,))
+
     conn.commit()
     conn.execute("DETACH DATABASE pub")
     conn.close()
 
     print(f"Exported public.db (last {days} days, cutoff {cutoff}) -> {out_path}")
     print(f"  statements={n_stmts} members={n_members} source_pdfs={n_pdfs} "
-          f"chunks={n_chunks} digests={n_digests} profiles={n_profiles}")
+          f"chunks={n_chunks} digests={n_digests} profiles={n_profiles} pib_releases={n_pib}")
     print(f"  size: {out_path.stat().st_size / 1_048_576:.1f} MB")
 
 

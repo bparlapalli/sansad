@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "_items.html" as ui %}
+{% block title %}Feed{% endblock %}
+{% block content %}
+{{ ui.item_css() }}
+<div class="page">
+  <h1>Running feed</h1>
+  <p class="deck">The newest items from every source, merged and sorted by time.</p>
+  <div class="filters">
+    <a href="/feed" class="{{ 'on' if not source else '' }}">All sources</a>
+    {% for key, s in sources.items() %}
+    <a href="/feed?source={{ key }}" class="{{ 'on' if source == key else '' }}">{{ s.label }}</a>
+    {% endfor %}
+  </div>
+  {{ ui.item_list(items, sources) }}
+  {% if items|length >= limit and limit < 300 %}
+  <a class="more" href="/feed?{% if source %}source={{ source }}&{% endif %}limit={{ limit + 50 }}">Show more →</a>
+  {% endif %}
+</div>
+{% endblock %}
