@@ -73,6 +73,7 @@ sansad/
 ├── render.yaml               # Render web service config (build/start command, env vars)
 ├── docs/
 │   ├── PROJECT_BRIEF.md     # Non-technical baseline for product/marketing/UI chats (claude.ai Project knowledge)
+│   ├── DATA_SOURCES.md      # Expansion catalogue: SEBI/RBI/CCI, exchanges, PSUs/DPSUs, CAG, gazette, tenders, ECI…
 │   ├── TIMELINE_UI_IDEAS.md # UI directions for timelines (story / swimlanes / chapters, evidence language, lens)
 │   ├── ISSUE_TIMELINES.md   # Timeline concept: fact/claim/hypothesis layers, evidence, linking, open decisions
 │   ├── PRODUCT_STRATEGY.md  # Marketing + investor reviews (2026-09-28), recommended path, go/no-go gates

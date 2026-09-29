@@ -60,6 +60,19 @@ automated access; X API is paid), solo-founder bandwidth, low willingness to pay
 misattribution or bad Hindi translation ends the brand → always show original beside translation,
 one-click source, public corrections log.
 
+## Path to venture scale: regulatory & corporate intelligence
+
+The investor's condition for venture scale is widening beyond Parliament into regulatory and
+corporate data — SEBI, RBI, CCI, exchange filings, **PSUs and DPSUs** (DPE survey, DIPAM, DAC
+approvals, CAG audits), Gazette, environmental clearances, tenders, electoral bonds, ECI affidavits,
+insolvency — **joined on stable IDs** (company CIN, director DIN, our politician IDs). Full
+catalogue, tiers and suggested order: [`DATA_SOURCES.md`](DATA_SOURCES.md).
+
+Suggested sequencing: add expansions that make the first paid product more valuable to
+compliance and government-relations buyers — Parliament Questions + Rajya Sabha → SEBI/RBI/CCI
+"regulatory watch" → a "defence & PSU watch" vertical → Gazette/clearances → the politician↔company
+join layer (only with an editor and legal review).
+
 ## Recommended path (synthesis)
 
 The hidden-connections vision is the **long-term asset**, not the **first thing to sell or

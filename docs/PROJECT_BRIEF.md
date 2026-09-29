@@ -50,7 +50,9 @@ conclusion:
   traffic, not revenue. Don't sell to political campaigns publicly.
 - **Marketing verdict:** worth pursuing as a receipts engine. **Investor verdict:** watch — prove
   someone pays. It's a solid lifestyle-scale business (~₹70 cr serviceable market); venture scale
-  only if it widens to regulatory intelligence (gazettes, regulators, courts, tenders).
+  only if it widens to regulatory and corporate intelligence — SEBI/RBI/CCI orders, exchange
+  filings, PSUs and DPSUs, CAG audits, Gazette, clearances, tenders, electoral bonds — joined on
+  company and director IDs. Catalogue and order: `DATA_SOURCES.md`.
 - **Cautionary comparable:** FiscalNote (US political data) went from a $1.3B valuation (2021) to
   delisted (2026). Quorum succeeded bootstrapped by selling workflow tools per seat.
 
@@ -118,6 +120,7 @@ conclusion:
 |---|---|
 | Code, docs, public timeline data | GitHub `bparlapalli/sansad` (public repo) |
 | Strategy reviews | `docs/PRODUCT_STRATEGY.md` |
+| Data expansion (SEBI, RBI, PSUs/DPSUs, CAG, tenders, electoral bonds…) | `docs/DATA_SOURCES.md` |
 | Timeline concept + guardrails | `docs/ISSUE_TIMELINES.md` |
 | Timeline UI directions | `docs/TIMELINE_UI_IDEAS.md` |
 | Timeline data (facts + claims) | `docs/timelines/*.json` |
