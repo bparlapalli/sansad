@@ -139,6 +139,22 @@ def wiki_index():
     return _render(RESEARCH_DIR / "wiki" / "INDEX.md", "Wiki", back="/draft")
 
 
+@draft_bp.route("/img/<name>.svg")
+def image(name):
+    """Graphics pushed with the bundle (img/*.svg). Served as an image with a locked-down CSP, so even a
+    direct visit can't run script; ingest also rejects SVGs containing script-like content."""
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", name):
+        abort(404)
+    path = RESEARCH_DIR / "img" / f"{name}.svg"
+    if not path.exists():
+        abort(404)
+    resp = make_response(path.read_bytes())
+    resp.headers["Content-Type"] = "image/svg+xml; charset=utf-8"
+    resp.headers["Content-Security-Policy"] = "default-src 'none'; style-src 'unsafe-inline'"
+    resp.headers["X-Content-Type-Options"] = "nosniff"
+    return resp
+
+
 @draft_bp.route("/wiki/<slug>")
 def wiki_page(slug):
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):

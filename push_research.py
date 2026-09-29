@@ -52,7 +52,14 @@ def build_zip(bundle: Path, story: str) -> bytes:
     subprocess.run([sys.executable, str(_ROOT / "record" / "claims_page.py"), story, str(bundle),
                     "--out", str(claims_md)], check=True, env=env, cwd=str(_ROOT))
 
+    # graphics are regenerated from the record DB so their grades match the claims page
+    build_tl = bundle / "graphics" / "build_timeline.py"
+    if build_tl.exists():
+        subprocess.run([sys.executable, str(build_tl)], check=True, env=env, cwd=str(_ROOT))
+
     files = {"post.md": bundle / "post" / "DRAFT-v0.md", "claims.md": claims_md}
+    for p in sorted((bundle / "graphics").glob("*.svg")):
+        files[f"img/{p.name}"] = p
     for p in sorted((bundle / "wiki").glob("*.md")):
         files[f"wiki/{p.name}"] = p
     missing = [k for k, v in files.items() if not v.exists()]

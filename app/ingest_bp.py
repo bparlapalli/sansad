@@ -71,7 +71,8 @@ def ingest_db():
 
 # Only these paths may appear in a research zip (see push_research.py). Anything else is rejected,
 # so a bad archive can't write outside RESEARCH_DIR or drop executable files there.
-_RESEARCH_OK = re.compile(r"^(post\.md|claims\.md|wiki/[A-Za-z0-9][A-Za-z0-9-]*\.md)$")
+_RESEARCH_OK = re.compile(r"^(post\.md|claims\.md|wiki/[A-Za-z0-9][A-Za-z0-9-]*\.md|img/[a-z0-9][a-z0-9-]*\.svg)$")
+_SVG_FORBIDDEN = re.compile(rb"<script|<foreignobject|javascript:|\son[a-z]+\s*=|<iframe|<embed|<object|xlink:href|href\s*=\s*[\"']https?:", re.I)
 _RESEARCH_MAX_FILES, _RESEARCH_MAX_BYTES = 500, 20 * 1024 * 1024
 
 
@@ -94,6 +95,10 @@ def ingest_research():
     bad = [i.filename for i in infos if not _RESEARCH_OK.match(i.filename)]
     if bad:
         return jsonify({"error": "disallowed paths in archive", "paths": bad[:5]}), 400
+
+    unsafe = [i.filename for i in infos if i.filename.endswith(".svg") and _SVG_FORBIDDEN.search(zf.read(i))]
+    if unsafe:
+        return jsonify({"error": "svg contains script-like or external content", "paths": unsafe}), 400
 
     parent = RESEARCH_DIR.parent
     parent.mkdir(parents=True, exist_ok=True)
