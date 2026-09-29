@@ -29,6 +29,13 @@ sansad/
 │       ├── youtube_scraper.py   # ✅ list channel tabs → fetch metadata + captions → media_items/media_chunks
 │       └── explore_transcripts.py # Original feasibility probe — superseded, kept for reference
 │
+├── record/                  # The Record (docs/STORY_ENGINE.md): sourced entities, dated attrs, nodes, edges
+│   ├── load.py              # load a research bundle (JSON under data/, private) into rec_* tables
+│   ├── verify.py            # verifier: fetch source, locate EXACT span, grade (only place grades are set)
+│   ├── wiki.py              # generate private wiki stubs from rec_* tables
+│   ├── review_form.py       # build a Google Apps Script → Google Form for non-technical reviewers
+│   └── import_reviews.py    # Form CSV export → rec_reviews (+ founder to-do list)
+│
 ├── core/party_registry.py   # WHO we track off-floor: parties, people, dated affiliations, accounts (edit + --seed)
 ├── core/sources.py          # Source registry — feeds /feed and /t/<topic> (see Known issues § Multi-source)
 ├── parser/
@@ -389,6 +396,9 @@ because `*.db` is gitignored — the intent was wrong regardless, now that data 
   claim / internal hypothesis), evidence computed from independent sources, everything-is-a-node linking.
   The single-file UI prototype was **rejected as unusable** by the founder (2026-09-28); keep the JSON
   schema, redesign the UI. Not yet in the DB or Flask app.
+- **Private research repo** — `bparlapalli/Sansad_research` (PRIVATE) holds research bundles,
+  drafts, wiki stubs and review forms (e.g. `hyderabad/`). Clone it into `data/` here (gitignored).
+  Never copy its contents into this public repo. Hyderabad post status: `docs/logs/hyderabad-post.md`.
 - **Strategy** — `docs/PRODUCT_STRATEGY.md`: both reviews say the product is sourced, party-dated quotes
   (+ alerts), not the hidden-links map; hypotheses stay internal; prove a paid pilot by day 90.
 - **`sansad.db` is not gitignored by accident** — it (and `public.db`) must stay gitignored. If either ever shows up in `git status` as trackable, something is wrong; do not commit them (see Deployment § hard rule above).

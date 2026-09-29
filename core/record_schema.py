@@ -150,6 +150,25 @@ RECORD_DDL = [
         PRIMARY KEY (from_node, to_node, relation)
     )
     """,
+    # ── Human reviews — people checking a node against its sources ────────────
+    # A review is NOT an evidence grade: only record/verify.py grades, from located
+    # spans. A 'yes' with a pasted passage is the input the verifier needs; a 'no' or
+    # counter_note is triaged by the founder into a counter-claim node + 'contradicts'.
+    """
+    CREATE TABLE IF NOT EXISTS rec_reviews (
+        id            INTEGER PRIMARY KEY AUTOINCREMENT,
+        node_id       TEXT NOT NULL REFERENCES rec_nodes(id),
+        reviewer      TEXT NOT NULL,
+        verdict       TEXT,                         -- yes | no | cant_tell | NULL (skipped)
+        note          TEXT,                         -- what the source says / what they know
+        counter_url   TEXT,                         -- another source they point to
+        submitted_at  TEXT NOT NULL,                -- from the form's timestamp
+        channel       TEXT NOT NULL DEFAULT 'google_form',
+        status        TEXT NOT NULL DEFAULT 'new',  -- new | span_added | counter_claim_created | dismissed
+        imported_at   TEXT DEFAULT (datetime('now')),
+        UNIQUE(node_id, reviewer, submitted_at)
+    )
+    """,
 ]
 
 
