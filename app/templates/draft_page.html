@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<style>
+.draft-doc { max-width: 860px; margin: 0 auto; padding: 26px 24px 60px; }
+.draft-doc h1 { font-size: 1.9rem; margin: 6px 0 12px; line-height: 1.2; }
+.draft-doc h2 { font-size: 1.4rem; margin: 30px 0 8px; }
+.draft-doc h3 { font-size: 1.05rem; margin: 22px 0 4px; }
+.draft-doc p, .draft-doc li { margin-bottom: 8px; }
+.draft-doc ul, .draft-doc ol { padding-left: 22px; margin-bottom: 10px; }
+.draft-doc blockquote { border-left: 3px solid #cfcfc6; margin: 6px 0 8px; padding: 2px 12px; color: #333; background: #f3f2ea; }
+.draft-doc code { background: #eeece2; padding: 1px 5px; border-radius: 3px; font-size: .85em; }
+.draft-doc table { border-collapse: collapse; margin: 12px 0; font-family: sans-serif; font-size: .85rem; display: block; overflow-x: auto; }
+.draft-doc th, .draft-doc td { border: 1px solid #d9d7cb; padding: 5px 9px; text-align: left; vertical-align: top; }
+.draft-doc th { background: #f0eee4; }
+.draft-back { font-family: sans-serif; font-size: .82rem; }
+</style>
+<article class="draft-doc">
+  <p class="draft-back"><span style="color:#b3261e;font-weight:700;">PRIVATE · UNVERIFIED</span>
+    {% if back %} · <a href="{{ back }}">← Back</a>{% endif %} · <a href="/draft/logout">Sign out</a></p>
+  {{ body|safe }}
+</article>
+{% endblock %}

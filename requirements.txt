@@ -7,6 +7,7 @@ truststore>=0.9         # use the OS cert store — pib.gov.in omits its interme
 
 # ── Web app ───────────────────────────────────────────────────────────────────
 flask>=3.0              # app/ news + admin site
+markdown-it-py>=3.0     # renders the private /draft pages (raw HTML disabled)
 gunicorn>=21.0           # production WSGI server (Render)
 python-dotenv>=1.0       # loads .env for local scripts (push_public_db.py etc.)
 

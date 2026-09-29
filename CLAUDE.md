@@ -355,6 +355,13 @@ because `*.db` is gitignored — the intent was wrong regardless, now that data 
   in both automatically. Only a source-specific browse page (like `/pib`) needs its own route in
   `app/feed_bp.py`. To add a source: scraper → table (+FTS with triggers) → register in `core/sources.py`
   → add its rows to `export_public_db.py` → add a step to `daily_update.py`.
+- **Private `/draft` section (`app/draft_bp.py`)** — serves a research bundle (draft post, claims/verification
+  page, wiki stubs) for a handful of reviewers. The content is **not in this repo**: `push_research.py`
+  zips it from the private research repo (`data/research/`, gitignored) and POSTs it to `/ingest/research`
+  (same `INGEST_TOKEN` as the DB push); the server keeps it in an ephemeral folder next to the DB, so a
+  redeploy wipes it → re-run `push_research.py` (like `push_public_db.py`). **Open by default** (hidden,
+  unlinked, noindex — founder's decision); set `DRAFT_PASSWORD` in the Render dashboard to lock it.
+  Never commit research content here.
 - **PIB in production** — `export_public_db.py` copies fetched `pib_releases` for the last N days
   (window measured from the newest PIB release, not the debate lag); `daily_update.py` scrapes the last 3
   days of PIB each run. Historical backfill stays local until we decide what the live site should hold.
