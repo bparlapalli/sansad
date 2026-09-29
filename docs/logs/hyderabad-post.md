@@ -8,8 +8,8 @@ Brief: *ParamaSrota: Hyderabad Post Agent Brief (2026-09-29)* (founder's Drive),
 - [x] a) Schema (`core/record_schema.py`, hooked into `core/db.py`) + loader (`record/load.py`)
 - [x] b) Sources collected via web search — boomed → risks → next areas
 - [x] c) Nodes + dated attributes extracted; verifier (`record/verify.py`) run
-- [ ] d) DRAFT v0
-- [ ] e) Wiki stubs
+- [x] d) DRAFT v0 (private: data/hyderabad/post/DRAFT-v0.md)
+- [x] e) Wiki stubs (`record/wiki.py` → 65 private stubs)
 - [ ] f) Full log + decision list
 
 Research data is private (`data/hyderabad/`, gitignored) — see the final entry below.
