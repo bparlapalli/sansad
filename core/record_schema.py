@@ -169,6 +169,48 @@ RECORD_DDL = [
         UNIQUE(node_id, reviewer, submitted_at)
     )
     """,
+    # ── Indicator series (pipelines under scrapers/indicators/) ───────────────
+    # A series is one measure (e.g. UPI transaction count); observations are
+    # (series, geography entity, period) -> value, each traceable to a source file.
+    """
+    CREATE TABLE IF NOT EXISTS rec_series (
+        id            TEXT PRIMARY KEY,             -- 'upi-txn-count'
+        name          TEXT NOT NULL,
+        unit          TEXT,                         -- 'count' | 'INR' | ...
+        measure       TEXT,                         -- what is counted
+        geo_level     TEXT,                         -- country | state | district | pincode (or 'a+b')
+        cadence       TEXT,                         -- quarterly | monthly | ...
+        source_family TEXT,                         -- 'phonepe_pulse'
+        licence       TEXT,
+        description   TEXT,
+        added_at      TEXT DEFAULT (datetime('now'))
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS rec_geo (
+        id        TEXT PRIMARY KEY,                 -- 'in', 'in-tg', 'in-tg-hyderabad', 'pin-500081'
+        level     TEXT NOT NULL,                    -- country | state | district | pincode
+        name      TEXT NOT NULL,                    -- raw name as published by the source
+        parent_id TEXT REFERENCES rec_geo(id),
+        lat       REAL,
+        lon       REAL,
+        source    TEXT
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS rec_observations (
+        series_id       TEXT NOT NULL REFERENCES rec_series(id),
+        entity_id       TEXT NOT NULL,              -- usually a rec_geo.id (may carry a '#suffix' breakdown key)
+        period          TEXT NOT NULL,              -- '2024-Q4'
+        value           REAL,
+        source_url      TEXT,
+        source_file_sha TEXT,                       -- git blob sha of the source file
+        retrieved_at    TEXT,
+        note            TEXT,
+        PRIMARY KEY (series_id, entity_id, period)
+    )
+    """,
+    "CREATE INDEX IF NOT EXISTS idx_rec_obs_entity ON rec_observations(entity_id, series_id)",
 ]
 
 

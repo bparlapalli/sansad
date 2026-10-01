@@ -1,0 +1,36 @@
+{% extends "editorial_base.html" %}
+{% set atlas_section = 'data' %}
+{% block title %}{{ title }} · Sansad Field Atlas{% endblock %}
+{% block body_class %}atlas-analysis{% endblock %}
+{% block content %}
+<article>
+  <header class="analysis-hero">
+    <p class="analysis-crumb"><a href="/draft/data">Datasets</a> / {{ title }}</p>
+    <p class="atlas-eyebrow">Standalone data analysis</p>
+    <h1>{{ title }}</h1>
+    {% if intro %}<p>{{ intro }}</p>{% endif %}
+    <div class="analysis-actions">
+      {% if chart_name %}<button type="button" class="primary" data-view-button="chart" aria-pressed="true">Chart</button>{% endif %}
+      <button type="button" data-view-button="data" aria-pressed="{{ 'false' if chart_name else 'true' }}">Data & method</button>
+      <button type="button" data-copy-link>Copy link</button>
+      <a href="/draft/atlas">Read the full story</a>
+    </div>
+    <p class="copy-status" data-copy-status role="status" aria-live="polite"></p>
+  </header>
+  <div class="analysis-shell">
+    {% if chart_name %}
+    <figure class="analysis-chart" data-view-panel="chart">
+      <img src="/draft/img/{{ chart_name }}.svg" alt="{{ title }}" decoding="async">
+      <figcaption>This chart is one view of the dataset. Open “Data & method” for exact figures, sources and caveats.</figcaption>
+    </figure>
+    {% endif %}
+    <section class="atlas-prose analysis-data" data-view-panel="data" {% if chart_name %}hidden{% endif %}>
+      {{ body|safe }}
+    </section>
+  </div>
+  <nav class="analysis-next" aria-label="Continue exploring">
+    <a href="/draft/atlas">← See this evidence in the full story</a>
+    <a href="/draft/data">All Hyderabad datasets →</a>
+  </nav>
+</article>
+{% endblock %}

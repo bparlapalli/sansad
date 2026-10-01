@@ -15,6 +15,7 @@ The claims page is regenerated first from the local record DB (record.db), so it
 import argparse
 import io
 import os
+import re
 import subprocess
 import sys
 import zipfile
@@ -46,6 +47,27 @@ def _load_env_file(path: Path):
 _load_env_file(_ROOT / ".env")
 
 
+def prepare_post(text: str) -> str:
+    """The draft opens with an HTML comment (tag legend + 'state at draft time'). The site renders markdown with raw
+    HTML disabled, so a comment would show up as visible text — and its '0 of 37 graded' is stale. Turn it into a
+    readable note that points to the Claims page for the current grades."""
+    m = re.match(r"\s*<!--(.*?)-->\s*", text, re.S)
+    if not m:
+        return text
+    legend: list[str] = []
+    for ln in (x.strip() for x in m.group(1).splitlines()):
+        if ln.startswith(("Node ids", "State at")):
+            break                                   # end of the legend; the rest is stale build info
+        if ln.startswith("["):
+            legend.append(ln)
+        elif legend and ln:
+            legend[-1] += " " + ln                  # legend entries wrap across lines in the comment
+    note = ["> **How to read this draft (private, unverified).** It was written before verification, so the tags below can be "
+            "out of date — **the [Claims page](/draft/claims) has the current evidence grade for every claim.**", ">"]
+    note += [f"> - `{ln.split(']')[0]}]` {ln.split(']', 1)[1].strip()}" for ln in legend if "]" in ln]
+    return "\n".join(note) + "\n\n" + text[m.end():]
+
+
 def build_zip(bundle: Path, story: str) -> bytes:
     claims_md = bundle / "claims.md"
     env = dict(os.environ, SANSAD_DB_PATH=str(bundle / "record.db"), PYTHONIOENCODING="utf-8")
@@ -57,10 +79,18 @@ def build_zip(bundle: Path, story: str) -> bytes:
     if build_tl.exists():
         subprocess.run([sys.executable, str(build_tl)], check=True, env=env, cwd=str(_ROOT))
 
-    files = {"post.md": bundle / "post" / "DRAFT-v0.md", "claims.md": claims_md}
+    # newest draft wins (DRAFT-v2 over DRAFT-v0)
+    post = max((bundle / "post").glob("DRAFT-v*.md"), key=lambda p: int(re.sub(r"\D", "", p.stem) or 0))
+    files = {"post.md": post, "claims.md": claims_md}
     for p in sorted((bundle / "graphics").glob("*.svg")):
         files[f"img/{p.name}"] = p
     for p in sorted((bundle / "wiki").glob("*.md")):
+        files[f"wiki/{p.name}"] = p
+    # v2 write-up assets (charts, timeline v2, data pages) override same-named v1 files
+    writeup = bundle / "v2" / "writeup"
+    for p in sorted((writeup / "img").glob("*.svg")):
+        files[f"img/{p.name}"] = p
+    for p in sorted((writeup / "wiki").glob("*.md")):
         files[f"wiki/{p.name}"] = p
     missing = [k for k, v in files.items() if not v.exists()]
     if missing:
@@ -69,7 +99,10 @@ def build_zip(bundle: Path, story: str) -> bytes:
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
         for arc, path in files.items():
-            zf.write(path, arc)
+            if arc == "post.md":   # the comment header becomes a visible, current "how to read this" note
+                zf.writestr(arc, prepare_post(path.read_text(encoding="utf-8")))
+            else:
+                zf.write(path, arc)
     return buf.getvalue()
 
 
@@ -83,7 +116,9 @@ if __name__ == "__main__":
     data = build_zip(Path(args.bundle), args.story)
     with zipfile.ZipFile(io.BytesIO(data)) as z:
         n = len(z.namelist())
-    print(f"{n} files, {len(data)/1024:.0f} KB  (post.md, claims.md, {n-2} wiki pages)")
+    with zipfile.ZipFile(io.BytesIO(data)) as z:
+        wiki = sum(1 for x in z.namelist() if x.startswith("wiki/"))
+    print(f"{n} files, {len(data)/1024:.0f} KB  (post, claims, {wiki} wiki pages, {n - wiki - 2} graphics)")
     if args.dry_run:
         sys.exit(0)
 

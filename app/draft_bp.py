@@ -114,6 +114,62 @@ def _render(md_path: Path, title: str, back: str | None = None):
                            title=title, body=html, back=back)
 
 
+def _atlas_document(md_path: Path) -> dict[str, str]:
+    """Render one private research document for the Editorial Atlas preview.
+
+    The research bundle remains the only content source.  The public repository
+    contains presentation code, but no copied research prose or figures.
+    """
+    if not md_path.exists():
+        abort(404)
+    text = md_path.read_text(encoding="utf-8")
+    lines = text.splitlines()
+    title = next((line[2:].strip() for line in lines if line.startswith("# ")), md_path.stem)
+    intro = ""
+    seen_title = False
+    for line in lines:
+        if line.startswith("# "):
+            seen_title = True
+            continue
+        if seen_title and line.strip() and not line.startswith(("<!--", "-->", "---")):
+            intro = re.sub(r"[*_`\[\]]", "", line.strip())
+            break
+    html = _md.render(text)
+    html = re.sub(
+        r'href="(?:\.\./)?wiki/data-([a-z0-9][a-z0-9-]*)\.md"',
+        r'href="/draft/data/\1"', html)
+    html = re.sub(
+        r'href="data-([a-z0-9][a-z0-9-]*)\.md"',
+        r'href="/draft/data/\1"', html)
+    html = re.sub(
+        r'src="(?:\.\./)?img/([a-z0-9][a-z0-9-]*)\.svg"',
+        r'src="/draft/img/\1.svg"', html)
+    html = html.replace('href="../post"', 'href="/draft/atlas"')
+    html = html.replace('href="post"', 'href="/draft/atlas"')
+    html = html.replace('href="claims"', 'href="/draft/claims"')
+    html = html.replace('<a href="http', '<a target="_blank" rel="noopener noreferrer" href="http')
+    return {"title": title, "intro": intro, "body": html}
+
+
+def _atlas_datasets() -> list[dict[str, str | bool]]:
+    datasets: list[dict[str, str | bool]] = []
+    wiki_dir = RESEARCH_DIR / "wiki"
+    if not wiki_dir.exists():
+        return datasets
+    for path in sorted(wiki_dir.glob("data-*.md")):
+        slug = path.stem.removeprefix("data-")
+        if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
+            continue
+        doc = _atlas_document(path)
+        datasets.append({
+            "slug": slug,
+            "title": doc["title"],
+            "intro": doc["intro"],
+            "has_chart": (RESEARCH_DIR / "img" / f"{slug}.svg").exists(),
+        })
+    return datasets
+
+
 @draft_bp.route("/")
 def hub():
     have = {p: (RESEARCH_DIR / p).exists() for p in ("post.md", "claims.md", "wiki/INDEX.md")}
@@ -127,6 +183,26 @@ def hub():
 @draft_bp.route("/post")
 def post():
     return _render(RESEARCH_DIR / "post.md", "Draft post", back="/draft")
+
+
+@draft_bp.route("/atlas")
+def atlas():
+    doc = _atlas_document(RESEARCH_DIR / "post.md")
+    return render_template("editorial_atlas_story.html", **doc)
+
+
+@draft_bp.route("/data")
+def data_hub():
+    return render_template("editorial_dataset_hub.html", datasets=_atlas_datasets())
+
+
+@draft_bp.route("/data/<slug>")
+def data_analysis(slug):
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
+        abort(404)
+    doc = _atlas_document(RESEARCH_DIR / "wiki" / f"data-{slug}.md")
+    chart_name = slug if (RESEARCH_DIR / "img" / f"{slug}.svg").exists() else None
+    return render_template("editorial_analysis.html", chart_name=chart_name, slug=slug, **doc)
 
 
 @draft_bp.route("/claims")

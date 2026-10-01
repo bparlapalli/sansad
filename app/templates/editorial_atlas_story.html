@@ -1,0 +1,24 @@
+{% extends "editorial_base.html" %}
+{% set atlas_section = 'story' %}
+{% block title %}{{ title }} · Sansad Field Atlas{% endblock %}
+{% block body_class %}atlas-story{% endblock %}
+{% block content %}
+<article>
+  <header class="story-hero">
+    <div class="hero-copy">
+      <p class="atlas-eyebrow">Hyderabad findings · Editorial Atlas</p>
+      <h1>{{ title }}</h1>
+      {% if intro %}<p class="hero-deck">{{ intro }}</p>{% endif %}
+      <p class="hero-meta">Living research · Multiple datasets · Evidence graded</p>
+    </div>
+    <div class="hero-signal" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+  </header>
+  <div class="story-actions">
+    <a href="/draft/data">Explore all datasets</a>
+    <a href="/draft/claims">Check the evidence</a>
+  </div>
+  <div class="atlas-prose story-body" data-atlas-story>{{ body|safe }}</div>
+</article>
+{% endblock %}

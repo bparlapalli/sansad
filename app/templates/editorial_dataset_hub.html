@@ -1,0 +1,34 @@
+{% extends "editorial_base.html" %}
+{% set atlas_section = 'data' %}
+{% block title %}Datasets · Sansad Field Atlas{% endblock %}
+{% block body_class %}atlas-data-hub{% endblock %}
+{% block content %}
+<header class="data-hero">
+  <p class="atlas-eyebrow">Durable evidence · Reusable stories</p>
+  <h1>Hyderabad datasets</h1>
+  <p>Each dataset is a living source of truth. One dataset can power several charts, findings, place profiles and stories without duplicating the underlying evidence.</p>
+</header>
+<section class="dataset-index" aria-labelledby="dataset-list-title">
+  <div class="index-heading">
+    <div><p class="atlas-eyebrow">Available now</p><h2 id="dataset-list-title">Explore the evidence</h2></div>
+    <p>{{ datasets|length }} connected datasets</p>
+  </div>
+  {% if datasets %}
+  <div class="dataset-list">
+    {% for dataset in datasets %}
+    <article class="dataset-row">
+      <div class="dataset-number">{{ "%02d"|format(loop.index) }}</div>
+      <div>
+        <h3><a href="/draft/data/{{ dataset.slug }}">{{ dataset.title }}</a></h3>
+        {% if dataset.intro %}<p>{{ dataset.intro }}</p>{% endif %}
+      </div>
+      <div class="dataset-meta"><span>{{ 'Chart + data' if dataset.has_chart else 'Data page' }}</span><a href="/draft/data/{{ dataset.slug }}">Open analysis →</a></div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty-datasets">No dataset pages have been pushed to this preview yet.</p>
+  {% endif %}
+</section>
+<section class="moat-note"><strong>Dataset → saved analysis → chart → many stories.</strong><p>Updates happen once at the dataset layer. Every connected view keeps its method, sources and data-through date.</p></section>
+{% endblock %}
