@@ -6,6 +6,15 @@
   <h1 style="font-family:Georgia,serif;font-size:2rem;margin:4px 0 6px;">Hyderabad post — working papers</h1>
   <p style="color:#555;margin-bottom:22px;">Why West Hyderabad boomed, what could stall it, and where growth may go next. Not for sharing.
      {% if pushed %}<br><span style="font-size:.85rem;">Last updated: {{ pushed }}</span>{% endif %}</p>
+  {% if have['post.md'] %}
+  <div style="background:#123d31;color:#f7f0e2;padding:22px 24px;margin:0 0 22px;border-left:5px solid #d96e35;">
+    <div style="font-size:.7rem;letter-spacing:1.4px;text-transform:uppercase;color:#efb47c;">New presentation preview</div>
+    <h2 style="font-family:Georgia,serif;margin:7px 0 6px;font-size:1.55rem;">Hyderabad Editorial Atlas</h2>
+    <p style="color:#c9d4ce;margin:0 0 14px;font-size:.9rem;">The full story, reusable dataset hub and standalone analysis pages using the research already pushed here.</p>
+    <a href="/draft/atlas" style="color:#fff;font-weight:700;margin-right:18px;">Open the story →</a>
+    <a href="/draft/data" style="color:#efc18f;font-weight:700;">Explore datasets →</a>
+  </div>
+  {% endif %}
   {% for path, label, desc in [
       ('post.md', 'Draft post', 'The v0 draft. Written before verification — its [UNVERIFIED] tags are out of date; use Claims for current grades.'),
       ('claims.md', 'Claims and verification status', 'Every claim with its grade, the exact passage found in the source, and what that passage does not prove.'),

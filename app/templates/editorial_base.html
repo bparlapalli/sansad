@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>{% block title %}Hyderabad Field Atlas{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='editorial-atlas.css') }}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="atlas-page {% block body_class %}{% endblock %}">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="draft-ribbon">Private preview · unverified research · not for circulation</div>
+  <header class="atlas-masthead">
+    <a class="atlas-wordmark" href="/draft/atlas">SANSAD <span>·</span> FIELD ATLAS</a>
+    <nav aria-label="Editorial Atlas">
+      <a href="/draft/atlas" {% if atlas_section == 'story' %}aria-current="page"{% endif %}>Story</a>
+      <a href="/draft/data" {% if atlas_section == 'data' %}aria-current="page"{% endif %}>Datasets</a>
+      <a href="/draft/">Working papers</a>
+    </nav>
+  </header>
+  <main id="main-content">{% block content %}{% endblock %}</main>
+  <footer class="atlas-footer">
+    <span>SANSAD · Hyderabad Field Atlas</span>
+    <span><a href="/draft/claims">Evidence grades</a> · <a href="/draft/logout">Sign out</a></span>
+  </footer>
+  <script src="{{ url_for('static', filename='editorial-atlas.js') }}" defer></script>
+</body>
+</html>
