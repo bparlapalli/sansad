@@ -79,10 +79,18 @@ def build_zip(bundle: Path, story: str) -> bytes:
     if build_tl.exists():
         subprocess.run([sys.executable, str(build_tl)], check=True, env=env, cwd=str(_ROOT))
 
-    files = {"post.md": bundle / "post" / "DRAFT-v0.md", "claims.md": claims_md}
+    # newest draft wins (DRAFT-v2 over DRAFT-v0)
+    post = max((bundle / "post").glob("DRAFT-v*.md"), key=lambda p: int(re.sub(r"\D", "", p.stem) or 0))
+    files = {"post.md": post, "claims.md": claims_md}
     for p in sorted((bundle / "graphics").glob("*.svg")):
         files[f"img/{p.name}"] = p
     for p in sorted((bundle / "wiki").glob("*.md")):
+        files[f"wiki/{p.name}"] = p
+    # v2 write-up assets (charts, timeline v2, data pages) override same-named v1 files
+    writeup = bundle / "v2" / "writeup"
+    for p in sorted((writeup / "img").glob("*.svg")):
+        files[f"img/{p.name}"] = p
+    for p in sorted((writeup / "wiki").glob("*.md")):
         files[f"wiki/{p.name}"] = p
     missing = [k for k, v in files.items() if not v.exists()]
     if missing:
