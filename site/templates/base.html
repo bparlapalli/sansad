@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}The StatPlotter{% endblock %}</title>
+<meta name="description" content="{% block description %}Indian data, explained with charts you can trace back to the source.{% endblock %}">
+<link rel="stylesheet" href="/static/css/main.css">
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+<header class="masthead">
+  <a href="/" class="brand">The StatPlotter</a>
+</header>
+<main>
+  {% block content %}{% endblock %}
+</main>
+<footer>
+  <p>&copy; {{ year }} The StatPlotter</p>
+</footer>
+</body>
+</html>
